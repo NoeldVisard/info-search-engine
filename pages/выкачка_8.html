@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+
+<html data-vue-meta="%7B%22lang%22:%7B%22ssr%22:%22ru%22%7D%7D" lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1.0,viewport-fit=cover,maximum-scale=1,user-scalable=0" name="viewport"/>
+<meta content="unsafe-url" name="referrer"/>
+<title>Эй конвертер, не шипи! Строптивые преобразователи платы для E-Ink экранов (Ч2) / Хабр</title>
+
+
+
+
+
+
+
+<meta content="2.165.0" name="habr-version"/>
+<meta content="444736788986613" data-vue-meta="ssr" property="fb:app_id"/><meta content="472597926099084" data-vue-meta="ssr" property="fb:pages"/><meta content="summary_large_image" data-vue-meta="ssr" name="twitter:card"/><meta content="@habr_com" data-vue-meta="ssr" name="twitter:site"/><meta content="Хабр" data-vmid="og:site_name" data-vue-meta="ssr" property="og:site_name"/><meta content="Эй конвертер, не шипи! Строптивые преобразователи платы для E-Ink экранов (Ч2)" data-vmid="og:title" data-vue-meta="ssr" property="og:title"/><meta content="Эй конвертер, не шипи! Строптивые преобразователи платы для E-Ink экранов (Ч2)" data-vmid="twitter:title" data-vue-meta="ssr" name="twitter:title"/><meta content="Эй конвертер, не шипи! Строптивые преобразователи платы для E-Ink экранов (Ч2)" data-vmid="aiturec:title" data-vue-meta="ssr" name="aiturec:title"/><meta content="Приветствую вас, друзья! Продолжаем разработку системы питания универсальной платы для E-Ink экранов. В этой части займёмся запуском и отладкой прототипа, «почувствуем вкус» ферритовых бусин, взорвём..." data-vmid="description" data-vue-meta="ssr" name="description"/><meta content="Приветствую вас, друзья! Продолжаем разработку системы питания универсальной платы для E-Ink экранов. В этой части займёмся запуском и отладкой прототипа, «почувствуем вкус» ферритовых бусин, взорвём..." data-vmid="description:itemprop" data-vue-meta="ssr" itemprop="description"/><meta content="Приветствую вас, друзья! Продолжаем разработку системы питания универсальной платы для E-Ink экранов. В этой части займёмся запуском и отладкой прототипа, «почувствуем вкус» ферритовых бусин, взорвём..." data-vmid="og:description" data-vue-meta="ssr" property="og:description"/><meta content="Приветствую вас, друзья! Продолжаем разработку системы питания универсальной платы для E-Ink экранов. В этой части займёмся запуском и отладкой прототипа, «почувствуем вкус» ферритовых бусин, взорвём..." data-vmid="twitter:description" data-vue-meta="ssr" name="twitter:description"/><meta content="Приветствую вас, друзья! Продолжаем разработку системы питания универсальной платы для E-Ink экранов. В этой части займёмся запуском и отладкой прототипа, «почувствуем вкус» ферритовых бусин, взорвём..." data-vmid="aiturec:description" data-vue-meta="ssr" property="aiturec:description"/><meta content="https://habrastorage.org/webt/ie/iv/47/ieiv477npg4dqpjgso6vzfe5o1i.png" data-vmid="image:itemprop" data-vue-meta="ssr" itemprop="image"/><meta content="https://habrastorage.org/webt/ie/iv/47/ieiv477npg4dqpjgso6vzfe5o1i.png" data-vmid="og:image" data-vue-meta="ssr" property="og:image"/><meta content="1200" data-vmid="og:image:width" data-vue-meta="ssr" property="og:image:width"/><meta content="630" data-vmid="og:image:height" data-vue-meta="ssr" property="og:image:height"/><meta content="https://habrastorage.org/webt/ie/iv/47/ieiv477npg4dqpjgso6vzfe5o1i.png" data-vmid="aiturec:image" data-vue-meta="ssr" property="aiturec:image"/><meta content="https://habrastorage.org/webt/ie/iv/47/ieiv477npg4dqpjgso6vzfe5o1i.png" data-vmid="twitter:image" data-vue-meta="ssr" name="twitter:image"/><meta content="https://habrastorage.org/webt/ie/iv/47/ieiv477npg4dqpjgso6vzfe5o1i.png?format=vk" data-vmid="vk:image" data-vue-meta="ssr" property="vk:image"/><meta content="792092" data-vmid="aiturec:item_id" data-vue-meta="ssr" property="aiturec:item_id"/><meta content="2024-02-15T08:01:26.000Z" data-vmid="aiturec:datetime" data-vue-meta="ssr" property="aiturec:datetime"/><meta content="https://habr.com/ru/companies/timeweb/articles/792092/" data-vmid="og:url" data-vue-meta="ssr" property="og:url"/><meta content="article" data-vmid="og:type" data-vue-meta="ssr" property="og:type"/><meta content="ru_RU" data-vmid="og:locale" data-vue-meta="ssr" property="og:locale"/><meta content="timeweb_статьи, обратная связь, стабилизация ОС, Power Stage Designer, RHPZ, e-ink, ферритовые бусины, отладка прототипа, строптивые конвертеры" data-vue-meta="ssr" name="keywords"/>
+
+<meta content="#303b44" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="#629FBC" name="msapplication-TileColor"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+<body>
+<div data-async-called="true" data-server-rendered="true" id="app"><div class="tm-layout__wrapper"><!-- --> <div></div> <!-- --> <header class="tm-header"><div class="tm-page-width"><div class="tm-header__container"><!-- --> <span class="tm-header__logo-wrap"><a class="tm-header__logo tm-header__logo tm-header__logo_hl-ru" href="/ru/"><svg class="tm-svg-img tm-header__icon" height="16" width="16"><title>Хабр</title> <use xlink:href="/img/habr-logo-ru.svg#logo"></use></svg></a> <span class="tm-header__beta-sign" style="display:none;">β</span></span> <div class="tm-dropdown tm-header__projects"><div class="tm-dropdown__head"><button class="tm-header__dropdown-toggle"><svg class="tm-svg-img tm-header__icon tm-header__icon_dropdown" height="16" width="16"><title>Открыть список</title> <use xlink:href="/img/megazord-v28.faec9762..svg#arrow-down"></use></svg></button></div> <!-- --></div> <a class="tm-header__become-author-btn" href="/ru/sandbox/start/">
+            Как стать автором
+          </a> <div class="tm-feature tm-header__feature tm-feature tm-feature_variant-inline"><!-- --></div> <!-- --> <!-- --></div></div></header> <div class="tm-layout"><div class="tm-page-progress-bar"></div> <div class="tm-base-layout__header tm-base-layout__header_is-sticky" data-menu-sticky="true"><div class="tm-page-width"><div class="tm-base-layout__header-wrapper"><div class="tm-main-menu"><div class="tm-main-menu__section"><nav class="tm-main-menu__section-content"><a class="tm-main-menu__item" href="/ru/feed/">
+        Моя лента
+      </a> <a class="tm-main-menu__item" href="/ru/articles/">
+        Все потоки
+      </a> <a class="tm-main-menu__item" href="/ru/flows/develop/">
+          Разработка
+        </a><a class="tm-main-menu__item" href="/ru/flows/admin/">
+          Администрирование
+        </a><a class="tm-main-menu__item" href="/ru/flows/design/">
+          Дизайн
+        </a><a class="tm-main-menu__item" href="/ru/flows/management/">
+          Менеджмент
+        </a><a class="tm-main-menu__item" href="/ru/flows/marketing/">
+          Маркетинг
+        </a><a class="tm-main-menu__item" href="/ru/flows/popsci/">
+          Научпоп
+        </a></nav></div></div> <div class="tm-header-user-menu tm-base-layout__user-menu"><a class="tm-header-user-menu__item tm-header-user-menu__search" href="/ru/search/"><svg class="tm-svg-img tm-header-user-menu__icon tm-header-user-menu__icon_search tm-header-user-menu__icon_dark" height="24" width="24"><title>Поиск</title> <use xlink:href="/img/megazord-v28.faec9762..svg#search"></use></svg></a> <!-- --> <!-- --> <!-- --> <div class="tm-header-user-menu__item"><button class="tm-header-user-menu__toggle"><svg class="tm-svg-img tm-header-user-menu__icon tm-header-user-menu__icon_dark" height="24" width="24"><title>Настройки</title> <use xlink:href="/img/megazord-v28.faec9762..svg#page-settings"></use></svg></button></div> <a class="tm-header-user-menu__item" href="https://habr.com/kek/v1/auth/habrahabr/?back=/ru/companies/timeweb/articles/792092/&amp;hl=ru" rel="nofollow"><button class="tm-header-user-menu__login btn btn_solid btn_small" type="button">
+        Войти
+      </button></a> <!-- --> <div class="v-portal" style="display:none;"></div></div></div></div></div> <!-- --> <div class="tm-page-width"></div> <main class="tm-layout__container"><div class="tm-page" companyname="timeweb" data-async-called="true" hl="ru"><div class="tm-page-width"><!-- --> <div class="tm-page__wrapper"><div class="tm-page__main tm-page__main_has-sidebar"><div class="pull-down"><!-- --> <div class="pull-down__header" style="height:0px;"><div class="pull-down__content" style="bottom:10px;"><svg class="tm-svg-img pull-down__icon pull-down__arrow" height="24" width="24"><title>Обновить</title> <use xlink:href="/img/megazord-v28.faec9762..svg#pull-arrow"></use></svg></div></div> <div class="tm-article-presenter"><!-- --> <div class="tm-company-profile-card tm-company-article__profile-card"><div class="tm-company-card tm-company-profile-card__info"><div class="tm-company-card__header"><a class="tm-company-card__avatar" href="/ru/companies/timeweb/profile/"><div class="tm-entity-image"><img alt="" class="tm-entity-image__pic" height="48" src="//habrastorage.org/getpro/habr/company/cbc/d7d/4bc/cbcd7d4bc33f3cdfa5e0401133ef9c4e.png" width="48"/></div></a> <!-- --> <div class="tm-counter-container tm-company-card__rating"><div class="tm-counter-container__header"> <div class="tm-votes-lever tm-votes-lever tm-votes-lever_appearance-rating"><!-- --> <div class="tm-votes-lever__score tm-votes-lever__score tm-votes-lever__score_appearance-rating"><span><span class="tm-votes-lever__score-counter tm-votes-lever__score-counter tm-votes-lever__score-counter_rating">
+          1918.42
+        </span></span></div> <!-- --></div></div> <div class="tm-counter-container__footer"><span class="tm-rating__text tm-rating__text">
+      Рейтинг
+    </span></div></div> <!-- --></div> <div class="tm-company-card__info"><a class="tm-company-card__name" href="/ru/companies/timeweb/profile/">Timeweb Cloud</a> <div class="tm-company-card__description"></div></div></div> <!-- --></div> <!-- --> <div class="tm-article-presenter__body"><div class="tm-misprint-area"><div class="tm-misprint-area__wrapper"><article class="tm-article-presenter__content tm-article-presenter__content_narrow"><div class="tm-article-presenter__header"> <div class="tm-article-snippet tm-article-presenter__snippet tm-article-snippet"> <div class="tm-article-snippet__meta-container"><div class="tm-article-snippet__meta"><span class="tm-user-info tm-article-snippet__author"><a class="tm-user-info__userpic" href="/ru/users/Kopcheniy/" title="Kopcheniy"><div class="tm-entity-image"><img alt="" class="tm-entity-image__pic" height="24" src="//habrastorage.org/r/w48/getpro/habr/avatars/d02/81c/e10/d0281ce100395ea1c76d67ea989fee8c.jpg" width="24"/></div></a> <span class="tm-user-info__user tm-user-info__user_appearance-default"><a class="tm-user-info__username" href="/ru/users/Kopcheniy/">
+      Kopcheniy
+      <!-- --></a> <span class="tm-article-datetime-published"><time datetime="2024-02-15T08:01:26.000Z" title="2024-02-15, 11:01">2 часа назад</time></span></span></span></div> <!-- --></div> <h1 class="tm-title tm-title_h1" lang="ru"><span>Эй конвертер, не шипи! Строптивые преобразователи платы для E-Ink экранов (Ч2)</span></h1> <div class="tm-article-snippet__stats"><div class="tm-article-complexity tm-article-complexity_complexity-medium"><span class="tm-svg-icon__wrapper tm-article-complexity__icon"><svg class="tm-svg-img tm-svg-icon" height="24" width="24"><title>Уровень сложности</title> <use xlink:href="/img/megazord-v28.faec9762..svg#complexity-medium"></use></svg></span> <span class="tm-article-complexity__label">
+    Средний
+  </span></div> <div class="tm-article-reading-time"><span class="tm-svg-icon__wrapper tm-article-reading-time__icon"><svg class="tm-svg-img tm-svg-icon" height="24" width="24"><title>Время на прочтение</title> <use xlink:href="/img/megazord-v28.faec9762..svg#clock"></use></svg></span> <span class="tm-article-reading-time__label">
+    12 мин
+  </span></div> <span class="tm-icon-counter tm-data-icons__item"><svg class="tm-svg-img tm-icon-counter__icon" height="24" width="24"><title>Количество просмотров</title> <use xlink:href="/img/megazord-v28.faec9762..svg#counter-views"></use></svg> <span class="tm-icon-counter__value">614</span></span></div> <div class="tm-publication-hubs__container"><div class="tm-publication-hubs"><span class="tm-publication-hub__link-container"><a class="router-link-active tm-publication-hub__link" href="/ru/companies/timeweb/articles/"><span>Блог компании Timeweb Cloud</span> <!-- --></a></span><span class="tm-publication-hub__link-container"><a class="tm-publication-hub__link" href="/ru/hubs/circuit-design/"><span>Схемотехника</span> <span class="tm-article-snippet__profiled-hub" title="Профильный хаб">*</span></a></span><span class="tm-publication-hub__link-container"><a class="tm-publication-hub__link" href="/ru/hubs/electronics/"><span>Производство и разработка электроники</span> <span class="tm-article-snippet__profiled-hub" title="Профильный хаб">*</span></a></span><span class="tm-publication-hub__link-container"><a class="tm-publication-hub__link" href="/ru/hubs/DIY/"><span>DIY или Сделай сам</span> <!-- --></a></span><span class="tm-publication-hub__link-container"><a class="tm-publication-hub__link" href="/ru/hubs/easyelectronics/"><span>Электроника для начинающих</span> <!-- --></a></span></div></div> <div class="tm-article-labels"><div class="tm-article-labels__container"><div class="tm-publication-label tm-publication-label_variant-case"><span>
+    Кейс
+  </span></div> </div></div> <!-- --> <!-- --></div></div> <!-- --> <div class="tm-article-body" data-gallery-root="" lang="ru"><div></div> <div id="post-content-body"><div><div class="article-formatted-body article-formatted-body article-formatted-body_version-1"><div xmlns="http://www.w3.org/1999/xhtml"><div style="text-align:center;"><img data-src="https://habrastorage.org/webt/ie/iv/47/ieiv477npg4dqpjgso6vzfe5o1i.png" src="https://habrastorage.org/r/w1560/webt/ie/iv/47/ieiv477npg4dqpjgso6vzfe5o1i.png"/></div><br/>
+Приветствую вас, друзья!<br/>
+Продолжаем разработку системы питания универсальной платы для E-Ink экранов. В этой части займёмся запуском и отладкой прототипа, «почувствуем вкус» ферритовых бусин, взорвём полсхемы. Поработаем с обратной связью: узнаем простой способ испытания устойчивости и измерения параметров, рычаги влияния при встроенной компенсации и разные хитрости. Проверим правильность расчётов программы Power Stage Designer с помощью экспериментов. Постабилизируем обратную связь и попробуем укротить уже эти конвертеры!<a name="habracut"></a><br/>
+<br/>
+<a href="https://habr.com/ru/companies/timeweb/articles/789538/">Часть 1. Разработка системы питания</a><br/>
+<br/>
+В прошлой части мы разработали схему и развели плату. Теперь самое время изготовить и запустить прототип. Макет сделаем популярным способом, без маски. Примеряем разъём.<br/>
+<br/>
+<div style="text-align:center;"><img data-blurred="true" data-src="https://habrastorage.org/webt/s9/m0/mt/s9m0mt_gdy3affutarpyovigr8i.jpeg" src="https://habrastorage.org/r/w780q1/webt/s9/m0/mt/s9m0mt_gdy3affutarpyovigr8i.jpeg"/></div><br/>
+Под разъёмом у нас идут проводники.<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/9v/s9/cb/9vs9cbdosmsgqibaw8hk3oyktzi.png" src="https://habrastorage.org/r/w1560/webt/9v/s9/cb/9vs9cbdosmsgqibaw8hk3oyktzi.png"/></div><br/>
+Маски нет, поэтому изолируем их. Мне понравилось это делать термопастой.<br/>
+<br/>
+<div style="text-align:center;"><img data-blurred="true" data-src="https://habrastorage.org/webt/c1/f6/n_/c1f6n_42hi06km2lhmyiyampqs0.jpeg" src="https://habrastorage.org/r/w780q1/webt/c1/f6/n_/c1f6n_42hi06km2lhmyiyampqs0.jpeg"/></div><br/>
+Она не плавится при пайке разъёма как какая-нибудь плёнка. Удобно наносить (в отличие от плёнки) и удалять лишнее, слой получается именно такой толщины, какой нужно. Остальное выдавливается.<br/>
+<br/>
+<h2><font color="#1c22be">❯</font> <font color="#454cee">Повышающий преобразователь (линия +15 В)</font></h2><br/>
+Начнём с преобразователя +5 –&gt; +15 В. Запаиваем разъём, линейный стабилизатор 3,3 В. Затем ключи, через которые идёт питание на dc-dc и начинаем отлаживать наш буст.<br/>
+Включаем и на выходе появляется напряжение +8.6 В, вместо +15 В. <br/>
+Забыли подать высокий уровень на базу транзистора.<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/cz/rg/vk/czrgvkhdfnogyv_harh7j3emfku.png" src="https://habrastorage.org/r/w1560/webt/cz/rg/vk/czrgvkhdfnogyv_harh7j3emfku.png"/></div><br/>
+Подаём, и напряжение на выходе преобразователя становится +15,56 В.<br/>
+Многовато, нужно 14,6…15,4 В.<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/it/ys/wk/ityswkchz0nze5ux8a50qaotuok.png" src="https://habrastorage.org/r/w1560/webt/it/ys/wk/ityswkchz0nze5ux8a50qaotuok.png"/></div><br/>
+В делителе хоть и применены резисторы с точностью 1%, напряжение вышло за расчётный предел. Дело в том, что напряжение обратной связи Vfb в микросхеме также имеет разброс, который при расчётах не учитывался. Решением могут быть более точные резисторы (дороже) или подбор резисторов.<br/>
+<br/>
+Изменяем сопротивление в делите и напряжение становится 15,26 В – в целевом диапазоне.<br/>
+Работать веселее с ассистентами:<br/>
+– Пацаны, как там прототип?<br/>
+<br/>
+<div style="text-align:center;"><img data-blurred="true" data-src="https://habrastorage.org/webt/pt/ax/tn/ptaxtnvpfziudxgsov7qejiy1jm.jpeg" src="https://habrastorage.org/r/w780q1/webt/pt/ax/tn/ptaxtnvpfziudxgsov7qejiy1jm.jpeg"/></div><br/>
+– Да тут Гек постоянно хвостом виляет, поэтому потенциал земли скачет. Ничего измерить не даёт.<br/>
+– А этот всё время не туда щупом тычет, – огрызается Чук.<br/>
+<br/>
+Понабирают на рынке по два кило…<br/>
+Даём нагрузку 50% (100 мА) и смотрим, что на выходе, до ферритовой бусины.<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/i6/n2/5y/i6n25yvebrucmijq6d25fr3nhya.png" src="https://habrastorage.org/r/w1560/webt/i6/n2/5y/i6n25yvebrucmijq6d25fr3nhya.png"/></div><br/>
+Колебаний нет, наблюдаем пульсации 218 мВ пик-пик.<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/hc/mw/oj/hcmwojb0v8qklx2s5tsgzsk4ki4.png" src="https://habrastorage.org/r/w1560/webt/hc/mw/oj/hcmwojb0v8qklx2s5tsgzsk4ki4.png"/></div><br/>
+Сейчас щуп подключен к концу резистора-нагрузки, а он проводком к выходу преобразователя.<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/fy/8y/48/fy8y48nszsvjlivlzzvokinfqua.png" src="https://habrastorage.org/r/w1560/webt/fy/8y/48/fy8y48nszsvjlivlzzvokinfqua.png"/></div><br/>
+Если подключить щуп у самого выхода конденсатора (без провода),<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/su/3w/yv/su3wyvbkhtm9a4f1rsxkwtcy43c.png" src="https://habrastorage.org/r/w1560/webt/su/3w/yv/su3wyvbkhtm9a4f1rsxkwtcy43c.png"/></div><br/>
+то пульсации меньше – 180 мВ. Но оставляем проводник, потому как от конденсатора до разъёма экрана по плате ещё идёт дорожка примерно такой длины, а значит условия похожие. Вообще, где-то попадался материал про правильное измерение пульсаций.<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/3d/ou/9p/3dou9pgfrg_ilwwxhmi_xk1mbcy.png" src="https://habrastorage.org/r/w1560/webt/3d/ou/9p/3dou9pgfrg_ilwwxhmi_xk1mbcy.png"/></div><br/>
+Нагружаем на 100%. Возбуждается на частоте 82 кГц.<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/oh/ns/14/ohns14i9mrh3vkzdipve4ogzlda.png" src="https://habrastorage.org/r/w1560/webt/oh/ns/14/ohns14i9mrh3vkzdipve4ogzlda.png"/></div><br/>
+Убираем конденсатор 680 пФ с верхнего сопротивления.<br/>
+Нагрузка 100%. Возбуждения нет.<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/fq/rm/km/fqrmkmn-eaheis4wnonhkeff_jo.png" src="https://habrastorage.org/r/w1560/webt/fq/rm/km/fqrmkmn-eaheis4wnonhkeff_jo.png"/></div><br/>
+Добавляем бусину и измеряем напряжение после неё.<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/vx/tm/a6/vxtma6d0b3vz-jeazfs52monahi.png" src="https://habrastorage.org/r/w1560/webt/vx/tm/a6/vxtma6d0b3vz-jeazfs52monahi.png"/></div><br/>
+Пульсации значительно уменьшились – с 364 мВ до 83 мВ. То есть в целых 4,4 раза! <br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/hg/-s/cp/hg-scpnmsaeohcrv9mfqrsuvbj4.png" src="https://habrastorage.org/r/w1560/webt/hg/-s/cp/hg-scpnmsaeohcrv9mfqrsuvbj4.png"/></div><br/>
+Пульсации составляют 83 мВ/15,2 В *100% = 0.5% от постоянного уровня выходного напряжения. Подойдёт.<br/>
+На всякий случай делаем наброс нагрузки – скачкообразное изменение с 50 до 100 % и обратно. Наблюдаем переходной процесс.<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/7p/77/at/7p77atgiw3upafltk3wlduj5baq.png" src="https://habrastorage.org/r/w1560/webt/7p/77/at/7p77atgiw3upafltk3wlduj5baq.png"/></div><br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/hl/_-/6c/hl_-6cxwozwqlkzouazckzvmf1y.png" src="https://habrastorage.org/r/w1560/webt/hl/_-/6c/hl_-6cxwozwqlkzouazckzvmf1y.png"/></div><br/>
+Синий график – напряжение на истоке ключа, который коммутирует половину нагрузки. Жёлтый – напряжение на выходе преобразователя (+15 В). Колебаний нет, запас по фазе в районе 45…50° – всё отлично.<br/>
+<br/>
+Делается наброс нагрузки просто. Выход источника питания нагружаем на R1, а параллельно подключаем через ключ (полевой транзистор) нагрузку R2.<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/8q/wr/9z/8qwr9zrn6qm93gizzcsd2gcbt7q.png" src="https://habrastorage.org/r/w1560/webt/8q/wr/9z/8qwr9zrn6qm93gizzcsd2gcbt7q.png"/></div><br/>
+Измеряем напряжение на выходе (можно обойтись без измерения тока) и наблюдаем переходной процесс. По форме этого процесса и количеству пиков можно оценить запас по фазе.<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/es/fb/s9/esfbs9cdrromk92ghiiottlwst0.png" src="https://habrastorage.org/r/w1560/webt/es/fb/s9/esfbs9cdrromk92ghiiottlwst0.png"/></div><br/>
+Подробнее процесс описан в документике «Simplifying Stability Checks slva381b».<br/>
+Далее на всякий случай проверим тепловой режим. Долго гонять не стал. Микросхема преобразователя, дроссель, диод и бусина греются слабо.<br/>
+<br/>
+<h2><font color="#1c22be">❯</font> <font color="#454cee">Добавляем зарядовый насос (линия +22 В)</font></h2><br/>
+Переходим к следующему преобразователю (+22 В). Он питается от +15 В.<br/>
+Припаиваем всё, кроме R2 (1 МОм)<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/mk/uf/iy/mkufiyuseezm8cp27d8ehgd2y2m.png" src="https://habrastorage.org/r/w1560/webt/mk/uf/iy/mkufiyuseezm8cp27d8ehgd2y2m.png"/></div><br/>
+Нагрузка линий +15 В 0%, +22 В 0%.<br/>
+Включаем, слышно какое-то гудение – что-то возбуждается. Посмотрим напряжение на выходе зарядового насоса (коллектор VT1).<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/mc/nl/gv/mcnlgvorfihhdrah5hkhvp80qma.png" src="https://habrastorage.org/r/w1560/webt/mc/nl/gv/mcnlgvorfihhdrah5hkhvp80qma.png"/></div><br/>
+На выходе блока +15 В (на катоде диода) колебания.<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/g-/_n/ky/g-_nky2fwtb7_pjxybtyzfoweqy.png" src="https://habrastorage.org/r/w1560/webt/g-/_n/ky/g-_nky2fwtb7_pjxybtyzfoweqy.png"/></div><br/>
+Без насоса нет колебаний, с насосом есть – значит он виноват. Логика ☺. Мне казалось, что импульсное потребление насоса стало достаточным возмущающим фактором, чтобы вызвать колебания. Но дело оказалось в источнике +15 В: он возбуждается при нагрузке, меньшей некоторого минимального уровня. А мы включили вообще без нагрузки.<br/>
+<br/>
+Плата универсальная, поэтому диапазон нагрузок у нас довольно широкий. Экран 5" потребляет минимум 3,4 мА. А экран 13,3" максимум 150 мА. Взяв запас 30 % наибольший ток мы приняли 200 мА. Отличие нагрузок 200/3,4 = 59 раз.<br/>
+<br/>
+После подгрузки линии +15В на 1,6 % (3,2 мА) частота колебаний изменилась с 400 Гц на 1,9 кГц. Колебания – это, конечно, нехорошо. Но посмотрите как красиво!<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/1s/vw/de/1svwdenfmrz-_kvjoimtw56br9e.png" src="https://habrastorage.org/r/w1560/webt/1s/vw/de/1svwdenfmrz-_kvjoimtw56br9e.png"/></div><br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/hh/jd/xc/hhjdxc1ll3xt3r8x_zz2zkkttry.png" src="https://habrastorage.org/r/w1560/webt/hh/jd/xc/hhjdxc1ll3xt3r8x_zz2zkkttry.png"/></div><br/>
+<div style="text-align:center;"><img data-blurred="true" data-src="https://habrastorage.org/webt/lt/ga/pt/ltgaptw8bssa8uk2ibbvteuicza.jpeg" src="https://habrastorage.org/r/w780q1/webt/lt/ga/pt/ltgaptw8bssa8uk2ibbvteuicza.jpeg"/></div><br/>
+Если изменять компоненты, влияющие на обратную связь, то изменяется частота колебаний и минимальная нагрузка Rмин, при которой пропадают колебания. Изменяя выходной конденсатор Свых, ёмкость в делителе Сдел и индуктивность, стараемся избавиться от колебаний во всём диапазоне нагрузок.<br/>
+<br/>
+Пробуем несколько вариантов (индуктивность не изменял). Получается 2 случая:<br/>
+<br/>
+<ol>
+<li>При 100% нагрузке колебаний нет, но они появляются при нагрузке, меньшей какого-то значения.<br/>
+</li>
+<li>При отсутствии нагрузки (только делитель ОС) колебаний нет, но они появляются при больших нагрузках (50 или 100 %).<br/>
+</li>
+</ol><br/>
+В итоге я остановился на минимальной нагрузке 2,8% (2,7 кОм). Приемлемая плата за стабильность. Плата питается не от аккумулятора, поэтому некритично. Делитель уменьшать не стал, чтобы он не грелся и напряжение не уплывало. Поставил резистор 0805.<br/>
+Хотелось бы обойтись без минимальной нагрузки. Микросхема LMR62014 имеет внутреннюю компенсацию.<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/mb/0l/ez/mb0lezia5-dhrqlizxa2hu6c3pi.png" src="https://habrastorage.org/r/w1560/webt/mb/0l/ez/mb0lezia5-dhrqlizxa2hu6c3pi.png"/></div><br/>
+Это удобно, но менее гибко. Вероятно, для широкого диапазона нагрузок лучше было бы использовать микросхему без встроенной компенсации ОС, чтобы полностью настроить обратную связь самостоятельно.<br/>
+<br/>
+Какие у нас есть рычаги влияния на параметры ОС, если компоненты компенсации встроены в микросхему?<br/>
+<br/>
+<ol>
+<li>Резистор последовательно с выводом FB (<a href="https://www.powerelectronicsnews.com/quick-tips-to-diagnose-and-stabilize-an-unstable-switching-power-supply/">FB-series resistor</a>).<br/>
+</li>
+<li>Конденсатор параллельно верхнему сопротивлению делителя (feed-forward capacitor).<br/>
+</li>
+<li>Повлиять на полосу усиления можно и изменением Свых, индуктивности.<br/>
+</li>
+</ol><br/>
+FB-series резистор, практически не изменяет фазовый отклик, но уменьшает усиление (смещает АЧХ влево) и таким образом уменьшает полосу (частоту единичного усиления) и увеличивает запас по фазе. Обычно его сопротивление 5…100 кОм.<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/zc/yt/_1/zcyt_1mrybawteqjcc0v3bvbgsa.png" src="https://habrastorage.org/r/w1560/webt/zc/yt/_1/zcyt_1mrybawteqjcc0v3bvbgsa.png"/></div><br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/0e/ko/p7/0ekop77vgr4v0ohha2-7tvw6kku.png" src="https://habrastorage.org/r/w1560/webt/0e/ko/p7/0ekop77vgr4v0ohha2-7tvw6kku.png"/></div><br/>
+Если нужно увеличить запас по фазе, не уменьшая полосу ОС, параллельно верхнему резистору делителя добавляют Cff.<br/>
+<br/>
+Пробовал поставить FB-series резистор, но какого-то заметного эффекта это не дало. Возможно, дело в топологии.<br/>
+<br/>
+Измерим напряжения. На коллекторе транзистора 28,6 В. На выходе стабилизатора 23,2 В. Нужно 21…23 В. На стабилитроне 23,8 В (больше на 0,6 В – падение на переходе б-э).<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/v_/8r/ig/v_8rigzztfi45q91ocrrrbsi0zc.png" src="https://habrastorage.org/r/w1560/webt/v_/8r/ig/v_8rigzztfi45q91ocrrrbsi0zc.png"/></div><br/>
+Заменяем диод перемычкой 1206 и на выходе напряжение становится +22,6 В – в целевом диапазоне. В данном случае сказывается разброс напряжения стабилитронов. У серии BZV55-C допуск ±5 %, а у серии BZV55-B – ±2%, но она дороже.<br/>
+<br/>
+Зачем резистор R2 = 1 Мом на выходе стабилизатора? Без нагрузки стабилизатора после выключения питания напряжение на его выходе сохраняется довольно долго. У меня оно продержалось более получаса почти без изменений. Поэтому R2 – это разрядный резистор. В дальнейшем устанавливать его я не стал, так как при запайке всех деталей на плату стабилизатор стал нагружен на операционный усилитель и напряжение перестало сохраняться.<br/>
+<br/>
+<h2><font color="#1c22be">❯</font> <font color="#454cee">Линии -15 и -20 В</font></h2><br/>
+Припаиваем все детали этих преобразователей, проверяем выходные напряжения. Без нагрузок получилось -15,14 В и -20.8 В. Заменим диод на перемычку, чтобы стало ближе к -20 В. Получилось -20.1 В. Отлично, всё в целевом диапазоне.<br/>
+<br/>
+Подключаем нагрузку 50% к -15 В. Блок начинает шипеть/свистеть. Что-то возбуждается. Посмотрим, что на выходе. Колебания на частоте около 38 кГц. Параметры такие: L 68 мкГн, Свых 10 мкФ (на штатном месте), Сдел 680пФ.<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/tz/ji/se/tzjiselbvozrkxii0ici8kh1nm0.png" src="https://habrastorage.org/r/w1560/webt/tz/ji/se/tzjiselbvozrkxii0ici8kh1nm0.png"/></div><br/>
+Поработаем с обратной связью. У микросхемы AOZ1280CI внутренняя цепь компенсации (вывода COMP нет).<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/n0/ps/mi/n0psmim64rqjesmn-7xfywlkv2a.png" src="https://habrastorage.org/r/w1560/webt/n0/ps/mi/n0psmim64rqjesmn-7xfywlkv2a.png"/></div><br/>
+Внешних рычагов воздействия у нас не так много. Удалим конденсатор с делителя (Сдел).<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/ac/rt/42/acrt42piz6xdor7nbqkklaq0qtc.png" src="https://habrastorage.org/r/w1560/webt/ac/rt/42/acrt42piz6xdor7nbqkklaq0qtc.png"/></div><br/>
+Возбуждается при 100% нагрузке.<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/au/cs/6s/aucs6s2w6yognyepdienmaiq7ju.png" src="https://habrastorage.org/r/w1560/webt/au/cs/6s/aucs6s2w6yognyepdienmaiq7ju.png"/></div><br/>
+Перепробовал с десяток вариантов, изменял индуктивность, Cвых, Сдел, но стабилизировать никак не получалось. Поэтому решил освежить знания и почитать про компенсацию ОС. Есть отличный документ «Switch-mode power converter compensation made easy». Самое то, чтобы освежить знания или впервые познакомиться со стабилизацией ОС. Многие эту тему обходят стороной, считая её сложной. Но в этом документе всё описано просто и понятно, удобно и коротко.<br/>
+<br/>
+<div class="spoiler" role="button" tabindex="0">
+<b class="spoiler_title">Несколько источников по стабилизации ОС</b>
+<div class="spoiler_text">Simplifying Stability Checks slva381b.<br/>
+Switch-mode power converter compensation made easy.<br/>
+Optimizing Transient Response of Internally Compensated DC-DC With Feedforward Capacitor slva289b.<br/>
+A Simple way to test buck converter stability. Richtek Design Tips.<br/>
+The Right-Half-Plane Zero — A Simplified Explanation (Power Supply Design Seminar, SLUP084).<br/>
+И др.<br/>
+</div>
+</div><br/>
+Мы сделали inverting buck-boost (IBB) преобразователь (для линии -15 В) на базе микросхемы для buck с внутренней компенсацией. Поэтому сравним передаточные функции для обоих этих случаев (current mode).<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/4g/5v/hu/4g5vhuy0njwoclcavxu4ld26nls.png" src="https://habrastorage.org/r/w1560/webt/4g/5v/hu/4g5vhuy0njwoclcavxu4ld26nls.png"/></div><br/>
+Наиболее важное отличие в том, что характеристика IBB содержит ноль в правой полуплоскости (right half plane zero, RHPZ). Этот ноль добавляет запаздывающую, а не опережающую фазу, как это сделал бы обычный ноль. В результате запас по фазе уменьшается, что приводит к нестабильности петли ОС. Частота этого нуля считается так:<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/p_/dx/v_/p_dxv_sjmx__aaorho19hmtxld8.png" src="https://habrastorage.org/r/w1560/webt/p_/dx/v_/p_dxv_sjmx__aaorho19hmtxld8.png"/></div><br/>
+Обычно частоту RHPZ выбирают примерно в 4 раза выше частоты единичного усиления f1. Из уравнения видно, что уменьшение индуктивности L увеличит частоту этого нуля и отодвинет его подальше от частоты f1. Но минимальная индуктивность может быть ограничена другими соображениями (пульсациями тока, максимальным током через транзистор и прочее). Другое решение проблемы – уменьшить полосу ОС путём использования большей выходной ёмкости, чем обычно использовалась бы с топологией buck. Такое решение дополнительно уменьшает пульсации выходного напряжения. Если есть внешний делитель ОС (как у нас), то параллельно верхнему сопротивлению можно поставить конденсатор прямой связи (feed-forward).<br/>
+<br/>
+Как можно определить ширину полосы ОС по переходному процессу? В документе «Optimizing Transient Response of Internally Compensated DC-DC With Feedforward Capacitor (slva289b)» есть такая картинка:<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/0z/xe/tl/0zxetlbzyatd3j5a7aeyivqyvwo.png" src="https://habrastorage.org/r/w1560/webt/0z/xe/tl/0zxetlbzyatd3j5a7aeyivqyvwo.png"/></div><br/>
+Если колебательного процесса нет, то можно измерить длительность tp до главного пика переходного процесса. Частота единичного усиления f1 будет примерно равна 1/4tp (документ «Switch-mode power converter compensation made easy»).<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/iv/fc/f9/ivfcf9th-v_alvjaq51clnuo4ki.png" src="https://habrastorage.org/r/w1560/webt/iv/fc/f9/ivfcf9th-v_alvjaq51clnuo4ki.png"/></div><br/>
+Какая полоса ОС у нас? Делаем наброс нагрузки 50-100% с Свых 1х10 мкФ и L 47 мкГн. Получаем переходной процесс с колебаниями около 7,8 кГц.<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/1v/m_/sw/1vm_swrjvifz1whww5uvutvjtso.png" src="https://habrastorage.org/r/w1560/webt/1v/m_/sw/1vm_swrjvifz1whww5uvutvjtso.png"/></div><br/>
+Для сравнения измерим частоту f1 по длительности до пика.<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/9e/ih/kp/9eihkpbon25fhgakmyw4qn04fsa.png" src="https://habrastorage.org/r/w1560/webt/9e/ih/kp/9eihkpbon25fhgakmyw4qn04fsa.png"/></div><br/>
+t<sub>p</sub> = 40,8 мкс. f1 = 1/4t<sub>p</sub> = 6,127 кГц. Довольно близко к 7,8 кГц (в масштабе десятков кГц).<br/>
+С индуктивностью L = 47 мкГн частота RHPZ равна 14,8 кГц. Значит частота f1 должна быть не выше 14,8 кГц/4 = 3,7 кГц. У нас это условие не выполняется. Поэтому нужно уменьшать индуктивность. Но тогда будут расти пульсации тока в ней. У меня получались такие расчётные значения:<br/>
+<div class="scrollable-table"><table>
+<tr>
+<td>Индуктивность, мкГн<br/>
+</td>
+<td>Частота RHPZ (f1), кГц<br/>
+</td>
+<td>Пульсации тока, %<br/>
+</td>
+</tr>
+<tr>
+<td>15<br/>
+</td>
+<td>46,3 (11,6)<br/>
+</td>
+<td>90<br/>
+</td>
+</tr>
+<tr>
+<td>22<br/>
+</td>
+<td>31,6 (7,9)<br/>
+</td>
+<td>60<br/>
+</td>
+</tr>
+<tr>
+<td>33<br/>
+</td>
+<td>21,1 (5,28)<br/>
+</td>
+<td>41,5<br/>
+</td>
+</tr>
+<tr>
+<td>47<br/>
+</td>
+<td>14,8 (3,7)<br/>
+</td>
+<td>3,29<br/>
+</td>
+</tr>
+<tr>
+<td>68<br/>
+</td>
+<td>10,2 (2,56)<br/>
+</td>
+<td>20<br/>
+</td>
+</tr>
+</table></div> В скобочках приведены частоты единичного усиления (в 4 раза меньше RHPZ).<br/>
+Судя по измерениям, внутренняя компенсация микросхемы AOZ1280CI устанавливает частоту f1 примерно на 6…8 кГц. Значит будем ориентироваться на 15 мкГн. Меньше брать нет смысла, так как ток становится больше минимального ограничения тока ключа.<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/bp/7n/gl/bp7ngl2cb3zlcyo2-ej-yfgpyim.png" src="https://habrastorage.org/r/w1560/webt/bp/7n/gl/bp7ngl2cb3zlcyo2-ej-yfgpyim.png"/></div><br/>
+Всё вроде бы хорошо, только пульсации тока 90%, мягко говоря, смущают.<br/>
+Расчёт индуктивности я делал по апноте «Working with Inverting Buck-Boost Converters» (snva856b). Для расчёта индуктивности L там задаются пульсациями тока 20…40% от тока нагрузки: «Typically a value of between <b>20% and 40% of the load current</b> is used for ΔIL.» Но это неверно. Нужно брать процент не от тока нагрузки, а от среднего тока индуктивности. Так написано и в программе Power Stage Designer от TI. Апнота тоже этой компании, но написано в ней иначе. Видимо, ошиблись.<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/2q/af/zl/2qafzlyg-ippdhq8jraoi5wts-w.png" src="https://habrastorage.org/r/w1560/webt/2q/af/zl/2qafzlyg-ippdhq8jraoi5wts-w.png"/></div><br/>
+В дальнейшем мы увидим, что результаты расчёта в этой программе отлично согласуются с результатами измерений.<br/>
+<br/>
+После уменьшения индуктивности дела стали получше. Наброс нагрузки 50-100%. Периодических колебаний нет, но запас по фазе маловат.<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/c1/ne/zi/c1neziebhxhkkom31suvihyzigo.png" src="https://habrastorage.org/r/w1560/webt/c1/ne/zi/c1neziebhxhkkom31suvihyzigo.png"/></div><br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/ju/fb/gp/jufbgp7a4m1inqj65v2ed5ogeic.png" src="https://habrastorage.org/r/w1560/webt/ju/fb/gp/jufbgp7a4m1inqj65v2ed5ogeic.png"/></div><br/>
+t<sub>p</sub> = 35 мкс. f1 = 1/4t<sub>p</sub> = 7,14 кГц, что не привышает частоту, в 4 раза меньшую RHPZ.<br/>
+Подбором конденсатора в делителе ОС удаётся получить стабильный отклик.<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/kv/x9/vc/kvx9vcyh_h2lsw_09uz5wvvgxs0.png" src="https://habrastorage.org/r/w1560/webt/kv/x9/vc/kvx9vcyh_h2lsw_09uz5wvvgxs0.png"/></div><br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/wc/up/aq/wcupaqr4f-vm3jwyt5zjcvgimys.png" src="https://habrastorage.org/r/w1560/webt/wc/up/aq/wcupaqr4f-vm3jwyt5zjcvgimys.png"/></div><br/>
+<br/>
+<h2><font color="#1c22be">❯</font> <font color="#454cee">Влияние входного напряжения на стабильность ОС</font></h2><br/>
+Не стоит забывать про влияние входного напряжения на стабильность обратной связи.<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/p_/dx/v_/p_dxv_sjmx__aaorho19hmtxld8.png" src="https://habrastorage.org/r/w1560/webt/p_/dx/v_/p_dxv_sjmx__aaorho19hmtxld8.png"/></div><br/>
+В числителе у нас квадрат напряжения, а в знаменателе первая степень, поэтому влияние в числителе больше и можно сделать вывод, что при увеличении Vin частота RHPZ уменьшается, что может вызвать проблемы со стабильностью. Проверим. Нужен регулируемый источник.<br/>
+Что-то скучно стало… Давайте уже спалим что-нибудь!<br/>
+<br/>
+<div style="text-align:center;"><img data-blurred="true" data-src="https://habrastorage.org/webt/lv/wp/f7/lvwpf7ozfrqffu-as6fvwphikv8.jpeg" src="https://habrastorage.org/r/w780q1/webt/lv/wp/f7/lvwpf7ozfrqffu-as6fvwphikv8.jpeg"/></div><br/>
+Нам понадобятся:<br/>
+<br/>
+<ol>
+<li>Недоделанный проект линейного регулируемого источника питания, 1 шт.<br/>
+</li>
+<li>Подопытное устройство, 1 шт.<br/>
+</li>
+<li>Немного везения, 3 шт.<br/>
+</li>
+</ol><br/>
+Способ применения:<br/>
+<br/>
+На вход регулятора подаём вольт 30…40, выход настраиваем на нужные 4,3…5,5 В, нагружаем почти на максимум тока, добавляем везения и ждём, пока пробьёт проходной регулирующий транзистор.<br/>
+<br/>
+Результат появляется довольно быстро – на вход наших преобразователей вместо 4,5...5,5 В прилетело 35 В. Маленький транзистор, отключающий питание, сгорел прямо на моих глазах, стал вонять, светиться и развалился пополам. Шоу ☺!<br/>
+<br/>
+Раньше я не понимал, почему при коротком замыкании сгорает проходной транзистор в этом источнике питания: от того, что он не вписывается в область безопасной работы, или потому что ОС не успевает отработать? Теперь понятно, что это выход за пределы ОБР. Ведь сейчас у нас не было КЗ и экстремальных токов. Ток нагрузки был чуть меньше максимального. Что ни делается – к лучшему!<br/>
+<br/>
+Новый источник регулируемого напряжения для питания преобразователей сделаем из оказавшегося под рукой самодельного обратнохода с выходным напряжением 12 В и регулируемого кипятильника LM317 (на фото аналог).<br/>
+<br/>
+<div style="text-align:center;"><img data-blurred="true" data-src="https://habrastorage.org/webt/3c/ju/ff/3cjuff-c69cypu5ukungzbqt4pg.jpeg" src="https://habrastorage.org/r/w780q1/webt/3c/ju/ff/3cjuff-c69cypu5ukungzbqt4pg.jpeg"/></div><br/>
+Подключаем наши преобразователи к новому регулируемому источнику и смотрим влияние входного напряжения на стабильность ОС.<br/>
+На входе 5,50 В.<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/kn/pl/wb/knplwbt3rwuheabda6dg44cqfw4.png" src="https://habrastorage.org/r/w1560/webt/kn/pl/wb/knplwbt3rwuheabda6dg44cqfw4.png"/></div><br/>
+На входе 5 В.<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/bx/km/q1/bxkmq1v_pibqvkb4ld3ojadtmyw.png" src="https://habrastorage.org/r/w1560/webt/bx/km/q1/bxkmq1v_pibqvkb4ld3ojadtmyw.png"/></div><br/>
+4,67 В.<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/xa/xg/lb/xaxglblos47sii7ufesuctrergi.png" src="https://habrastorage.org/r/w1560/webt/xa/xg/lb/xaxglblos47sii7ufesuctrergi.png"/></div><br/>
+4,37 В.<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/8j/j2/ku/8jj2kuxogpvhcgyrlx3kjolclno.png" src="https://habrastorage.org/r/w1560/webt/8j/j2/ku/8jj2kuxogpvhcgyrlx3kjolclno.png"/></div><br/>
+Результат на лицо. При уменьшении напряжения на входе преобразователей появляются и увеличиваются колебания.<br/>
+<br/>
+В общем, как я ни старался, стабилизировать со 100% нагрузкой не удалось. Были и несколько странные моменты, когда казалось, что срабатывает или ограничение по току ключа (запас по данному параметру был около 15%) или защита от перегрева. Или происходит вообще непонятно что.<br/>
+<br/>
+Например, ниже жёлтый график – напряжение на выходе (-15В), синий – ток в индуктивности. Вместо треугольной формы он имеет несколько пиков.<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/2p/zi/-s/2pzi-s2fvzsbyhvnop_8ziks8aq.png" src="https://habrastorage.org/r/w1560/webt/2p/zi/-s/2pzi-s2fvzsbyhvnop_8ziks8aq.png"/></div><br/>
+А здесь выходное напряжение (жёлтый) и сигнал в узле переключения SW (синий). Период переключения показан красной чёрточкой.<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/un/rk/gz/unrkgzpapc9laulfmcby7y2lumq.png" src="https://habrastorage.org/r/w1560/webt/un/rk/gz/unrkgzpapc9laulfmcby7y2lumq.png"/></div><br/>
+Что это? Как будто срабатывает какая-то защита и начинается икота и пропуск периодов, как это бывает у других микросхем. Скудный даташит AOZ1280CI на 13 страниц (сравните с 27 страницами у LMR62014) ничего про это не говорит.<br/>
+<br/>
+Возможные причины:<br/>
+<br/>
+<ol>
+<li>Нагрузка 200 мА велика для этой микросхемы. Запас по току ключа мал. Срабатывает защита по току.<br/>
+</li>
+<li>Микросхемы, скорее всего поддельные, так как куплены на Али и параметры не соответствуют даташиту. Например, у некоторых экземпляров частота переключения была ниже диапазона, заявленного в документе.<br/>
+</li>
+<li>Какую-то роль могла сыграть ошибка с расчётом пульсаций тока.<br/>
+</li>
+</ol><br/>
+Устав бороться с микросхемой AOZ1280CI, я стал думать, как поступить. Варианты были такие:<br/>
+<br/>
+<ol>
+<li>Пробовать всё-таки запустить 100% нагрузку с текущей схемой.<br/>
+</li>
+<li>Запустить менее 100%. Этого будет с запасом достаточно для данной платы, так как установил разъёмы только для 5", 6", и 9,7" экранов.<br/>
+</li>
+<li>Пробовать 100% нагрузку с новой схемой. Но тогда придётся разрабатывать новую схему, новый прототип.<br/>
+</li>
+</ol><br/>
+Я решил уменьшить ток, чтобы собрать этот прототип до конца и выявить ошибки, которые могут обнаружиться в других частях устройства. Уменьшение тока облегчит тепловой режим, увеличит запас по току и отодвинет частоту RHPZ повыше, что упростит стабилизацию ОС.<br/>
+<br/>
+При проектировании платы я установил на неё несколько разъёмов, которые подходят к большей части совместимых с платой экранов. Максимальная диагональ экранов, подключаемых к плате – 9,7". Какой максимальный ток нужен для экранов 9,7"? Посмотрим табличку из первой части.<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/nc/dm/2y/ncdm2yx-im3cpuc6lneunpci-gi.png" src="https://habrastorage.org/r/w1560/webt/nc/dm/2y/ncdm2yx-im3cpuc6lneunpci-gi.png"/></div><br/>
+Возьмём запас 30%.<br/>
+90 мА *1,3= 117 мА. Примем 120 мА.<br/>
+15 В/120 мА=125 Ом Новая нагрузка 100%<br/>
+125 Ом *2 = 250 Ом Новая нагрузка 50%<br/>
+Зарядовый насос потребляет примерно 40 мА. Максимальный ток для линии -20 В остаётся прежним, поэтому прибавляем к выходному току линии -15 В 40 мА.<br/>
+120 + 40 =160 мА. <br/>
+Изначально ток был 240 мА. Получается, снизили требования по нему на 33%.<br/>
+Ради интереса рассчитаем новый вариант с помощью программы.<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/3z/jo/86/3zjo8610wlmwogoeqnam-xwlxpy.png" src="https://habrastorage.org/r/w1560/webt/3z/jo/86/3zjo8610wlmwogoeqnam-xwlxpy.png"/></div><br/>
+Сразу скажу, что вариант с 15 мкГн (измеренное значение 13,5 мкГн), Свых 2х10 мкФ, Сдел =680 пФ и без FB-series резистора оказался стабильным при всех сочетаниях входного напряжения и нагрузки. В данном случае FB-series резистор я тоже пробовал ставить, но он как будто ни на что не влиял. Возможно, его применяют не во всех топологиях.<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/j0/el/bg/j0elbgjor0they53rapxzjjxslk.png" src="https://habrastorage.org/r/w1560/webt/j0/el/bg/j0elbgjor0they53rapxzjjxslk.png"/></div><br/>
+Запас по фазе несколько больше 45°.<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/dc/9d/x4/dc9dx4i1tt4alfufeeg2fxrgxxa.png" src="https://habrastorage.org/r/w1560/webt/dc/9d/x4/dc9dx4i1tt4alfufeeg2fxrgxxa.png"/></div><br/>
+Поисследуем этот стабильный вариант. Смотрим переключающийся узел (Lx). Частота 1,29 МГц, на входе 5,5 В. Коэффициент заполнения + 74%. Отлично согласуется с программой.<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/ac/fm/el/acfmelol_odjomlnexheyffv1xo.png" src="https://habrastorage.org/r/w1560/webt/ac/fm/el/acfmelol_odjomlnexheyffv1xo.png"/></div><br/>
+Измерим пульсации тока в индуктивности с помощью последовательно включённого резистора 170 мОм при разных нагрузках. Нагрузка линии -15 В 50%, -20 В –113%.<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/tn/ev/md/tnevmd2490-q1lhk6ln-ky_q-hu.png" src="https://habrastorage.org/r/w1560/webt/tn/ev/md/tnevmd2490-q1lhk6ln-ky_q-hu.png"/></div><br/>
+Максимальный ток 87,6 мВ/170 мОм = 515 мА<br/>
+Минимальный ток 46,8 мВ/170 мОм = 275 мА<br/>
+Средний ток 67,7 мВ/170 мОм = 398 мА<br/>
+Размах пульсаций (87,6 мВ – 46,8 мВ)/ 67,7 мВ = 60%<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/nc/ak/rr/ncakrrgo8zi5utku6ipkd1kwlek.png" src="https://habrastorage.org/r/w1560/webt/nc/ak/rr/ncakrrgo8zi5utku6ipkd1kwlek.png"/></div><br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/ma/bd/_v/mabd_vjcu1tfdxxhrrorsf14axm.png" src="https://habrastorage.org/r/w1560/webt/ma/bd/_v/mabd_vjcu1tfdxxhrrorsf14axm.png"/></div><br/>
+Коэффициент заполнения, минимальный, максимальный и средний ток отлично согласуются с программой. Практически совпадают.<br/>
+Нагрузка линии -15 В 100%, -20 В –113%.<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/tf/zw/pv/tfzwpvr4n2z6ocipfhfcqt_2z10.png" src="https://habrastorage.org/r/w1560/webt/tf/zw/pv/tfzwpvr4n2z6ocipfhfcqt_2z10.png"/></div><br/>
+Максимальный ток 140 мВ/170 мОм = 823 мА<br/>
+Минимальный ток 100 мВ/170 мОм = 588 мА<br/>
+Средний ток 121 мВ/170 мОм = 712 мА<br/>
+Размах пульсаций (140 мВ – 100 мВ)/ 121 мВ = 33 %<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/yt/ho/0q/ytho0q9aqw8ex2gpks7wv0gea1u.png" src="https://habrastorage.org/r/w1560/webt/yt/ho/0q/ytho0q9aqw8ex2gpks7wv0gea1u.png"/></div><br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/fh/h7/vc/fhh7vc_tad1cdkssmju7i8ordka.png" src="https://habrastorage.org/r/w1560/webt/fh/h7/vc/fhh7vc_tad1cdkssmju7i8ordka.png"/></div><br/>
+Коэффициент заполнения, минимальный, максимальный и средний ток так же отлично согласуются с программой.<br/>
+Измерим пульсации.<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/wo/e9/bv/woe9bvsmyn7faw2jpnnbhf6oryc.png" src="https://habrastorage.org/r/w1560/webt/wo/e9/bv/woe9bvsmyn7faw2jpnnbhf6oryc.png"/></div><br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/jz/yt/1y/jzyt1y3ltooay6iog0ernxqekzc.png" src="https://habrastorage.org/r/w1560/webt/jz/yt/1y/jzyt1y3ltooay6iog0ernxqekzc.png"/></div><br/>
+252 мВ пик-пик – пойдёт.<br/>
+Теперь подключим нагрузку после бусины (остальные условия те же). 123 мВ пик-пик. Пульсации уменьшились в два раза! Ощутимый эффект.<br/>
+<br/>
+<h2><font color="#1c22be">❯</font> <font color="#454cee">Возвращаемся к бусту с новым опытом</font></h2><br/>
+Посмотрим, на сколько совпадают результаты измерений с расчётом в программе Power Stage Designer для повышающего преобразователя.<br/>
+<br/>
+Параметры схемы: 22 мкГн, Свых 1х10 мкФ, Сдел = 0. Минимальная нагрузка для +15 В 2,7 кОм. Посмотрим ток в катушке при входном напряжении 5,5 В. Датчик тока 170 мОм.<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/er/vo/ka/ervokauepikfuqvera2bbvfetge.png" src="https://habrastorage.org/r/w1560/webt/er/vo/ka/ervokauepikfuqvera2bbvfetge.png"/></div><br/>
+Максимальный ток 124,6 мВ/170 мОм =733 мА<br/>
+Минимальный ток 104 мВ/170 мОм = 612 мА<br/>
+Средний ток 113 мВ/170 мОм = 665 мА<br/>
+Размах пульсаций (124,6 мВ – 104 мВ)/113 мВ = 18%<br/>
+Это отлично совпадает с программой.<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/tz/mj/ls/tzmjlsin8a0wsjm2zl8m6unm-70.png" src="https://habrastorage.org/r/w1560/webt/tz/mj/ls/tzmjlsin8a0wsjm2zl8m6unm-70.png"/></div><br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/aw/il/iz/awilizwc2j_fwgewgywp8qrbupc.png" src="https://habrastorage.org/r/w1560/webt/aw/il/iz/awilizwc2j_fwgewgywp8qrbupc.png"/></div><br/>
+Выход колбасит, но в целом как-то меньше, чем у AOZ1280. Возможно, микросхема LMR62014 получше.<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/0o/zv/e-/0ozve-glubkqlq8fc9m6gbqphxw.png" src="https://habrastorage.org/r/w1560/webt/0o/zv/e-/0ozve-glubkqlq8fc9m6gbqphxw.png"/></div><br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/dw/i7/yw/dwi7ywg9fmnfhudqlajyilrdbrq.png" src="https://habrastorage.org/r/w1560/webt/dw/i7/yw/dwi7ywg9fmnfhudqlajyilrdbrq.png"/></div><br/>
+Колбасит, это вверх-вниз (отметил стрелочками). При этом периодических колебаний нет, даже если изменить масштаб по времени. Вероятно, влияет и разница в напряжениях Vfb. У LMR62014 минимальное 1,205 В, а у AOZ1280 – 784 мВ.<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/te/s8/4d/tes84di49pldnphvvbjvc4ldopa.png" src="https://habrastorage.org/r/w1560/webt/te/s8/4d/tes84di49pldnphvvbjvc4ldopa.png"/></div><br/>
+Ранее мы не проверяли устойчивость ОС повышающего преобразователя при всех входных напряжениях, поэтому проверим сейчас (набросом нагрузки 50-100%). При всех входных напряжениях (4,3…5,5 В) после основного пика 1 горб – запас по фазе 45°. Годится. Результаты измерений так же хорошо совпадают с расчётными данными программы.<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/vj/9e/qs/vj9eqsuldjxnc-mr-heil8prypc.png" src="https://habrastorage.org/r/w1560/webt/vj/9e/qs/vj9eqsuldjxnc-mr-heil8prypc.png"/></div><br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/pt/xr/gr/ptxrgrxc_b3momp6yznwfajyqmm.png" src="https://habrastorage.org/r/w1560/webt/pt/xr/gr/ptxrgrxc_b3momp6yznwfajyqmm.png"/></div><br/>
+Измерим полосу через длительность до пика (при 5,5 В).<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/tg/g5/7q/tgg57qevfbiclme9kptzntc3024.png" src="https://habrastorage.org/r/w1560/webt/tg/g5/7q/tgg57qevfbiclme9kptzntc3024.png"/></div><br/>
+Длительность до пика tp = 18 мкс. Частота единичного усиления f1 = 1/4tp = 13,9 кГц. Меньше, чем частота нуля RHPZ, делённая на 4 (56,9/4 = 14,2 кГц). Это хорошо.<br/>
+<br/>
+Преобразователи запустились. Повышающий – на 100% нагрузку, инвертирующий – на 67% от планируемой мощности. Но шипение не пропало. В чём причина «строптивости» преобразователей? В неверной разводке и компоновке, в некачественных компонентах с Али, в расчётах и ошибках выбора компонентов или ещё в чём-то? Есть над чем подумать.<br/>
+<br/>
+Продолжение следует…<br/>
+<br/>
+<div style="text-align:center;"><img data-blurred="true" data-src="https://habrastorage.org/webt/li/bu/yt/libuyt-uc9ftdf4owwvoopjxb7k.jpeg" src="https://habrastorage.org/r/w780q1/webt/li/bu/yt/libuyt-uc9ftdf4owwvoopjxb7k.jpeg"/></div><br/>
+<hr/><br/>
+<h4><font color="#454cee">Возможно, захочется почитать и это:</font><br/>
+<br/>
+<ul>
+<li>➤ <a href="https://habr.com/ru/companies/timeweb/articles/709184/">Рецепт красивого бабаха. Три составляющих хорошего силового преобразователя</a></li>
+<li>➤ <a href="https://habr.com/ru/companies/timeweb/articles/793152/">STM32. Процесс компиляции и сборки прошивки</a></li>
+<li>➤ <a href="https://habr.com/ru/companies/timeweb/articles/789662/">Начало работы с Axum — самым популярным веб-фреймворком Rust</a></li>
+<li>➤ <a href="https://habr.com/ru/companies/timeweb/articles/789908/">Потерян и не найден: каталог в Linux и UNIX</a></li>
+<li>➤ <a href="https://habr.com/ru/companies/timeweb/articles/792804/">Как создавалась Call of Duty 2</a></li>
+</ul><br/>
+<a href="https://timeweb.cloud/?i=106909"><img data-src="https://habrastorage.org/webt/b5/pj/of/b5pjofdoxth14ro-rjsrn7sbmiy.png" src="https://habrastorage.org/r/w1560/webt/b5/pj/of/b5pjofdoxth14ro-rjsrn7sbmiy.png"/></a></h4></div></div></div> <!-- --> <!-- --></div> <!-- --> <!-- --></div> <!-- --> <div class="tm-article-presenter__meta"><div class="tm-article-presenter__meta-list tm-separated-list"><span class="tm-separated-list__title">Теги:</span> <ul class="tm-separated-list__list"><li class="tm-separated-list__item"><a class="tm-tags-list__link" href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5Btimeweb_%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8%5D">timeweb_статьи</a></li><li class="tm-separated-list__item"><a class="tm-tags-list__link" href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5B%D0%BE%D0%B1%D1%80%D0%B0%D1%82%D0%BD%D0%B0%D1%8F%20%D1%81%D0%B2%D1%8F%D0%B7%D1%8C%5D">обратная связь</a></li><li class="tm-separated-list__item"><a class="tm-tags-list__link" href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5B%D1%81%D1%82%D0%B0%D0%B1%D0%B8%D0%BB%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%9E%D0%A1%5D">стабилизация ОС</a></li><li class="tm-separated-list__item"><a class="tm-tags-list__link" href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5BPower%20Stage%20Designer%5D">Power Stage Designer</a></li><li class="tm-separated-list__item"><a class="tm-tags-list__link" href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5BRHPZ%5D">RHPZ</a></li><li class="tm-separated-list__item"><a class="tm-tags-list__link" href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5Be-ink%5D">e-ink</a></li><li class="tm-separated-list__item"><a class="tm-tags-list__link" href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5B%D1%84%D0%B5%D1%80%D1%80%D0%B8%D1%82%D0%BE%D0%B2%D1%8B%D0%B5%20%D0%B1%D1%83%D1%81%D0%B8%D0%BD%D1%8B%5D">ферритовые бусины</a></li><li class="tm-separated-list__item"><a class="tm-tags-list__link" href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5B%D0%BE%D1%82%D0%BB%D0%B0%D0%B4%D0%BA%D0%B0%20%D0%BF%D1%80%D0%BE%D1%82%D0%BE%D1%82%D0%B8%D0%BF%D0%B0%5D">отладка прототипа</a></li><li class="tm-separated-list__item"><a class="tm-tags-list__link" href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5B%D1%81%D1%82%D1%80%D0%BE%D0%BF%D1%82%D0%B8%D0%B2%D1%8B%D0%B5%20%D0%BA%D0%BE%D0%BD%D0%B2%D0%B5%D1%80%D1%82%D0%B5%D1%80%D1%8B%5D">строптивые конвертеры</a></li> <!-- --></ul></div> <div class="tm-article-presenter__meta-list tm-separated-list"><span class="tm-separated-list__title">Хабы:</span> <ul class="tm-separated-list__list"><li class="tm-separated-list__item"><a class="tm-hubs-list__link router-link-active" href="/ru/companies/timeweb/articles/">Блог компании Timeweb Cloud</a></li><li class="tm-separated-list__item"><a class="tm-hubs-list__link" href="/ru/hubs/circuit-design/">Схемотехника</a></li><li class="tm-separated-list__item"><a class="tm-hubs-list__link" href="/ru/hubs/electronics/">Производство и разработка электроники</a></li><li class="tm-separated-list__item"><a class="tm-hubs-list__link" href="/ru/hubs/DIY/">DIY или Сделай сам</a></li><li class="tm-separated-list__item"><a class="tm-hubs-list__link" href="/ru/hubs/easyelectronics/">Электроника для начинающих</a></li> <!-- --></ul></div></div> <!-- --></article></div> <!-- --></div> <div class="tm-article-sticky-panel"><div class="tm-data-icons tm-article-sticky-panel__icons"><div class="tm-article-rating tm-data-icons__item"><div class="tm-votes-lever tm-article-rating__votes-switcher tm-votes-lever tm-votes-lever_appearance-article" title="Всего голосов 18: ↑18 и ↓0"><button class="tm-votes-lever__button" title="Нравится" type="button"><svg class="tm-svg-img tm-votes-lever__icon" height="24" width="24"><title>Голосование</title> <use xlink:href="/img/megazord-v28.faec9762..svg#counter-vote"></use></svg></button> <div class="tm-votes-lever__score tm-votes-lever__score tm-votes-lever__score_appearance-article"><span><span class="tm-votes-lever__score-counter tm-votes-lever__score-counter tm-votes-lever__score-counter_positive">
+          +18
+        </span></span></div> <button class="tm-votes-lever__button" title="Не нравится" type="button"><svg class="tm-svg-img tm-votes-lever__icon tm-votes-lever__icon_arrow-down" height="24" width="24"><title>Голосование</title> <use xlink:href="/img/megazord-v28.faec9762..svg#counter-vote"></use></svg></button></div> <div class="v-portal" style="display:none;"></div> <!-- --></div> <!-- --> <!-- --> <button class="bookmarks-button tm-data-icons__item" title="Добавить в закладки" type="button"><span class="tm-svg-icon__wrapper bookmarks-button__icon"><svg class="tm-svg-img tm-svg-icon" height="24" width="24"><title>Добавить в закладки</title> <use xlink:href="/img/megazord-v28.faec9762..svg#counter-favorite"></use></svg></span> <span class="bookmarks-button__counter" title="Количество пользователей, добавивших публикацию в закладки">
+    6
+  </span></button> <div class="tm-sharing tm-data-icons__item" title="Поделиться"><button class="tm-sharing__button" type="button"><svg class="tm-sharing__icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13.8 13.8V18l7.2-6.6L13.8 5v3.9C5 8.9 3 18.6 3 18.6c2.5-4.4 6-4.8 10.8-4.8z" fill="currentColor"></path></svg></button> <div class="v-portal" style="display:none;"></div></div> <div class="tm-article-comments-counter-link tm-data-icons__item" title="Читать комментарии"><a class="tm-article-comments-counter-link__link" href="/ru/companies/timeweb/articles/792092/comments/"><svg class="tm-svg-img tm-article-comments-counter-link__icon" height="24" width="24"><title>Комментарии</title> <use xlink:href="/img/megazord-v28.faec9762..svg#counter-comments"></use></svg> <span class="tm-article-comments-counter-link__value">
+      0
+    </span></a> <!-- --></div> <!-- --> <div class="v-portal" style="display:none;"></div></div></div></div> <div class="tm-article-presenter__footer"><div class="tm-article-blocks"><!-- --> <section class="tm-block tm-block tm-block_spacing-bottom"><!-- --> <div class="tm-block__body tm-block__body tm-block__body_variant-balanced"><div class="tm-article-author"><div class="tm-article-author__company"><div class="tm-article-author__company-card"><div class="tm-company-snippet"><a class="tm-company-snippet__logo-link" href="/ru/companies/timeweb/profile/"><div class="tm-entity-image"><img alt="" class="tm-entity-image__pic" height="40" src="//habrastorage.org/getpro/habr/company/cbc/d7d/4bc/cbcd7d4bc33f3cdfa5e0401133ef9c4e.png" width="40"/></div></a> <div class="tm-company-snippet__info"><a class="tm-company-snippet__title" href="/ru/companies/timeweb/profile/">Timeweb Cloud</a> <div class="tm-company-snippet__description">Компания</div></div></div> <div class="tm-article-author__buttons"><!-- --> <!-- --></div></div> <!-- --> <div class="tm-article-author__separator"></div></div> <div class="tm-user-card tm-article-author__user-card tm-user-card tm-user-card_variant-article"><div class="tm-user-card__info-container"><div class="tm-user-card__header"><div class="tm-user-card__header-data"><a class="tm-user-card__userpic tm-user-card__userpic_size-40" href="/ru/users/Kopcheniy/"><div class="tm-entity-image"><img alt="" class="tm-entity-image__pic" src="//habrastorage.org/getpro/habr/avatars/d02/81c/e10/d0281ce100395ea1c76d67ea989fee8c.jpg"/></div></a> <div class="tm-user-card__meta"><div class="tm-counter-container tm-karma tm-karma" title=" 158 голосов "><div class="tm-counter-container__header"><div class="tm-karma__votes tm-karma__votes_positive">
+      144
+    </div></div> <div class="tm-counter-container__footer"><div class="tm-karma__text">
+      Карма
+    </div> <div class="v-portal" style="display:none;"></div></div></div> <div class="tm-counter-container" title="Рейтинг пользователя"><div class="tm-counter-container__header"> <div class="tm-votes-lever tm-votes-lever tm-votes-lever_appearance-rating"><!-- --> <div class="tm-votes-lever__score tm-votes-lever__score tm-votes-lever__score_appearance-rating"><span><span class="tm-votes-lever__score-counter tm-votes-lever__score-counter tm-votes-lever__score-counter_rating">
+          68.6
+        </span></span></div> <!-- --></div></div> <div class="tm-counter-container__footer"><span class="tm-rating__text tm-rating__text">
+      Рейтинг
+    </span></div></div></div></div></div> <div class="tm-user-card__info tm-user-card__info tm-user-card__info_variant-article"><div class="tm-user-card__title tm-user-card__title tm-user-card__title_variant-article"><!-- --> <a class="tm-user-card__nickname tm-user-card__nickname tm-user-card__nickname_variant-article" href="/ru/users/Kopcheniy/">
+          @Kopcheniy
+        </a> <!-- --></div> <p class="tm-user-card__short-info tm-user-card__short-info tm-user-card__short-info_variant-article">Пользователь</p></div></div> <div class="tm-user-card__buttons tm-user-card__buttons tm-user-card__buttons_variant-article"><!-- --> <!-- --> <!-- --> <!-- --></div></div> <!-- --></div></div> <!-- --></section> <!-- --> <!-- --> <div class="tm-article-blocks__comments"><div class="tm-article-page-comments" id="publication-comments"><div class="tm-article-comments-counter-link tm-article-comments-counter-button"><a class="tm-article-comments-counter-link__link tm-article-comments-counter-link__link_button-style" href="/ru/companies/timeweb/articles/792092/comments/"><svg class="tm-svg-img tm-article-comments-counter-link__icon tm-article-comments-counter-link__icon_contrasted" height="24" width="24"><title>Комментарии</title> <use xlink:href="/img/megazord-v28.faec9762..svg#counter-comments"></use></svg> <span class="tm-article-comments-counter-link__value tm-article-comments-counter-link__value_contrasted">
+       Комментировать 
+    </span></a> <!-- --></div></div></div> <section class="tm-block tm-block tm-block_spacing-bottom"><header class="tm-block__header tm-block__header tm-block__header_variant-borderless"><div class="tm-block__header-container"><h2 class="tm-block__title tm-block__title tm-block__title_variant-large">Публикации</h2> </div> <!-- --></header> <div class="tm-block__body tm-block__body tm-block__body_variant-condensed-slim"><div class="tm-tabs tm-tabs"><div><span class="tm-tabs__tab-item"><button class="tm-tabs__tab-link tm-tabs__tab-link tm-tabs__tab-link_active tm-tabs__tab-link_slim">
+        Лучшие за сутки
+      </button></span><span class="tm-tabs__tab-item"><button class="tm-tabs__tab-link tm-tabs__tab-link tm-tabs__tab-link_slim">
+        Похожие
+      </button></span></div> <!-- --></div> <div class="similar-and-daily__tab-view"><div class="placeholder-wrapper"><!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <div class="tm-placeholder-article-cards"><div class="tm-placeholder-article-card"><div class="tm-placeholder__user"><div class="tm-placeholder__user-pic loads"></div> <div class="tm-placeholder__user-date loads"></div></div> <div class="tm-placeholder-article-card__title"><div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div></div> <div class="tm-placeholder-article-card__icons tm-placeholder__counters"><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div></div></div><div class="tm-placeholder-article-card"><div class="tm-placeholder__user"><div class="tm-placeholder__user-pic loads"></div> <div class="tm-placeholder__user-date loads"></div></div> <div class="tm-placeholder-article-card__title"><div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div></div> <div class="tm-placeholder-article-card__icons tm-placeholder__counters"><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div></div></div><div class="tm-placeholder-article-card"><div class="tm-placeholder__user"><div class="tm-placeholder__user-pic loads"></div> <div class="tm-placeholder__user-date loads"></div></div> <div class="tm-placeholder-article-card__title"><div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div></div> <div class="tm-placeholder-article-card__icons tm-placeholder__counters"><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div></div></div><div class="tm-placeholder-article-card"><div class="tm-placeholder__user"><div class="tm-placeholder__user-pic loads"></div> <div class="tm-placeholder__user-date loads"></div></div> <div class="tm-placeholder-article-card__title"><div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div></div> <div class="tm-placeholder-article-card__icons tm-placeholder__counters"><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div></div></div><div class="tm-placeholder-article-card"><div class="tm-placeholder__user"><div class="tm-placeholder__user-pic loads"></div> <div class="tm-placeholder__user-date loads"></div></div> <div class="tm-placeholder-article-card__title"><div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div></div> <div class="tm-placeholder-article-card__icons tm-placeholder__counters"><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div></div></div></div> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --></div> <!-- --></div></div> <!-- --></section> <div class="placeholder-wrapper"><!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <div class="tm-placeholder-inset tm-placeholder-vacancies"><div class="tm-placeholder-inset__header"><div class="tm-placeholder__line tm-placeholder__line_inset-header loads"></div></div> <div class="tm-placeholder-inset__body"><ul class="tm-placeholder-list"><li class="tm-placeholder-list__item tm-placeholder-list__item_inset"><div class="tm-placeholder-list__title-container"><div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div></div> <div class="tm-project-block-items__properties"><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span></div></li><li class="tm-placeholder-list__item tm-placeholder-list__item_inset"><div class="tm-placeholder-list__title-container"><div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div></div> <div class="tm-project-block-items__properties"><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span></div></li><li class="tm-placeholder-list__item tm-placeholder-list__item_inset"><div class="tm-placeholder-list__title-container"><div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div></div> <div class="tm-project-block-items__properties"><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span></div></li><li class="tm-placeholder-list__item tm-placeholder-list__item_inset"><div class="tm-placeholder-list__title-container"><div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div></div> <div class="tm-project-block-items__properties"><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span></div></li><li class="tm-placeholder-list__item tm-placeholder-list__item_inset"><div class="tm-placeholder-list__title-container"><div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div></div> <div class="tm-project-block-items__properties"><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span></div></li></ul></div> <div class="tm-placeholder-inset__footer"><div class="tm-placeholder__line tm-placeholder__line_inset-footer loads"></div></div></div> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --></div> <!-- --> </div></div></div></div></div> <div class="tm-page__sidebar"><div class="tm-layout-sidebar"><div class="tm-layout-sidebar__placeholder_initial"></div> <div class="tm-sexy-sidebar tm-sexy-sidebar_initial" style="margin-top:0px;"><!-- --> <section class="tm-block tm-block tm-block_spacing-bottom"><header class="tm-block__header tm-block__header"><div class="tm-block__header-container"><h2 class="tm-block__title tm-block__title">Информация</h2> </div> <!-- --></header> <div class="tm-block__body tm-block__body"><div class="tm-company-basic-info"><dl class="tm-description-list tm-description-list tm-description-list_variant-columns-nowrap"><dt class="tm-description-list__title tm-description-list__title tm-description-list__title_variant-columns-nowrap">Сайт</dt> <dd class="tm-description-list__body tm-description-list__body tm-description-list__body_variant-columns-nowrap"><a class="tm-company-basic-info__link" href="https://timeweb.cloud/" target="_blank">
+      timeweb.cloud
+    </a></dd></dl> <dl class="tm-description-list tm-description-list tm-description-list_variant-columns-nowrap"><dt class="tm-description-list__title tm-description-list__title tm-description-list__title_variant-columns-nowrap">Дата регистрации</dt> <dd class="tm-description-list__body tm-description-list__body tm-description-list__body_variant-columns-nowrap"><time datetime="2011-08-11T14:17:04.000Z" title="2011-08-11, 18:17">11  августа  2011</time></dd></dl> <dl class="tm-description-list tm-description-list tm-description-list_variant-columns-nowrap"><dt class="tm-description-list__title tm-description-list__title tm-description-list__title_variant-columns-nowrap">Дата основания</dt> <dd class="tm-description-list__body tm-description-list__body tm-description-list__body_variant-columns-nowrap"><time datetime="2006-05-24T20:00:00.000Z" title="2006-05-25, 00:00">25  мая  2006</time></dd></dl> <dl class="tm-description-list tm-description-list tm-description-list_variant-columns-nowrap"><dt class="tm-description-list__title tm-description-list__title tm-description-list__title_variant-columns-nowrap">Численность</dt> <dd class="tm-description-list__body tm-description-list__body tm-description-list__body_variant-columns-nowrap">
+    201–500 человек
+  </dd></dl> <dl class="tm-description-list tm-description-list tm-description-list_variant-columns-nowrap"><dt class="tm-description-list__title tm-description-list__title tm-description-list__title_variant-columns-nowrap">Местоположение</dt> <dd class="tm-description-list__body tm-description-list__body tm-description-list__body_variant-columns-nowrap">
+    Россия
+  </dd></dl> <dl class="tm-description-list tm-description-list tm-description-list_variant-columns-nowrap"><dt class="tm-description-list__title tm-description-list__title tm-description-list__title_variant-columns-nowrap">Представитель</dt> <dd class="tm-description-list__body tm-description-list__body tm-description-list__body_variant-columns-nowrap"><a class="tm-company-basic-info__link" href="/ru/users/tw_community/">
+      Timeweb Cloud
+    </a></dd></dl></div></div> <!-- --></section> <div class="tm-company-widgets"></div> <!-- --> <!-- --> <!-- --></div></div></div></div></div></div></main> <!-- --></div> <div class="tm-footer-menu"><div class="tm-page-width"><div class="tm-footer-menu__container"><div class="tm-footer-menu__block"><p class="tm-footer-menu__block-title">
+          Ваш аккаунт
+        </p> <div class="tm-footer-menu__block-content"><ul class="tm-footer-menu__list"><li class="tm-footer-menu__list-item"><a href="/kek/v1/auth/habrahabr/?back=/ru/companies/timeweb/articles/792092/&amp;hl=ru" rel="nofollow" target="_self">
+                Войти
+              </a></li><li class="tm-footer-menu__list-item"><a href="/kek/v1/auth/habrahabr-register/?back=/ru/companies/timeweb/articles/792092/&amp;hl=ru" rel="nofollow" target="_self">
+                Регистрация
+              </a></li></ul></div></div><div class="tm-footer-menu__block"><p class="tm-footer-menu__block-title">
+          Разделы
+        </p> <div class="tm-footer-menu__block-content"><ul class="tm-footer-menu__list"><li class="tm-footer-menu__list-item"><a class="footer-menu__item-link" href="/ru/articles/">
+                Статьи
+              </a></li><li class="tm-footer-menu__list-item"><a class="footer-menu__item-link" href="/ru/news/">
+                Новости
+              </a></li><li class="tm-footer-menu__list-item"><a class="footer-menu__item-link" href="/ru/hubs/">
+                Хабы
+              </a></li><li class="tm-footer-menu__list-item"><a class="footer-menu__item-link router-link-active" href="/ru/companies/">
+                Компании
+              </a></li><li class="tm-footer-menu__list-item"><a class="footer-menu__item-link" href="/ru/users/">
+                Авторы
+              </a></li><li class="tm-footer-menu__list-item"><a class="footer-menu__item-link" href="/ru/sandbox/">
+                Песочница
+              </a></li></ul></div></div><div class="tm-footer-menu__block"><p class="tm-footer-menu__block-title">
+          Информация
+        </p> <div class="tm-footer-menu__block-content"><ul class="tm-footer-menu__list"><li class="tm-footer-menu__list-item"><a class="footer-menu__item-link" href="/ru/docs/help/">
+                Устройство сайта
+              </a></li><li class="tm-footer-menu__list-item"><a class="footer-menu__item-link" href="/ru/docs/authors/codex/">
+                Для авторов
+              </a></li><li class="tm-footer-menu__list-item"><a class="footer-menu__item-link" href="/ru/docs/companies/corpblogs/">
+                Для компаний
+              </a></li><li class="tm-footer-menu__list-item"><a class="footer-menu__item-link" href="/ru/docs/docs/transparency/">
+                Документы
+              </a></li><li class="tm-footer-menu__list-item"><a href="https://account.habr.com/info/agreement/?hl=ru_RU" target="_blank">
+                Соглашение
+              </a></li><li class="tm-footer-menu__list-item"><a href="https://account.habr.com/info/confidential/?hl=ru_RU" target="_blank">
+                Конфиденциальность
+              </a></li></ul></div></div><div class="tm-footer-menu__block"><p class="tm-footer-menu__block-title">
+          Услуги
+        </p> <div class="tm-footer-menu__block-content"><ul class="tm-footer-menu__list"><li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/corporate-blogs/" target="_blank">
+                Корпоративный блог
+              </a></li><li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/advertising/" target="_blank">
+                Медийная реклама
+              </a></li><li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/native-special/" target="_blank">
+                Нативные проекты
+              </a></li><li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/education-programs/" target="_blank">
+                Образовательные программы
+              </a></li><li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/hello-startup/" target="_blank">
+                Стартапам
+              </a></li></ul></div></div></div></div></div> <div class="tm-footer"><div class="tm-page-width"><div class="tm-footer__container"><!-- --> <div class="tm-footer__social"><a class="tm-svg-icon__wrapper tm-social-icons__icon" href="https://www.facebook.com/habrahabr.ru" rel="nofollow noopener noreferrer" target="_blank"><svg class="tm-svg-img tm-svg-icon" height="24" width="24"><title>Facebook</title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-facebook"></use></svg></a><a class="tm-svg-icon__wrapper tm-social-icons__icon" href="https://twitter.com/habr_com" rel="nofollow noopener noreferrer" target="_blank"><svg class="tm-svg-img tm-svg-icon" height="24" width="24"><title>Twitter</title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-twitter"></use></svg></a><a class="tm-svg-icon__wrapper tm-social-icons__icon" href="https://vk.com/habr" rel="nofollow noopener noreferrer" target="_blank"><svg class="tm-svg-img tm-svg-icon" height="24" width="24"><title>VK</title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-vk"></use></svg></a><a class="tm-svg-icon__wrapper tm-social-icons__icon" href="https://telegram.me/habr_com" rel="nofollow noopener noreferrer" target="_blank"><svg class="tm-svg-img tm-svg-icon" height="24" width="24"><title>Telegram</title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-telegram"></use></svg></a><a class="tm-svg-icon__wrapper tm-social-icons__icon" href="https://www.youtube.com/channel/UCd_sTwKqVrweTt4oAKY5y4w" rel="nofollow noopener noreferrer" target="_blank"><svg class="tm-svg-img tm-svg-icon" height="24" width="24"><title>Youtube</title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-youtube"></use></svg></a><a class="tm-svg-icon__wrapper tm-social-icons__icon" href="https://dzen.ru/habr" rel="nofollow noopener noreferrer" target="_blank"><svg class="tm-svg-img tm-svg-icon" height="24" width="24"><title>Яндекс Дзен</title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-dzen"></use></svg></a></div> <div class="v-portal" style="display:none;"></div> <button class="tm-footer__link"><!-- -->
+        Настройка языка
+      </button> <a class="tm-footer__link" href="/ru/feedback/">
+        Техническая поддержка
+      </a> <div class="tm-footer-copyright"><span class="tm-copyright"><span class="tm-copyright__years">© 2006–2024, </span> <span class="tm-copyright__name"><a class="tm-copyright__link" href="https://company.habr.com/" rel="noopener" target="_blank">Habr</a></span></span></div></div></div></div> <!-- --></div> <div class="vue-portal-target"></div></div>
+
+
+
+
+
+<noscript>
+<div>
+<img alt="" src="https://mc.yandex.ru/watch/24049213" style="position:absolute; left:-9999px;">
+</img></div>
+</noscript>
+
+
+</body>
+</html>

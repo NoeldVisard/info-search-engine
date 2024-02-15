@@ -9,7 +9,7 @@ class Crawler:
     def __init__(self):
         self.base_url = 'https://habr.com'
         self.request_url = 'https://habr.com/ru/flows/develop/articles/'
-        self.class_attribute = 'short-text'
+        self.class_attribute = 'tm-title__link'
         self.pages_folder_name = os.path.dirname(__file__) + '/pages'
         self.index_file_name = os.path.dirname(__file__) + '/index.txt'
         os.mkdir(self.pages_folder_name)

@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+
+<html data-vue-meta="%7B%22lang%22:%7B%22ssr%22:%22ru%22%7D%7D" lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1.0,viewport-fit=cover,maximum-scale=1,user-scalable=0" name="viewport"/>
+<meta content="unsafe-url" name="referrer"/>
+<title>Система мета-сборки GN: краткий обзор и подходы / Хабр</title>
+
+
+
+
+
+
+
+<meta content="2.165.0" name="habr-version"/>
+<meta content="444736788986613" data-vue-meta="ssr" property="fb:app_id"/><meta content="472597926099084" data-vue-meta="ssr" property="fb:pages"/><meta content="summary_large_image" data-vue-meta="ssr" name="twitter:card"/><meta content="@habr_com" data-vue-meta="ssr" name="twitter:site"/><meta content="Хабр" data-vmid="og:site_name" data-vue-meta="ssr" property="og:site_name"/><meta content="Система мета-сборки GN: краткий обзор и подходы" data-vmid="og:title" data-vue-meta="ssr" property="og:title"/><meta content="Система мета-сборки GN: краткий обзор и подходы" data-vmid="twitter:title" data-vue-meta="ssr" name="twitter:title"/><meta content="Система мета-сборки GN: краткий обзор и подходы" data-vmid="aiturec:title" data-vue-meta="ssr" name="aiturec:title"/><meta content="Привет! Меня зовут Александр, я работаю в VK в команде браузера Atom. В его основе лежит open source-движок Сhromium. Сегодня хочу поговорить о системе мета-сборки GN. Её используют в крупных..." data-vmid="description" data-vue-meta="ssr" name="description"/><meta content="Привет! Меня зовут Александр, я работаю в VK в команде браузера Atom. В его основе лежит open source-движок Сhromium. Сегодня хочу поговорить о системе мета-сборки GN. Её используют в крупных..." data-vmid="description:itemprop" data-vue-meta="ssr" itemprop="description"/><meta content="Привет! Меня зовут Александр, я работаю в VK в команде браузера Atom. В его основе лежит open source-движок Сhromium. Сегодня хочу поговорить о системе мета-сборки GN. Её используют в крупных..." data-vmid="og:description" data-vue-meta="ssr" property="og:description"/><meta content="Привет! Меня зовут Александр, я работаю в VK в команде браузера Atom. В его основе лежит open source-движок Сhromium. Сегодня хочу поговорить о системе мета-сборки GN. Её используют в крупных..." data-vmid="twitter:description" data-vue-meta="ssr" name="twitter:description"/><meta content="Привет! Меня зовут Александр, я работаю в VK в команде браузера Atom. В его основе лежит open source-движок Сhromium. Сегодня хочу поговорить о системе мета-сборки GN. Её используют в крупных..." data-vmid="aiturec:description" data-vue-meta="ssr" property="aiturec:description"/><meta content="https://habrastorage.org/getpro/habr/upload_files/a84/7f2/440/a847f2440a16c65db1871d5a7f1860f9.jpg" data-vmid="image:itemprop" data-vue-meta="ssr" itemprop="image"/><meta content="https://habrastorage.org/getpro/habr/upload_files/a84/7f2/440/a847f2440a16c65db1871d5a7f1860f9.jpg" data-vmid="og:image" data-vue-meta="ssr" property="og:image"/><meta content="1200" data-vmid="og:image:width" data-vue-meta="ssr" property="og:image:width"/><meta content="630" data-vmid="og:image:height" data-vue-meta="ssr" property="og:image:height"/><meta content="https://habrastorage.org/getpro/habr/upload_files/a84/7f2/440/a847f2440a16c65db1871d5a7f1860f9.jpg" data-vmid="aiturec:image" data-vue-meta="ssr" property="aiturec:image"/><meta content="https://habrastorage.org/getpro/habr/upload_files/a84/7f2/440/a847f2440a16c65db1871d5a7f1860f9.jpg" data-vmid="twitter:image" data-vue-meta="ssr" name="twitter:image"/><meta content="https://habrastorage.org/getpro/habr/upload_files/a84/7f2/440/a847f2440a16c65db1871d5a7f1860f9.jpg?format=vk" data-vmid="vk:image" data-vue-meta="ssr" property="vk:image"/><meta content="793854" data-vmid="aiturec:item_id" data-vue-meta="ssr" property="aiturec:item_id"/><meta content="2024-02-15T09:42:52.000Z" data-vmid="aiturec:datetime" data-vue-meta="ssr" property="aiturec:datetime"/><meta content="https://habr.com/ru/companies/vk/articles/793854/" data-vmid="og:url" data-vue-meta="ssr" property="og:url"/><meta content="article" data-vmid="og:type" data-vue-meta="ssr" property="og:type"/><meta content="ru_RU" data-vmid="og:locale" data-vue-meta="ssr" property="og:locale"/><meta content="C++, GN, система сборки" data-vue-meta="ssr" name="keywords"/>
+
+<meta content="#303b44" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="#629FBC" name="msapplication-TileColor"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+<body>
+<div data-async-called="true" data-server-rendered="true" id="app"><div class="tm-layout__wrapper"><!-- --> <div></div> <!-- --> <header class="tm-header"><div class="tm-page-width"><div class="tm-header__container"><!-- --> <span class="tm-header__logo-wrap"><a class="tm-header__logo tm-header__logo tm-header__logo_hl-ru" href="/ru/"><svg class="tm-svg-img tm-header__icon" height="16" width="16"><title>Хабр</title> <use xlink:href="/img/habr-logo-ru.svg#logo"></use></svg></a> <span class="tm-header__beta-sign" style="display:none;">β</span></span> <div class="tm-dropdown tm-header__projects"><div class="tm-dropdown__head"><button class="tm-header__dropdown-toggle"><svg class="tm-svg-img tm-header__icon tm-header__icon_dropdown" height="16" width="16"><title>Открыть список</title> <use xlink:href="/img/megazord-v28.faec9762..svg#arrow-down"></use></svg></button></div> <!-- --></div> <a class="tm-header__become-author-btn" href="/ru/sandbox/start/">
+            Как стать автором
+          </a> <div class="tm-feature tm-header__feature tm-feature tm-feature_variant-inline"><!-- --></div> <!-- --> <!-- --></div></div></header> <div class="tm-layout"><div class="tm-page-progress-bar"></div> <div class="tm-base-layout__header tm-base-layout__header_is-sticky" data-menu-sticky="true"><div class="tm-page-width"><div class="tm-base-layout__header-wrapper"><div class="tm-main-menu"><div class="tm-main-menu__section"><nav class="tm-main-menu__section-content"><a class="tm-main-menu__item" href="/ru/feed/">
+        Моя лента
+      </a> <a class="tm-main-menu__item" href="/ru/articles/">
+        Все потоки
+      </a> <a class="tm-main-menu__item" href="/ru/flows/develop/">
+          Разработка
+        </a><a class="tm-main-menu__item" href="/ru/flows/admin/">
+          Администрирование
+        </a><a class="tm-main-menu__item" href="/ru/flows/design/">
+          Дизайн
+        </a><a class="tm-main-menu__item" href="/ru/flows/management/">
+          Менеджмент
+        </a><a class="tm-main-menu__item" href="/ru/flows/marketing/">
+          Маркетинг
+        </a><a class="tm-main-menu__item" href="/ru/flows/popsci/">
+          Научпоп
+        </a></nav></div></div> <div class="tm-header-user-menu tm-base-layout__user-menu"><a class="tm-header-user-menu__item tm-header-user-menu__search" href="/ru/search/"><svg class="tm-svg-img tm-header-user-menu__icon tm-header-user-menu__icon_search tm-header-user-menu__icon_dark" height="24" width="24"><title>Поиск</title> <use xlink:href="/img/megazord-v28.faec9762..svg#search"></use></svg></a> <!-- --> <!-- --> <!-- --> <div class="tm-header-user-menu__item"><button class="tm-header-user-menu__toggle"><svg class="tm-svg-img tm-header-user-menu__icon tm-header-user-menu__icon_dark" height="24" width="24"><title>Настройки</title> <use xlink:href="/img/megazord-v28.faec9762..svg#page-settings"></use></svg></button></div> <a class="tm-header-user-menu__item" href="https://habr.com/kek/v1/auth/habrahabr/?back=/ru/companies/vk/articles/793854/&amp;hl=ru" rel="nofollow"><button class="tm-header-user-menu__login btn btn_solid btn_small" type="button">
+        Войти
+      </button></a> <!-- --> <div class="v-portal" style="display:none;"></div></div></div></div></div> <!-- --> <div class="tm-page-width"></div> <main class="tm-layout__container"><div class="tm-page" companyname="vk" data-async-called="true" hl="ru"><div class="tm-page-width"><div class="tm-page__header"><div class="tm-company-card__branding tm-company-article__branding tm-company-card__branding_loading"><div class="tm-company-card__branding-placeholder"><!-- --></div> <a href="https://vk.com/vkteam"><img class="tm-company-card__branding-image" src="//habrastorage.org/getpro/habr/branding/174/2c4/3a5/1742c43a5b504987a0fadf577a0bd4de.png" width="100%"/></a></div></div> <div class="tm-page__wrapper"><div class="tm-page__main tm-page__main_has-sidebar"><div class="pull-down"><!-- --> <div class="pull-down__header" style="height:0px;"><div class="pull-down__content" style="bottom:10px;"><svg class="tm-svg-img pull-down__icon pull-down__arrow" height="24" width="24"><title>Обновить</title> <use xlink:href="/img/megazord-v28.faec9762..svg#pull-arrow"></use></svg></div></div> <div class="tm-article-presenter"><!-- --> <div class="tm-company-profile-card tm-company-article__profile-card"><div class="tm-company-card tm-company-profile-card__info"><div class="tm-company-card__header"><a class="tm-company-card__avatar" href="/ru/companies/vk/profile/"><div class="tm-entity-image"><img alt="" class="tm-entity-image__pic" height="48" src="//habrastorage.org/getpro/habr/company/9ed/c74/6b4/9edc746b484c805ecad1f941b5f7068a.png" width="48"/></div></a> <a class="tm-grade tm-company-card__rating" href="https://career.habr.com/companies/vk" rel="noopener" target="_blank"><div class="tm-counter-container"><div class="tm-counter-container__header"><svg class="tm-svg-img tm-svg-grade__icon" height="24" width="24"><title>Оценка компании на Хабр Карьере</title> <use xlink:href="/img/megazord-v28.faec9762..svg#grade"></use></svg> <div class="tm-votes-lever tm-votes-lever tm-votes-lever_appearance-grade"><!-- --> <div class="tm-votes-lever__score tm-votes-lever__score tm-votes-lever__score_appearance-grade"><span><span class="tm-votes-lever__score-counter tm-votes-lever__score-counter tm-votes-lever__score-counter_grade">
+          4.29
+        </span></span></div> <!-- --></div></div> <div class="tm-counter-container__footer"><span class="tm-rating__text tm-rating__text tm-rating__text_variant-grade">
+      Оценка
+    </span></div></div></a> <div class="tm-counter-container tm-company-card__rating"><div class="tm-counter-container__header"> <div class="tm-votes-lever tm-votes-lever tm-votes-lever_appearance-rating"><!-- --> <div class="tm-votes-lever__score tm-votes-lever__score tm-votes-lever__score_appearance-rating"><span><span class="tm-votes-lever__score-counter tm-votes-lever__score-counter tm-votes-lever__score-counter_rating">
+          656.51
+        </span></span></div> <!-- --></div></div> <div class="tm-counter-container__footer"><span class="tm-rating__text tm-rating__text">
+      Рейтинг
+    </span></div></div> <!-- --></div> <div class="tm-company-card__info"><a class="tm-company-card__name" href="/ru/companies/vk/profile/">VK</a> <div class="tm-company-card__description">Технологии, которые объединяют</div></div></div> <!-- --></div> <!-- --> <div class="tm-article-presenter__body"><div class="tm-misprint-area"><div class="tm-misprint-area__wrapper"><article class="tm-article-presenter__content tm-article-presenter__content_narrow"><div class="tm-article-presenter__header"> <div class="tm-article-snippet tm-article-presenter__snippet tm-article-snippet"> <div class="tm-article-snippet__meta-container"><div class="tm-article-snippet__meta"><span class="tm-user-info tm-article-snippet__author"><a class="tm-user-info__userpic" href="/ru/users/Ciberst/" title="Ciberst"><div class="tm-entity-image"><img alt="" class="tm-entity-image__pic" height="24" src="https://assets.habr.com/habr-web/img/avatars/117.png" width="24"/></div></a> <span class="tm-user-info__user tm-user-info__user_appearance-default"><a class="tm-user-info__username" href="/ru/users/Ciberst/">
+      Ciberst
+      <!-- --></a> <span class="tm-article-datetime-published"><time datetime="2024-02-15T09:42:52.000Z" title="2024-02-15, 12:42">48 минут назад</time></span></span></span></div> <!-- --></div> <h1 class="tm-title tm-title_h1" lang="ru"><span>Система мета-сборки GN: краткий обзор и подходы</span></h1> <div class="tm-article-snippet__stats"><div class="tm-article-complexity tm-article-complexity_complexity-medium"><span class="tm-svg-icon__wrapper tm-article-complexity__icon"><svg class="tm-svg-img tm-svg-icon" height="24" width="24"><title>Уровень сложности</title> <use xlink:href="/img/megazord-v28.faec9762..svg#complexity-medium"></use></svg></span> <span class="tm-article-complexity__label">
+    Средний
+  </span></div> <div class="tm-article-reading-time"><span class="tm-svg-icon__wrapper tm-article-reading-time__icon"><svg class="tm-svg-img tm-svg-icon" height="24" width="24"><title>Время на прочтение</title> <use xlink:href="/img/megazord-v28.faec9762..svg#clock"></use></svg></span> <span class="tm-article-reading-time__label">
+    12 мин
+  </span></div> <span class="tm-icon-counter tm-data-icons__item"><svg class="tm-svg-img tm-icon-counter__icon" height="24" width="24"><title>Количество просмотров</title> <use xlink:href="/img/megazord-v28.faec9762..svg#counter-views"></use></svg> <span class="tm-icon-counter__value">148</span></span></div> <div class="tm-publication-hubs__container"><div class="tm-publication-hubs"><span class="tm-publication-hub__link-container"><a class="router-link-active tm-publication-hub__link" href="/ru/companies/vk/articles/"><span>Блог компании VK</span> <!-- --></a></span><span class="tm-publication-hub__link-container"><a class="tm-publication-hub__link" href="/ru/hubs/build_automation/"><span>Системы сборки</span> <span class="tm-article-snippet__profiled-hub" title="Профильный хаб">*</span></a></span><span class="tm-publication-hub__link-container"><a class="tm-publication-hub__link" href="/ru/hubs/browsers/"><span>Браузеры</span> <!-- --></a></span></div></div> <div class="tm-article-labels"><div class="tm-article-labels__container"><div class="tm-publication-label tm-publication-label_variant-review"><span>
+    Обзор
+  </span></div> </div></div> <!-- --> <!-- --></div></div> <!-- --> <div class="tm-article-body" data-gallery-root="" lang="ru"><div></div> <div id="post-content-body"><div><div class="article-formatted-body article-formatted-body article-formatted-body_version-2"><div xmlns="http://www.w3.org/1999/xhtml"><figure class="full-width"><img data-blurred="true" data-src="https://habrastorage.org/getpro/habr/upload_files/bfc/47a/04e/bfc47a04ec275a0c3661aeea0391006c.jpg" height="720" src="https://habrastorage.org/r/w780q1/getpro/habr/upload_files/bfc/47a/04e/bfc47a04ec275a0c3661aeea0391006c.jpg" width="1280"/></figure><p>Привет! Меня зовут Александр, я работаю в VK в команде браузера Atom. В его основе лежит open source-движок Сhromium. Сегодня хочу поговорить о системе мета-сборки GN. Её используют в крупных проектах Google (Chrome, Fuchsia, а также связанных с ними), и, например, когда разрабатывают браузеры на основе Chromium (то есть почти все браузеры, кроме Mozilla, Safari и совсем какой-то экзотики). Система мета-сборки GN используется для генерации ninja-файлов, описывающих этапы сборки проекта.</p><p>Возможно, кто-то из вас уже сталкивался с GN и относится к ней отрицательно из-за непонятности или сложности. Но лично меня она этим и привлекает, поэтому хочу поделиться небольшим гайдом о том, как сделать собственный проект с помощью GN или использовать её в рабочих задачах. Предлагаю рассмотреть, как устроена система мета-сборки внутри браузера Chromium, а потом создать свой проект, который не будет зависеть от кодовой базы этого движка.</p><h3>Как я познакомился с GN</h3><p>Знакомство с любым продуктом, который требует стадию сборки, обычно начинается (барабанная дробь) с системы сборки. Обычно для этого в проектах на C++ используется CMake. Однако, когда я пришёл в команду Atom,(а это было почти три года назад), то понял, что никакого CMake в браузере не будет. Раньше мы использовали GYP, но с 2016 года перешли на <a href="https://chromium.googlesource.com/chromium/src/tools/gn/+/48062805e19b4697c5fbd926dc649c78b6aaa138/README.md"><u>GN</u></a>. </p><p>Наша разработка выстроена таким образом, чтобы мы могли минимизировать затраты ресурсов при обновлении на более свежую версию. Поэтому иногда приходится искать довольно неочевидные варианты решения. Одно из таких неочевидных решений сподвигло меня написать данную статью. Мы все уже привыкли к тому, что в браузерах и текстовых редакторах за тем, чтобы мы писали без ошибок следит «проверка правописания». Она делится на базовую проверку (по словарям) и расширенную (когда отправляется текст на сервера для его более глубокой проверки). Chromium скачивает эти словари для проверки правописания из интернета. Мы решили, что при установке браузера Atom этот словарь уже должен быть у пользователя и его не нужно было бы скачивать повторно. Это удобно, например, для корпоративных пользователей, потому что позволит использовать базовую проверку правописания даже в закрытом контуре.  </p><p>В Chromium <a href="https://source.chromium.org/chromium/chromium/src/+/main:components/spellcheck/common/spellcheck_common.cc;l=148;drc=8ba1bad80dc22235693a0dd41fe55c0fd2dbdabd"><u>скачивание словарей</u></a> использует заранее прописанные значения. А передо мной стояла задача придумать способ, который позволил бы получить актуальный словарь и встроить его сразу в браузер. Для этого и я взял GN. </p><h3>Как работают GN-сборки</h3><p>Сначала рассмотрим основной процесс сборки проектов, внутри которых применяется система GN. Как правило, все они используют в том или ином виде depot_tools — коллекцию инструментов Chromium, а также CIPD (Chrome Infrastructure Package Deployment) — <a href="https://chromium.googlesource.com/infra/luci/luci-go/+/main/cipd/"><u>инфраструктуру развёртывания пакетов</u></a>, не привязанную к определённой ОС, в отличие от APT, Nuget, Brew и других.</p><p>Прежде чем начать собирать проект, его нужно клонировать. Для этого можно использовать Git, можно утилиту fetch или gclient из набора depot_tools. Рассмотрим последнюю подробнее. </p><p>Gclient — утилита, которая позволяет cкачивать исходный код проектов из различных репозиториев. Команда <code>gclient config --name &lt;local_path&gt;&lt;repo_path&gt;</code> создаёт файл .gclient, в котором будет прописан репозиторий, и папку, в которую его нужно выгрузить. Команда <code>gclient sync</code> запускает клонирование заданного репозитория и всех зависимостей указанных в файле DEPS, который лежит в корне проекта. Внутри файла DEPS можно описать, что клонировать и куда класть. Например, этот файл может выглядеть так:</p><details class="spoiler"><summary>Код</summary><div class="spoiler__content"><pre><code>vars = {
+ # This can be overridden, e.g. with custom_vars, to build clang from HEAD
+ # instead of downloading the prebuilt pinned revision.
+ 'llvm_force_head_revision': False,
+
+
+ 'chromium_git': 'https://chromium.googlesource.com',
+ 'clang_format_revision':    'f97059df7f8b205064625cdb5f97b56668a125ef',
+ 'libcxxabi_revision':    '307bd163607c315d46103ebe1d68aab44bf93986',
+ 'libunwind_revision':    '2795322d57001de8125cfdf18cef804acff69e35',
+ 'reclient_package': 'infra/rbe/client/',
+ 'reclient_version': 're_client_version:0.101.0.6210d0d-gomaip',
+
+
+ # If you change this, also update the libc++ revision in
+ # //buildtools/deps_revisions.gni.
+ 'libcxx_revision':       'bff81b702ff4b7f74b1c0ed02a4bcf6c2744a90b',
+
+
+ # GN CIPD package version.
+ 'gn_version': 'git_revision:5a004f9427a050c6c393c07ddb85cba8ff3849fa',
+
+
+ # ninja CIPD package version.
+ # https://chrome-infra-packages.appspot.com/p/infra/3pp/tools/ninja
+ # This has to stay in sync with the version in src/third_party/ninja/README.chromium.
+ 'ninja_version': 'version:2@1.11.1.chromium.6',
+}
+
+
+deps = {
+ 'src/buildtools/clang_format/script':
+   Var('chromium_git') +
+   '/external/github.com/llvm/llvm-project/clang/tools/clang-format.git@' +
+   Var('clang_format_revision'),
+ 'src/buildtools/linux64': {
+   'packages': [
+     {
+       'package': 'gn/gn/linux-${{arch}}',
+       'version': Var('gn_version'),
+     }
+   ],
+   'dep_type': 'cipd',
+   'condition': 'host_os == "linux"',
+ },
+ 'src/buildtools/mac': {
+   'packages': [
+     {
+       'package': 'gn/gn/mac-${{arch}}',
+       'version': Var('gn_version'),
+     }
+   ],
+   'dep_type': 'cipd',
+   'condition': 'host_os == "mac"',
+ },
+ 'src/buildtools/third_party/libc++/trunk':
+   Var('chromium_git') +
+   '/external/github.com/llvm/llvm-project/libcxx.git' + '@' +
+   Var('libcxx_revision'),
+ 'src/buildtools/third_party/libc++abi/trunk':
+   Var('chromium_git') +
+   '/external/github.com/llvm/llvm-project/libcxxabi.git' + '@' +
+   Var('libcxxabi_revision'),
+ 'src/buildtools/third_party/libunwind/trunk':
+   Var('chromium_git') +
+   '/external/github.com/llvm/llvm-project/libunwind.git' + '@' +
+   Var('libunwind_revision'),
+ 'src/buildtools/win': {
+   'packages': [
+     {
+       'package': 'gn/gn/windows-amd64',
+       'version': Var('gn_version'),
+     }
+   ],
+   'dep_type': 'cipd',
+   'condition': 'host_os == "win"',
+ },
+ 'src/buildtools/reclient': {
+   'packages': [
+     {
+       'package': Var('reclient_package') + '${{platform}}',
+       'version': Var('reclient_version'),
+     }
+   ],
+   'dep_type': 'cipd',
+ },
+ 'src/third_party/ninja': {
+   'packages': [
+     {
+       'package': 'infra/3pp/tools/ninja/${{platform}}',
+       'version': Var('ninja_version'),
+     }
+   ],
+   'dep_type': 'cipd',
+ },
+}
+</code></pre><p></p></div></details><p>Здесь можно скачать все необходимы инструменты и зависимости с указанием нужной ревизии, которые понадобятся нам в проекте.</p><p>Когда все нужные исходники получены, а ОС-зависимые компоненты установлены в систему (SDK для Windows, ряд зависимостей для Linux), переходим к подготовке сборки нашего продукта с помощью системы сборки Ninja. Для этого мы выполним команду <code>gn args out/Debug</code>, где <code>out/Debug</code> — директория, в которой будет собираться проект, а <code>args</code> — это аргумент, который будет требовать от нас ввода через текстовый редактор всех аргументов, применяемых при сборке. Через него можно, например, регулировать, какие фичи будем собирать, под какую систему и т. д.  После того, как утилита GN отработала, можно запускать сборку через Ninja привычным образом: </p><p><code>ninja -j80 -C out/Debug chrome</code></p><p>Общий конвейер для таких проектов выглядит следующим образом. Сначала создаем конфигурацию в файле .gclient с помощью команды:</p><p><code>$ gclient config --name gn_example git@github.com:ciberst/gn_example.git</code></p><p>Содержимое получившегося файла выглядит следующим образом:</p><pre><code>solutions = [
+  { "name"        : 'src',
+    "url"         : 'git@github.com:ciberst/gn_example.git',
+    "deps_file"   : 'DEPS',
+    "managed"     : True,
+    "custom_deps" : {
+    },
+    "custom_vars": {},
+  },
+]
+</code></pre><p>Далее клонируем проект и зависимости: </p><p><code>$ gclient sync</code></p><p>Переходим в клонированную директорию:</p><p><code>$ cd gn_example</code></p><p>Создаём сборочную директорию и генерируем таргеты:</p><p><code>$ gn args out/Debug</code><br/><br/>Собираем проект целиком:</p><p><code>$ ninja -j4 -C out/Debug</code> </p><p>Собираем выбранные таргеты:</p><p><code>$ ninja -j4 -C out/Debug example_1 exmple_2</code></p><p>Отлично, мы запустили сборку. А как использовать систему GN в своих проектах? Что она вообще умеет, насколько гибка, какие языки программирования поддерживает?</p><h3>Начинаем свой проект</h3><p>По этим ссылкам вы найдёте сухую информацию о том, как начать использовать GN в своих проектах:</p><p>1. <a href="https://gn.googlesource.com/gn/+/refs/heads/main"><u>https://gn.googlesource.com/gn/+/refs/heads/main</u><br/></a>2. <a href="https://gn.googlesource.com/gn/+/main/docs/reference.md"><u>https://gn.googlesource.com/gn/+/main/docs/reference.md</u></a></p><p>Но, как мы знаем, документация не всегда помогает на практике, и тогда мы обращаемся к сообществу, к которому я отношу и себя.   </p><p>Прежде чем мы попробуем написать собственный проект на основе сборки GN, давайте разберёмся, как будет устроена файловая структура проекта: </p><pre><code>├── build
+├── BUILD.gn
+├── buildtools
+├── DEPS
+├── example_1
+├── example_2
+├── example_3
+├── example_4
+├── .gn
+├── out
+└── third_party</code></pre><p>В первую очередь нам интересен файл .gn, который лежит в корне. Внутри файла прописывается <code>buildconfig</code> — это переменная, которая принимает путь до gn-файла с описанием основных опций сборки. Помимо этого можно указать <code>script_executable</code> — утилиту, с помощью которой будут запускаться наши скрипты. Содержимое файла .gn будет выглядеть так:</p><pre><code># The location of the build configuration file.
+buildconfig = "//build/BUILDCONFIG.gn"
+
+
+# The python interpreter to use by default. On Windows, this will look
+# for python3.exe and python3.bat.
+script_executable = "python3"</code></pre><p>Как видите, <code>buildconfig</code> ссылается на файл BUILDCONFIG.gn в директории build. Рассмотрим, его содержимое. В нём устанавливается набор инструментов для конкретной платформы или архитектуры. Внутри GN уже есть переменные с нужной информацией, такой как целевые и текущие архитектура и ОС   </p><p>В итоге получаем примерно такой файл:</p><details class="spoiler"><summary>Код</summary><div class="spoiler__content"><pre><code>if (target_os == "") {
+  target_os = host_os
+}
+if (target_cpu == "") {
+  target_cpu = host_cpu
+}
+if (current_cpu == "") {
+  current_cpu = target_cpu
+}
+if (current_os == "") {
+  current_os = target_os
+}
+
+is_linux = host_os == "linux" &amp;&amp; current_os == "linux" &amp;&amp; target_os == "linux"
+is_mac = host_os == "mac" &amp;&amp; current_os == "mac" &amp;&amp; target_os == "mac"
+
+# All binary targets will get this list of configs by default.
+_shared_binary_target_configs = [ "//build:compiler_defaults" ]
+
+# Apply that default list to the binary target types.
+set_defaults("executable") {
+  configs = _shared_binary_target_configs
+  # Executables get this additional configuration.
+  configs += [ 
+    "//build:executable_ldconfig",
+  ]
+}
+
+set_defaults("static_library") {
+  configs = _shared_binary_target_configs
+}
+
+set_defaults("shared_library") {
+  configs = _shared_binary_target_configs
+}
+
+set_defaults("source_set") {
+  configs = _shared_binary_target_configs
+}
+
+set_default_toolchain("//build/toolchain:gcc")</code></pre><p></p></div></details><p>Рассмотрим строчку <code>_shared_binary_target_configs = [ "//build:compiler_defaults" ]</code>. Она добавляет описание конфигов для динамических библиотек. Дополнительные конфиги описываются в секции <code>set_defaults("executable")</code>:</p><pre><code>  configs += [ 
+    "//build:executable_ldconfig",
+  ]</code></pre><p>Как мы уже знаем, путь вида <code>//build:compiler_defaults</code> и <code>//build:executable_ldconfig</code> говорит о том, что в папке build расположен файл BUILD.gn, внутри которого есть описание таргетов <code>compiler_defaults</code> и <code>executable_ldconfig</code>, а выглядит файл так: </p><pre><code>config("compiler_defaults") {
+ if (current_os == "linux") {
+   cflags = [
+     "-fPIC",
+     "-pthread",
+   ]
+ }
+ include_dirs = [
+   "//",
+   root_gen_dir,
+ ]
+}
+config("executable_ldconfig") {
+ if (!is_mac) {
+   ldflags = [
+     "-Wl,-rpath=\$ORIGIN/",
+     "-Wl,-rpath-link=",
+   ]
+ }
+}</code></pre><p><code>set_default_toolchain</code> устанавливает имя цепочки инструментов по умолчанию. Если нам надо задать разные инструменты, то можно сделать таким образом:</p><pre><code>  if (target_cpu == "x64") {
+    set_default_toolchain("//toolchains:64")
+  } else if (target_cpu == "x86") {
+    set_default_toolchain("//toolchains:32")
+  }</code></pre><p>Теперь рассмотрим строку <code>//build/toolchain:gcc</code>. Подстрока <code>//build/toolchain</code> предполагает, что в директории build/toolchain будет файл BUILD.gn. А подстрока <code>gcc</code> говорит о том, что в файле BUILD.gn будет описан таргет <code>gcc</code>.</p><p><br/>Внутри описания набора инструментов можно описать все этапы сборки. Сам набор описывается так: </p><pre><code>toolchain("gcc") {
+}</code></pre><p>где <code>gcc</code> — имя набора. Оно может быть любым, в этом примере буду использовать gcc, а вы можете выбрать любое. Внутри описываются основные инструменты,можно гибко всё настроить. Внутри таргета <code>gcc</code> описываются его инструменты (<code>tool</code>):</p><details class="spoiler"><summary>Код</summary><div class="spoiler__content"><pre><code>tool("cc") {
+   depfile = "{{output}}.d"
+   command = "gcc -MMD -MF $depfile {{defines}} {{include_dirs}} {{cflags}} {{cflags_c}} -c {{source}} -o {{output}}"
+   depsformat = "gcc"
+   description = "CC {{output}}"
+   outputs =
+       [ "{{source_out_dir}}/{{target_output_name}}.{{source_name_part}}.o" ]
+ }
+ tool("cxx") {
+   depfile = "{{output}}.d"
+   command = "g++ -MMD -MF $depfile {{defines}} {{include_dirs}} {{cflags}} {{cflags_cc}} -c {{source}} -o {{output}}"
+   depsformat = "gcc"
+   description = "CXX {{output}}"
+   outputs =
+       [ "{{source_out_dir}}/{{target_output_name}}.{{source_name_part}}.o" ]
+ }
+ tool("alink") {
+   command = "rm -f {{output}} &amp;&amp; ar rcs {{output}} {{inputs}}"
+   description = "AR {{target_output_name}}{{output_extension}}"
+   outputs =
+       [ "{{target_out_dir}}/{{target_output_name}}{{output_extension}}" ]
+   default_output_extension = ".a"
+   output_prefix = "lib"
+ }
+ tool("solink") {
+   soname = "{{target_output_name}}{{output_extension}}"  # e.g. "libfoo.so".
+   sofile = "{{output_dir}}/$soname"
+   rspfile = soname + ".rsp"
+   if (is_mac) {
+     os_specific_option = "-install_name @executable_path/$sofile"
+     rspfile_content = "{{inputs}} {{solibs}} {{libs}}"
+   } else {
+     os_specific_option = "-Wl,-soname=$soname"
+     rspfile_content = "-Wl,--whole-archive {{inputs}} {{solibs}} -Wl,--no-whole-archive {{libs}}"
+   }
+   command = "g++ -shared {{ldflags}} -o $sofile $os_specific_option @$rspfile"
+   description = "SOLINK $soname"
+   # Use this for {{output_extension}} expansions unless a target manually
+   # overrides it (in which case {{output_extension}} will be what the target
+   # specifies).
+   default_output_extension = ".so"
+   # Use this for {{output_dir}} expansions unless a target manually overrides
+   # it (in which case {{output_dir}} will be what the target specifies).
+   default_output_dir = "{{root_out_dir}}"
+   outputs = [ sofile ]
+   link_output = sofile
+   depend_output = sofile
+   output_prefix = "lib"
+ }
+ tool("link") {
+   outfile = "{{target_output_name}}{{output_extension}}"
+   rspfile = "$outfile.rsp"
+   if (is_mac) {
+     command = "g++ {{ldflags}} -o $outfile @$rspfile {{solibs}} {{libs}}"
+   } else {
+     command = "g++ {{ldflags}} -o $outfile -Wl,--start-group @$rspfile {{solibs}} -Wl,--end-group {{libs}}"
+   }
+   description = "LINK $outfile"
+   default_output_dir = "{{root_out_dir}}"
+   rspfile_content = "{{inputs}}"
+   outputs = [ outfile ]
+ }</code></pre><p></p></div></details><p>Инструменты cc, cxx, alink, solink, link и другие отвечают за описание сборки С/C++, линковку, формирования исполняемых файлов и библиотек.</p><p>Теперь об основной функциональности описания таргетов. Ими мы называем цели сборки или некоторые действия. В GN условно можно выделить два глобальных шага: генерацию проектных файлов и непосредственно сборку. Система мета-сборки генерирует файлы таким образом, что в дальнейшем можно работать с помощью Ninja или Autoninja. </p><p>Из коробки GN поддерживает Rust, C++ и Objective-C++. Другие языки можно добавить через врапперы на Python. GN позволяет собрать сначала один проект, а потом его использовать для генерации других файлов. Например, мы можем сначала собрать protoc, а потом его использовать для генерации proto-файлов.</p><h3>Практика</h3><p>Для описания того и что нужно собирать существуют файлы BUILD.gn. Обычно в корне проекта создают общий BUILD.gn файл, в котором необходимо указать независимые цели, которые будут доступны для сборки. Это делают так: создают группу (group создает мета-таргет) all, в которой описывают расположение независимых таргетов: </p><pre><code>group("all") {
+ deps = [
+   "//example_1:example_1",
+   "//example_2",
+   "//example_3",
+   "//example_4",
+ ]
+}</code></pre><p>Два слэша означают, что искать расположение нужно относительно корня проекта, а двоеточие после пути означает конкретную цель. Например, первая цель <code>//example_1:example_1</code> говорит нам о том, что существует директория <code>example_1</code>, внутри которой описан таргет <code>example_1</code>. Давайте посмотрим, как его можно описать. Для этого необходимо создать файл BUILD.gn в директории example_1 и в нём перечислить нужные действия. Если нам нужен исполняемый файл, то это будет выглядеть так:</p><pre><code>executable("example_1") {
+ sources = [
+   "main.cc"
+ ]
+}</code></pre><p>Здесь мы описываем таргет <code>example_1</code> и указываем все исходные файлы (заголовочные тоже нужно указывать). Таким образом, <code>executable</code> с переданным именем позволяет нам создать исполняемый файл  с именем <code>example_1</code>.</p><p>Если нам необходимо указать зависимости: </p><pre><code>executable("example_3") {
+   sources = [
+       "main.cc",
+   ]
+
+
+   deps = [
+       "library:library"
+   ]
+}</code></pre><p>Появляется секция <code>deps</code>. Дерево сборки будет построено таким образом, что сначала соберётся <code>library</code> из папки library. Для сборки статической библиотеки существует <code>static_library</code>:</p><pre><code>static_library("library") {
+   sources = [
+       "library.h",
+       "library.cc",
+   ]
+}</code></pre><p>Для динамической — <code>shared_library</code>:</p><pre><code>shared_library("library") {
+   sources = [
+       "library.h",
+       "library.cc",
+   ]
+}</code></pre><p>Помимо этого мы можем настроить кодогенерацию:</p><pre><code>action("example_2_action") {
+   script = "main.py"
+   args = [
+       rebase_path("$target_gen_dir/main.cc", root_out_dir)
+   ]
+   outputs = [
+       "$target_gen_dir/main.cc"
+   ]
+}</code></pre><p>Здесь нужно объявить переменную <code>script</code>, в которую необходимо передать Python-файл. Выше я уже указал, что для скриптов будем использовать Python 3. И укажем, какие данные получаем на выходе. </p><p><code>Args</code> — это аргументы которые пробрасываются в Python-файл, а <code>outputs</code> — это файлы, которые мы получаем на выходе. Если же никакие файлы мы не создаём, то таргет <code>action</code> нам не подойдёт, лучше рассмотреть функциональность <code>exec_script</code>. </p><p>Здесь появляется ещё один интересный момент: используются предобъявленные переменные, <a href="https://gn.googlesource.com/gn/+/main/docs/reference.md#predefined_variables"><u>встроенные в GN</u></a>, в данном случае <code>target_gen_dir</code> и <code>root_out_dir</code>. Также можно легко использовать переменные внутри строки, просто с помощью знака $ перед переменной. </p><p>Этот таргет будет пересобираться только тогда, когда мы поменяем исходники Python-файла или вручную поменяем сгенерированный файл, что делать, конечно, не очень хорошо.</p><pre><code>executable("example_2") {
+   sources = [
+       "$root_build_dir/gen/example_2/main.cc"
+   ]
+   deps = [
+       ":example_2_action"
+   ]
+}</code></pre><p>В этом примере мы собираем <code>example_2</code>, используя код, сгенерированный из таргета  <code>example_2_action</code>. <br/><br/>Если вдруг захотите пощупать лично, то можно посмотреть на созданное <a href="https://github.com/ciberst/gn_example"><u>тестовое окружение</u></a>. Это не готовая заготовка для прода, а лишь материал для ознакомления. Внутри настроен Github Actions, можно дополнительно посмотреть на процесс сборки проекта.</p><p>Помимо того, что есть из коробки, в GN мы можем с помощью template описывать свои шаблоны, например, реализовать поддержку других языков программирования или использовать для любых других случаев, где необходимо избежать повторений. </p><h3>Вместо заключения</h3><p>GN — это очень гибкий инструмент, который после правильного конфигурирования предоставляет инструмент для кроссплатформенной разработки. А бонусом идёт возможность генерации проектов для Visual Studio, XCode и QtCreator с помощью команды <code>gn gen</code> и передачи в аргумент <code>--ide</code> нужной IDE.Привет! Меня зовут Александр, я работаю в VK в команде браузера Atom. В его основе лежит open source-движок Сhromium. Сегодня хочу поговорить о системе мета-сборки GN. Её используют в крупных проектах Google (Chrome, Fuchsia, а также связанных с ними), и, например, когда разрабатывают браузеры на основе Chromium (то есть почти все браузеры, кроме Mozilla, Safari и совсем какой-то экзотики). Система мета-сборки GN используется для генерации ninja-файлов, описывающих этапы сборки проекта.</p><p></p></div></div></div> <!-- --> <!-- --></div> <!-- --> <!-- --></div> <!-- --> <div class="tm-article-presenter__meta"><div class="tm-article-presenter__meta-list tm-separated-list"><span class="tm-separated-list__title">Теги:</span> <ul class="tm-separated-list__list"><li class="tm-separated-list__item"><a class="tm-tags-list__link" href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5BC%2B%2B%5D">C++</a></li><li class="tm-separated-list__item"><a class="tm-tags-list__link" href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5BGN%5D">GN</a></li><li class="tm-separated-list__item"><a class="tm-tags-list__link" href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5B%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B0%20%D1%81%D0%B1%D0%BE%D1%80%D0%BA%D0%B8%5D">система сборки</a></li> <!-- --></ul></div> <div class="tm-article-presenter__meta-list tm-separated-list"><span class="tm-separated-list__title">Хабы:</span> <ul class="tm-separated-list__list"><li class="tm-separated-list__item"><a class="tm-hubs-list__link router-link-active" href="/ru/companies/vk/articles/">Блог компании VK</a></li><li class="tm-separated-list__item"><a class="tm-hubs-list__link" href="/ru/hubs/build_automation/">Системы сборки</a></li><li class="tm-separated-list__item"><a class="tm-hubs-list__link" href="/ru/hubs/browsers/">Браузеры</a></li> <!-- --></ul></div></div> <!-- --></article></div> <!-- --></div> <div class="tm-article-sticky-panel"><div class="tm-data-icons tm-article-sticky-panel__icons"><div class="tm-article-rating tm-data-icons__item"><div class="tm-votes-lever tm-article-rating__votes-switcher tm-votes-lever tm-votes-lever_appearance-article" title="Всего голосов 3: ↑3 и ↓0"><button class="tm-votes-lever__button" title="Нравится" type="button"><svg class="tm-svg-img tm-votes-lever__icon" height="24" width="24"><title>Голосование</title> <use xlink:href="/img/megazord-v28.faec9762..svg#counter-vote"></use></svg></button> <div class="tm-votes-lever__score tm-votes-lever__score tm-votes-lever__score_appearance-article"><span><span class="tm-votes-lever__score-counter tm-votes-lever__score-counter tm-votes-lever__score-counter_positive">
+          +3
+        </span></span></div> <button class="tm-votes-lever__button" title="Не нравится" type="button"><svg class="tm-svg-img tm-votes-lever__icon tm-votes-lever__icon_arrow-down" height="24" width="24"><title>Голосование</title> <use xlink:href="/img/megazord-v28.faec9762..svg#counter-vote"></use></svg></button></div> <div class="v-portal" style="display:none;"></div> <!-- --></div> <!-- --> <!-- --> <button class="bookmarks-button tm-data-icons__item" title="Добавить в закладки" type="button"><span class="tm-svg-icon__wrapper bookmarks-button__icon"><svg class="tm-svg-img tm-svg-icon" height="24" width="24"><title>Добавить в закладки</title> <use xlink:href="/img/megazord-v28.faec9762..svg#counter-favorite"></use></svg></span> <span class="bookmarks-button__counter" title="Количество пользователей, добавивших публикацию в закладки">
+    4
+  </span></button> <div class="tm-sharing tm-data-icons__item" title="Поделиться"><button class="tm-sharing__button" type="button"><svg class="tm-sharing__icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13.8 13.8V18l7.2-6.6L13.8 5v3.9C5 8.9 3 18.6 3 18.6c2.5-4.4 6-4.8 10.8-4.8z" fill="currentColor"></path></svg></button> <div class="v-portal" style="display:none;"></div></div> <div class="tm-article-comments-counter-link tm-data-icons__item" title="Читать комментарии"><a class="tm-article-comments-counter-link__link" href="/ru/companies/vk/articles/793854/comments/"><svg class="tm-svg-img tm-article-comments-counter-link__icon" height="24" width="24"><title>Комментарии</title> <use xlink:href="/img/megazord-v28.faec9762..svg#counter-comments"></use></svg> <span class="tm-article-comments-counter-link__value">
+      0
+    </span></a> <!-- --></div> <!-- --> <div class="v-portal" style="display:none;"></div></div></div></div> <div class="tm-article-presenter__footer"><div class="tm-article-blocks"><!-- --> <section class="tm-block tm-block tm-block_spacing-bottom"><!-- --> <div class="tm-block__body tm-block__body tm-block__body_variant-balanced"><div class="tm-article-author"><div class="tm-article-author__company"><div class="tm-article-author__company-card"><div class="tm-company-snippet"><a class="tm-company-snippet__logo-link" href="/ru/companies/vk/profile/"><div class="tm-entity-image"><img alt="" class="tm-entity-image__pic" height="40" src="//habrastorage.org/getpro/habr/company/9ed/c74/6b4/9edc746b484c805ecad1f941b5f7068a.png" width="40"/></div></a> <div class="tm-company-snippet__info"><a class="tm-company-snippet__title" href="/ru/companies/vk/profile/">VK</a> <div class="tm-company-snippet__description">Технологии, которые объединяют</div></div></div> <div class="tm-article-author__buttons"><!-- --> <!-- --></div></div> <div class="tm-article-author__company-contacts"><a class="tm-article-author__contact" href="https://twitter.com/inside_vk" rel="noopener" target="_blank">
+      Twitter
+    </a><a class="tm-article-author__contact" href="https://vk.com/insidevk" rel="noopener" target="_blank">
+      ВКонтакте
+    </a><a class="tm-article-author__contact" href="https://telegram.me/inside_vk" rel="noopener" target="_blank">
+      Telegram
+    </a></div> <div class="tm-article-author__separator"></div></div> <div class="tm-user-card tm-article-author__user-card tm-user-card tm-user-card_variant-article"><div class="tm-user-card__info-container"><div class="tm-user-card__header"><div class="tm-user-card__header-data"><a class="tm-user-card__userpic tm-user-card__userpic_size-40" href="/ru/users/Ciberst/"><div class="tm-entity-image"><img alt="" class="tm-entity-image__pic" src="https://assets.habr.com/habr-web/img/avatars/117.png"/></div></a> <div class="tm-user-card__meta"><div class="tm-counter-container tm-karma tm-karma" title=" 1 голос "><div class="tm-counter-container__header"><div class="tm-karma__votes tm-karma__votes_positive">
+      1
+    </div></div> <div class="tm-counter-container__footer"><div class="tm-karma__text">
+      Карма
+    </div> <div class="v-portal" style="display:none;"></div></div></div> <div class="tm-counter-container" title="Рейтинг пользователя"><div class="tm-counter-container__header"> <div class="tm-votes-lever tm-votes-lever tm-votes-lever_appearance-rating"><!-- --> <div class="tm-votes-lever__score tm-votes-lever__score tm-votes-lever__score_appearance-rating"><span><span class="tm-votes-lever__score-counter tm-votes-lever__score-counter tm-votes-lever__score-counter_rating">
+          3
+        </span></span></div> <!-- --></div></div> <div class="tm-counter-container__footer"><span class="tm-rating__text tm-rating__text">
+      Рейтинг
+    </span></div></div></div></div></div> <div class="tm-user-card__info tm-user-card__info tm-user-card__info_variant-article"><div class="tm-user-card__title tm-user-card__title tm-user-card__title_variant-article"><span class="tm-user-card__name tm-user-card__name tm-user-card__name_variant-article">Александр</span> <a class="tm-user-card__nickname tm-user-card__nickname tm-user-card__nickname_variant-article" href="/ru/users/Ciberst/">
+          @Ciberst
+        </a> <!-- --></div> <p class="tm-user-card__short-info tm-user-card__short-info tm-user-card__short-info_variant-article">Пользователь</p></div></div> <div class="tm-user-card__buttons tm-user-card__buttons tm-user-card__buttons_variant-article"><!-- --> <!-- --> <!-- --> <!-- --></div></div> <!-- --></div></div> <!-- --></section> <!-- --> <!-- --> <div class="tm-article-blocks__comments"><div class="tm-article-page-comments" id="publication-comments"><div class="tm-article-comments-counter-link tm-article-comments-counter-button"><a class="tm-article-comments-counter-link__link tm-article-comments-counter-link__link_button-style" href="/ru/companies/vk/articles/793854/comments/"><svg class="tm-svg-img tm-article-comments-counter-link__icon tm-article-comments-counter-link__icon_contrasted" height="24" width="24"><title>Комментарии</title> <use xlink:href="/img/megazord-v28.faec9762..svg#counter-comments"></use></svg> <span class="tm-article-comments-counter-link__value tm-article-comments-counter-link__value_contrasted">
+       Комментировать 
+    </span></a> <!-- --></div></div></div> <section class="tm-block tm-block tm-block_spacing-bottom"><header class="tm-block__header tm-block__header tm-block__header_variant-borderless"><div class="tm-block__header-container"><h2 class="tm-block__title tm-block__title tm-block__title_variant-large">Публикации</h2> </div> <!-- --></header> <div class="tm-block__body tm-block__body tm-block__body_variant-condensed-slim"><div class="tm-tabs tm-tabs"><div><span class="tm-tabs__tab-item"><button class="tm-tabs__tab-link tm-tabs__tab-link tm-tabs__tab-link_active tm-tabs__tab-link_slim">
+        Лучшие за сутки
+      </button></span><span class="tm-tabs__tab-item"><button class="tm-tabs__tab-link tm-tabs__tab-link tm-tabs__tab-link_slim">
+        Похожие
+      </button></span></div> <!-- --></div> <div class="similar-and-daily__tab-view"><div class="placeholder-wrapper"><!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <div class="tm-placeholder-article-cards"><div class="tm-placeholder-article-card"><div class="tm-placeholder__user"><div class="tm-placeholder__user-pic loads"></div> <div class="tm-placeholder__user-date loads"></div></div> <div class="tm-placeholder-article-card__title"><div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div></div> <div class="tm-placeholder-article-card__icons tm-placeholder__counters"><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div></div></div><div class="tm-placeholder-article-card"><div class="tm-placeholder__user"><div class="tm-placeholder__user-pic loads"></div> <div class="tm-placeholder__user-date loads"></div></div> <div class="tm-placeholder-article-card__title"><div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div></div> <div class="tm-placeholder-article-card__icons tm-placeholder__counters"><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div></div></div><div class="tm-placeholder-article-card"><div class="tm-placeholder__user"><div class="tm-placeholder__user-pic loads"></div> <div class="tm-placeholder__user-date loads"></div></div> <div class="tm-placeholder-article-card__title"><div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div></div> <div class="tm-placeholder-article-card__icons tm-placeholder__counters"><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div></div></div><div class="tm-placeholder-article-card"><div class="tm-placeholder__user"><div class="tm-placeholder__user-pic loads"></div> <div class="tm-placeholder__user-date loads"></div></div> <div class="tm-placeholder-article-card__title"><div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div></div> <div class="tm-placeholder-article-card__icons tm-placeholder__counters"><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div></div></div><div class="tm-placeholder-article-card"><div class="tm-placeholder__user"><div class="tm-placeholder__user-pic loads"></div> <div class="tm-placeholder__user-date loads"></div></div> <div class="tm-placeholder-article-card__title"><div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div></div> <div class="tm-placeholder-article-card__icons tm-placeholder__counters"><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div></div></div></div> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --></div> <!-- --></div></div> <!-- --></section> <div class="placeholder-wrapper"><!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <div class="tm-placeholder-inset tm-placeholder-vacancies"><div class="tm-placeholder-inset__header"><div class="tm-placeholder__line tm-placeholder__line_inset-header loads"></div></div> <div class="tm-placeholder-inset__body"><ul class="tm-placeholder-list"><li class="tm-placeholder-list__item tm-placeholder-list__item_inset"><div class="tm-placeholder-list__title-container"><div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div></div> <div class="tm-project-block-items__properties"><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span></div></li><li class="tm-placeholder-list__item tm-placeholder-list__item_inset"><div class="tm-placeholder-list__title-container"><div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div></div> <div class="tm-project-block-items__properties"><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span></div></li><li class="tm-placeholder-list__item tm-placeholder-list__item_inset"><div class="tm-placeholder-list__title-container"><div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div></div> <div class="tm-project-block-items__properties"><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span></div></li><li class="tm-placeholder-list__item tm-placeholder-list__item_inset"><div class="tm-placeholder-list__title-container"><div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div></div> <div class="tm-project-block-items__properties"><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span></div></li><li class="tm-placeholder-list__item tm-placeholder-list__item_inset"><div class="tm-placeholder-list__title-container"><div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div></div> <div class="tm-project-block-items__properties"><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span></div></li></ul></div> <div class="tm-placeholder-inset__footer"><div class="tm-placeholder__line tm-placeholder__line_inset-footer loads"></div></div></div> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --></div> <!-- --> </div></div></div></div></div> <div class="tm-page__sidebar"><div class="tm-layout-sidebar"><div class="tm-layout-sidebar__placeholder_initial"></div> <div class="tm-sexy-sidebar tm-sexy-sidebar_initial" style="margin-top:0px;"><!-- --> <section class="tm-block tm-block tm-block_spacing-bottom"><header class="tm-block__header tm-block__header"><div class="tm-block__header-container"><h2 class="tm-block__title tm-block__title">Информация</h2> </div> <!-- --></header> <div class="tm-block__body tm-block__body"><div class="tm-company-basic-info"><dl class="tm-description-list tm-description-list tm-description-list_variant-columns-nowrap"><dt class="tm-description-list__title tm-description-list__title tm-description-list__title_variant-columns-nowrap">Сайт</dt> <dd class="tm-description-list__body tm-description-list__body tm-description-list__body_variant-columns-nowrap"><a class="tm-company-basic-info__link" href="https://team.vk.company/" target="_blank">
+      team.vk.company
+    </a></dd></dl> <dl class="tm-description-list tm-description-list tm-description-list_variant-columns-nowrap"><dt class="tm-description-list__title tm-description-list__title tm-description-list__title_variant-columns-nowrap">Дата регистрации</dt> <dd class="tm-description-list__body tm-description-list__body tm-description-list__body_variant-columns-nowrap"><time datetime="2008-08-09T07:42:32.000Z" title="2008-08-09, 11:42">9  августа  2008</time></dd></dl> <dl class="tm-description-list tm-description-list tm-description-list_variant-columns-nowrap"><dt class="tm-description-list__title tm-description-list__title tm-description-list__title_variant-columns-nowrap">Дата основания</dt> <dd class="tm-description-list__body tm-description-list__body tm-description-list__body_variant-columns-nowrap"><time datetime="1998-10-14T20:00:00.000Z" title="1998-10-15, 00:00">15  октября  1998</time></dd></dl> <dl class="tm-description-list tm-description-list tm-description-list_variant-columns-nowrap"><dt class="tm-description-list__title tm-description-list__title tm-description-list__title_variant-columns-nowrap">Численность</dt> <dd class="tm-description-list__body tm-description-list__body tm-description-list__body_variant-columns-nowrap">
+    свыше 10 000 человек
+  </dd></dl> <dl class="tm-description-list tm-description-list tm-description-list_variant-columns-nowrap"><dt class="tm-description-list__title tm-description-list__title tm-description-list__title_variant-columns-nowrap">Местоположение</dt> <dd class="tm-description-list__body tm-description-list__body tm-description-list__body_variant-columns-nowrap">
+    Россия
+  </dd></dl> <dl class="tm-description-list tm-description-list tm-description-list_variant-columns-nowrap"><dt class="tm-description-list__title tm-description-list__title tm-description-list__title_variant-columns-nowrap">Представитель</dt> <dd class="tm-description-list__body tm-description-list__body tm-description-list__body_variant-columns-nowrap"><a class="tm-company-basic-info__link" href="/ru/users/Baiz/">
+      Руслан Дзасохов
+    </a></dd></dl></div></div> <!-- --></section> <div class="tm-company-widgets"></div> <!-- --> <!-- --> <!-- --></div></div></div></div></div></div></main> <!-- --></div> <div class="tm-footer-menu"><div class="tm-page-width"><div class="tm-footer-menu__container"><div class="tm-footer-menu__block"><p class="tm-footer-menu__block-title">
+          Ваш аккаунт
+        </p> <div class="tm-footer-menu__block-content"><ul class="tm-footer-menu__list"><li class="tm-footer-menu__list-item"><a href="/kek/v1/auth/habrahabr/?back=/ru/companies/vk/articles/793854/&amp;hl=ru" rel="nofollow" target="_self">
+                Войти
+              </a></li><li class="tm-footer-menu__list-item"><a href="/kek/v1/auth/habrahabr-register/?back=/ru/companies/vk/articles/793854/&amp;hl=ru" rel="nofollow" target="_self">
+                Регистрация
+              </a></li></ul></div></div><div class="tm-footer-menu__block"><p class="tm-footer-menu__block-title">
+          Разделы
+        </p> <div class="tm-footer-menu__block-content"><ul class="tm-footer-menu__list"><li class="tm-footer-menu__list-item"><a class="footer-menu__item-link" href="/ru/articles/">
+                Статьи
+              </a></li><li class="tm-footer-menu__list-item"><a class="footer-menu__item-link" href="/ru/news/">
+                Новости
+              </a></li><li class="tm-footer-menu__list-item"><a class="footer-menu__item-link" href="/ru/hubs/">
+                Хабы
+              </a></li><li class="tm-footer-menu__list-item"><a class="footer-menu__item-link router-link-active" href="/ru/companies/">
+                Компании
+              </a></li><li class="tm-footer-menu__list-item"><a class="footer-menu__item-link" href="/ru/users/">
+                Авторы
+              </a></li><li class="tm-footer-menu__list-item"><a class="footer-menu__item-link" href="/ru/sandbox/">
+                Песочница
+              </a></li></ul></div></div><div class="tm-footer-menu__block"><p class="tm-footer-menu__block-title">
+          Информация
+        </p> <div class="tm-footer-menu__block-content"><ul class="tm-footer-menu__list"><li class="tm-footer-menu__list-item"><a class="footer-menu__item-link" href="/ru/docs/help/">
+                Устройство сайта
+              </a></li><li class="tm-footer-menu__list-item"><a class="footer-menu__item-link" href="/ru/docs/authors/codex/">
+                Для авторов
+              </a></li><li class="tm-footer-menu__list-item"><a class="footer-menu__item-link" href="/ru/docs/companies/corpblogs/">
+                Для компаний
+              </a></li><li class="tm-footer-menu__list-item"><a class="footer-menu__item-link" href="/ru/docs/docs/transparency/">
+                Документы
+              </a></li><li class="tm-footer-menu__list-item"><a href="https://account.habr.com/info/agreement/?hl=ru_RU" target="_blank">
+                Соглашение
+              </a></li><li class="tm-footer-menu__list-item"><a href="https://account.habr.com/info/confidential/?hl=ru_RU" target="_blank">
+                Конфиденциальность
+              </a></li></ul></div></div><div class="tm-footer-menu__block"><p class="tm-footer-menu__block-title">
+          Услуги
+        </p> <div class="tm-footer-menu__block-content"><ul class="tm-footer-menu__list"><li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/corporate-blogs/" target="_blank">
+                Корпоративный блог
+              </a></li><li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/advertising/" target="_blank">
+                Медийная реклама
+              </a></li><li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/native-special/" target="_blank">
+                Нативные проекты
+              </a></li><li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/education-programs/" target="_blank">
+                Образовательные программы
+              </a></li><li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/hello-startup/" target="_blank">
+                Стартапам
+              </a></li></ul></div></div></div></div></div> <div class="tm-footer"><div class="tm-page-width"><div class="tm-footer__container"><!-- --> <div class="tm-footer__social"><a class="tm-svg-icon__wrapper tm-social-icons__icon" href="https://www.facebook.com/habrahabr.ru" rel="nofollow noopener noreferrer" target="_blank"><svg class="tm-svg-img tm-svg-icon" height="24" width="24"><title>Facebook</title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-facebook"></use></svg></a><a class="tm-svg-icon__wrapper tm-social-icons__icon" href="https://twitter.com/habr_com" rel="nofollow noopener noreferrer" target="_blank"><svg class="tm-svg-img tm-svg-icon" height="24" width="24"><title>Twitter</title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-twitter"></use></svg></a><a class="tm-svg-icon__wrapper tm-social-icons__icon" href="https://vk.com/habr" rel="nofollow noopener noreferrer" target="_blank"><svg class="tm-svg-img tm-svg-icon" height="24" width="24"><title>VK</title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-vk"></use></svg></a><a class="tm-svg-icon__wrapper tm-social-icons__icon" href="https://telegram.me/habr_com" rel="nofollow noopener noreferrer" target="_blank"><svg class="tm-svg-img tm-svg-icon" height="24" width="24"><title>Telegram</title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-telegram"></use></svg></a><a class="tm-svg-icon__wrapper tm-social-icons__icon" href="https://www.youtube.com/channel/UCd_sTwKqVrweTt4oAKY5y4w" rel="nofollow noopener noreferrer" target="_blank"><svg class="tm-svg-img tm-svg-icon" height="24" width="24"><title>Youtube</title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-youtube"></use></svg></a><a class="tm-svg-icon__wrapper tm-social-icons__icon" href="https://dzen.ru/habr" rel="nofollow noopener noreferrer" target="_blank"><svg class="tm-svg-img tm-svg-icon" height="24" width="24"><title>Яндекс Дзен</title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-dzen"></use></svg></a></div> <div class="v-portal" style="display:none;"></div> <button class="tm-footer__link"><!-- -->
+        Настройка языка
+      </button> <a class="tm-footer__link" href="/ru/feedback/">
+        Техническая поддержка
+      </a> <div class="tm-footer-copyright"><span class="tm-copyright"><span class="tm-copyright__years">© 2006–2024, </span> <span class="tm-copyright__name"><a class="tm-copyright__link" href="https://company.habr.com/" rel="noopener" target="_blank">Habr</a></span></span></div></div></div></div> <!-- --></div> <div class="vue-portal-target"></div></div>
+
+
+
+
+
+<noscript>
+<div>
+<img alt="" src="https://mc.yandex.ru/watch/24049213" style="position:absolute; left:-9999px;">
+</img></div>
+</noscript>
+
+
+</body>
+</html>
