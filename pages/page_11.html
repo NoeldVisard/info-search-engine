@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+
+<html data-vue-meta="%7B%22lang%22:%7B%22ssr%22:%22ru%22%7D%7D" lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1.0,viewport-fit=cover,maximum-scale=1,user-scalable=0" name="viewport"/>
+<meta content="unsafe-url" name="referrer"/>
+<title>Улучшение кода без споров и цитирования известных практик / Хабр</title>
+
+
+
+
+
+
+
+<meta content="2.165.0" name="habr-version"/>
+<meta content="444736788986613" data-vue-meta="ssr" property="fb:app_id"/><meta content="472597926099084" data-vue-meta="ssr" property="fb:pages"/><meta content="summary_large_image" data-vue-meta="ssr" name="twitter:card"/><meta content="@habr_com" data-vue-meta="ssr" name="twitter:site"/><meta content="Хабр" data-vmid="og:site_name" data-vue-meta="ssr" property="og:site_name"/><meta content="Улучшение кода без споров и цитирования известных практик" data-vmid="og:title" data-vue-meta="ssr" property="og:title"/><meta content="Улучшение кода без споров и цитирования известных практик" data-vmid="twitter:title" data-vue-meta="ssr" name="twitter:title"/><meta content="Улучшение кода без споров и цитирования известных практик" data-vmid="aiturec:title" data-vue-meta="ssr" name="aiturec:title"/><meta content="Не секрет, что при формировании новой команды руководители (Team Leader, Tech Leader) сталкиваются с проблемой формирования единого стиля написания программ, так как все члены команды новые, и у..." data-vmid="description" data-vue-meta="ssr" name="description"/><meta content="Не секрет, что при формировании новой команды руководители (Team Leader, Tech Leader) сталкиваются с проблемой формирования единого стиля написания программ, так как все члены команды новые, и у..." data-vmid="description:itemprop" data-vue-meta="ssr" itemprop="description"/><meta content="Не секрет, что при формировании новой команды руководители (Team Leader, Tech Leader) сталкиваются с проблемой формирования единого стиля написания программ, так как все члены команды новые, и у..." data-vmid="og:description" data-vue-meta="ssr" property="og:description"/><meta content="Не секрет, что при формировании новой команды руководители (Team Leader, Tech Leader) сталкиваются с проблемой формирования единого стиля написания программ, так как все члены команды новые, и у..." data-vmid="twitter:description" data-vue-meta="ssr" name="twitter:description"/><meta content="Не секрет, что при формировании новой команды руководители (Team Leader, Tech Leader) сталкиваются с проблемой формирования единого стиля написания программ, так как все члены команды новые, и у..." data-vmid="aiturec:description" data-vue-meta="ssr" property="aiturec:description"/><meta content="https://habr.com/share/publication/794392/95a6ada0c407608e4abe37ab23cfece3/" data-vmid="image:itemprop" data-vue-meta="ssr" itemprop="image"/><meta content="https://habr.com/share/publication/794392/95a6ada0c407608e4abe37ab23cfece3/" data-vmid="og:image" data-vue-meta="ssr" property="og:image"/><meta content="1200" data-vmid="og:image:width" data-vue-meta="ssr" property="og:image:width"/><meta content="630" data-vmid="og:image:height" data-vue-meta="ssr" property="og:image:height"/><meta content="https://habr.com/share/publication/794392/95a6ada0c407608e4abe37ab23cfece3/" data-vmid="aiturec:image" data-vue-meta="ssr" property="aiturec:image"/><meta content="https://habr.com/share/publication/794392/95a6ada0c407608e4abe37ab23cfece3/" data-vmid="twitter:image" data-vue-meta="ssr" name="twitter:image"/><meta content="https://habr.com/share/publication/794392/95a6ada0c407608e4abe37ab23cfece3/?format=vk" data-vmid="vk:image" data-vue-meta="ssr" property="vk:image"/><meta content="794392" data-vmid="aiturec:item_id" data-vue-meta="ssr" property="aiturec:item_id"/><meta content="2024-02-17T12:34:39.000Z" data-vmid="aiturec:datetime" data-vue-meta="ssr" property="aiturec:datetime"/><meta content="https://habr.com/ru/articles/794392/" data-vmid="og:url" data-vue-meta="ssr" property="og:url"/><meta content="article" data-vmid="og:type" data-vue-meta="ssr" property="og:type"/><meta content="ru_RU" data-vmid="og:locale" data-vue-meta="ssr" property="og:locale"/><meta content="unit-testing, oop, php, refactoring" data-vue-meta="ssr" name="keywords"/>
+
+<meta content="#303b44" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="#629FBC" name="msapplication-TileColor"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+<body>
+<div data-async-called="true" data-server-rendered="true" id="app"><div class="tm-layout__wrapper"><!-- --> <div></div> <div class="tm-feature tm-feature"><!-- --></div> <header class="tm-header"><div class="tm-page-width"><div class="tm-header__container"><div class="tm-header__burger-nav"><button class="tm-header__button tm-header__button_burger" type="button"><svg class="tm-svg-img tm-header__icon tm-header__icon-burger" height="16" width="16"><title>Меню</title> <use xlink:href="/img/megazord-v28.faec9762..svg#header-burger"></use></svg></button></div> <span class="tm-header__logo-wrap"><a class="tm-header__logo tm-header__logo tm-header__logo_hl-ru" href="/ru/"><svg class="tm-svg-img tm-header__icon" height="16" width="16"><title>Хабр</title> <use xlink:href="/img/habr-logo-ru.svg#logo"></use></svg></a> <span class="tm-header__beta-sign" style="display:none;">β</span></span> <!-- --> <div class="tm-header-user-menu tm-header_user-menu"><a class="tm-header-user-menu__item tm-header-user-menu__search" href="/ru/search/"><svg class="tm-svg-img tm-header-user-menu__icon tm-header-user-menu__icon_search" height="24" width="24"><title>Поиск</title> <use xlink:href="/img/megazord-v28.faec9762..svg#search"></use></svg></a> <!-- --> <!-- --> <!-- --> <div class="tm-header-user-menu__item"><button class="tm-header-user-menu__toggle"><svg class="tm-svg-img tm-header-user-menu__icon" height="24" width="24"><title>Настройки</title> <use xlink:href="/img/megazord-v28.faec9762..svg#page-settings"></use></svg></button></div> <a class="tm-header-user-menu__item" href="https://habr.com/kek/v1/auth/habrahabr/?back=/ru/articles/794392/&amp;hl=ru" rel="nofollow"><button class="tm-header-user-menu__login btn btn_solid btn_small" type="button">
+        Войти
+      </button></a> <!-- --> <div class="v-portal" style="display:none;"></div></div></div></div></header> <div class="tm-layout"><div class="tm-page-progress-bar"></div> <!-- --> <!-- --> <div class="tm-page-width"></div> <main class="tm-layout__container"><div class="tm-page" data-async-called="true" hl="ru"><div class="tm-page-width"><!-- --> <div class="tm-page__wrapper"><div class="tm-page__main tm-page__main_has-sidebar"><div class="pull-down"><!-- --> <div class="pull-down__header" style="height:0px;"><div class="pull-down__content" style="bottom:10px;"><svg class="tm-svg-img pull-down__icon pull-down__arrow" height="24" width="24"><title>Обновить</title> <use xlink:href="/img/megazord-v28.faec9762..svg#pull-arrow"></use></svg></div></div> <div class="tm-adfox-banner__container"><!-- --> <div class="tm-adfox-banner tm-adfox-banner tm-adfox-banner_variant-narrow" id="adfox_169815559787254866"></div></div> <div class="tm-article-presenter"> <div class="tm-article-presenter__body"><div class="tm-misprint-area"><div class="tm-misprint-area__wrapper"><article class="tm-article-presenter__content tm-article-presenter__content_narrow"><div class="tm-article-presenter__header"> <div class="tm-article-snippet tm-article-presenter__snippet tm-article-snippet"> <div class="tm-article-snippet__meta-container"><div class="tm-article-snippet__meta"><span class="tm-user-info tm-article-snippet__author"><a class="tm-user-info__userpic" href="/ru/users/zavodnoyapl/" title="zavodnoyapl"><div class="tm-entity-image"><img alt="" class="tm-entity-image__pic" height="32" src="https://assets.habr.com/habr-web/img/avatars/008.png" width="32"/></div></a> <span class="tm-user-info__user tm-user-info__user_appearance-default"><a class="tm-user-info__username" href="/ru/users/zavodnoyapl/">
+      zavodnoyapl
+      <!-- --></a> <span class="tm-article-datetime-published"><time datetime="2024-02-17T12:34:39.000Z" title="2024-02-17, 15:34">7 часов назад</time></span></span></span></div> <!-- --></div> <h1 class="tm-title tm-title_h1" lang="ru"><span>Улучшение кода без споров и цитирования известных практик</span></h1> <div class="tm-article-snippet__stats"><div class="tm-article-complexity tm-article-complexity_complexity-low"><span class="tm-svg-icon__wrapper tm-article-complexity__icon"><svg class="tm-svg-img tm-svg-icon" height="24" width="24"><title>Уровень сложности</title> <use xlink:href="/img/megazord-v28.faec9762..svg#complexity-low"></use></svg></span> <span class="tm-article-complexity__label">
+    Простой
+  </span></div> <div class="tm-article-reading-time"><span class="tm-svg-icon__wrapper tm-article-reading-time__icon"><svg class="tm-svg-img tm-svg-icon" height="24" width="24"><title>Время на прочтение</title> <use xlink:href="/img/megazord-v28.faec9762..svg#clock"></use></svg></span> <span class="tm-article-reading-time__label">
+    16 мин
+  </span></div> <span class="tm-icon-counter tm-data-icons__item"><svg class="tm-svg-img tm-icon-counter__icon" height="24" width="24"><title>Количество просмотров</title> <use xlink:href="/img/megazord-v28.faec9762..svg#counter-views"></use></svg> <span class="tm-icon-counter__value">1.7K</span></span></div> <div class="tm-publication-hubs__container"><div class="tm-publication-hubs"><span class="tm-publication-hub__link-container"><a class="tm-publication-hub__link" href="/ru/hubs/php/"><span>PHP</span> <span class="tm-article-snippet__profiled-hub" title="Профильный хаб">*</span></a></span><span class="tm-publication-hub__link-container"><a class="tm-publication-hub__link" href="/ru/hubs/refactoring/"><span>Проектирование и рефакторинг</span> <span class="tm-article-snippet__profiled-hub" title="Профильный хаб">*</span></a></span><span class="tm-publication-hub__link-container"><a class="tm-publication-hub__link" href="/ru/hubs/oop/"><span>ООП</span> <span class="tm-article-snippet__profiled-hub" title="Профильный хаб">*</span></a></span></div></div> <div class="tm-article-labels"><div class="tm-article-labels__container"><!-- --> <div class="tm-publication-label tm-publication-label_variant-sandbox"><a href="/ru/sandbox/">
+    Из песочницы
+  </a></div></div></div> <!-- --> <!-- --></div></div> <!-- --> <div class="tm-article-body" data-gallery-root="" lang="ru"><div></div> <div id="post-content-body"><div><div class="article-formatted-body article-formatted-body article-formatted-body_version-2"><div xmlns="http://www.w3.org/1999/xhtml"><p>Не секрет, что при формировании новой команды руководители (Team Leader, Tech Leader) сталкиваются с проблемой формирования единого стиля написания программ, так как все члены команды новые, и у каждого из них свой подход к организации кода и выбору используемой практики. Как правило, в большинстве случаев это приводит к длинным диспутам на ревью, которые в итоге перетекают в различные толкования известных практик, таких как SOLID, KISS, DRY, и т.д. Принципы использования этих практик довольно размыты и, при должном упорстве, легко найти парадокс, когда одна из них противоречит другой. Например, рассмотрим Single Responsibility и DRY.</p><p>Одна из вариаций определения принципа единой ответственности (Single Responsibility - буква S из аббревиатуры SOLID) гласит, что каждый объект должен иметь одну ответственность, и эта ответственность должна быть полностью инкапсулирована в класс. Принцип DRY (Don’t repeat yourself) предлагает избегать дублирования в коде. Однако, если у нас в коде есть один набор данных (DTO), который может использоваться в разных слоях/сервисах/модулях, какому из этих принципов нам следовать? Безусловно, во многих книгах по программированию разбираются похожие ситуации, как правило, в них говорится, что если речь идет о разных объектах/функциях с одинаковым набором свойств и логики, но принадлежащим разным доменным областям, то дублированием это не является. Но как доказать что эти объекты ДОЛЖНЫ принадлежать разным доменным областям, и, главное, готов (и уверен ли в своих силах) руководитель доказывать это утверждение?</p><p>Один из часто практикуемых вариантов - это категоричное заявление “У нас так принято/Слово руководителя закон” и тому подобные ультимативные утверждения, которые подчеркивают авторитет и экспертизу придумавшего эти правила. Такой подход определенно имеет шанс на успех, если мы говорим об уже состоявшейся команде и проекте с некой кодовой базой, на основе которой продолжается разработка. Но что делать, когда команда новая, а проект только начался? Взывание к авторитету не может работать, так как Team/Tech Leader еще им не обладает, а каждый член команды считает, что именно его знания и подход станет оптимальным решением для будущего проекта.</p><p>В данной статье предлагается подход, позволяющий избежать большинство подобных спорных ситуаций. Более того, каждый разработчик на практике (и без замечаний со стороны руководителя) будет понимать, что именно он делает неправильно и как можно сделать лучше.</p><p>Для начала введем несколько дополнительных условий и определений:</p><ol><li><p>на момент отправки на ревью задача считается завершенной, и, в случае прохождения ревью, может быть зарелизена без каких-либо изменений. То есть, мы не рассматриваем возможность заранее запланированных изменений/дополнений в коде;</p></li><li><p>команда состоит из равнозначных по опыту и квалификации специалистов, у которых нет проблем в имплементации задач, специалисты имеют только несогласованность в подходах;</p></li><li><p>стиль кода согласован и проверяется code checkers;</p></li><li><p>время разработки не критично (как минимум, менее критично, чем надежность продукта).</p></li></ol><p>Необходимость первого условия рассмотрим позже, хотя само по себе оно вполне очевидно, так как нелогично отправлять на проверку незавершенную задачу. Вторым условием мы гарантируем, что каждый член команды не имеет проблем с выбором алгоритма и реализацией поставленной задачи. В третьем условии мы допускаем, что команда следует определенному стилю (PSR) и вопросы типа “что лучше CamelCase или snake_case” не возникают.  И финальным условием мы отказываемся от расчета изменения трудозатрат на выполнения задач в данной работе.</p><h2>Unit tests</h2><p>Многие из читателей знают, что unit тестирование повышает качество кода, как правило, после данного утверждения приводят в пример методологию TDD (Test-driven development), которая, действительно, повышает качество кода, но довольно редко применима на практике ввиду того, что писать тест ДО реализации может только программист высокого класса.</p><p>Так как может помочь unit тестирование в решении задачи улучшения кода без использования перечисленных ранее известных практик? Для начала напомним, что unit тесты применяются для тестирования определенного метода/модуля/класса, используя в качестве зависимостей объекты/модули заглушки (mocks). </p><p>Следуя первому условию, на момент отправки на ревью задача должна быть завершенной, поэтому введем определение, что мы называем завершенной задачей. Задача считается завершенной тогда и только тогда, когда она удовлетворяет всем перечисленным ниже условиям:</p><ul><li><p>выполнены требования поставленной задачи;</p></li><li><p>весь новый код должен быть покрыт unit тестами, включая различные условия алгоритмов программ;</p></li><li><p>новый код не ломает существующие тесты.</p></li></ul><p>Так как время на написание новых тестов и поддержку старых у нас не ограничено (условие 4), а каждый разработчик может написать данные тесты и выполнить требования задачи (условие 2), мы можем считать, что любая задача может быть потенциально завершена. Теперь, так как мы ввели определение завершенной задачи, мы можем обосновать условие 1: код не может быть отправлен на ревью, если он не покрыт тестами, в противном случае, код будет отклонен без ревью. Таким образом, разработчик знает, что исправление в коде после замечаний ведет к исправлению в тестах. Этот, на первый взгляд, малозначительный момент и будет основополагающей движущей силой для написания хорошего кода. </p><p>Рассмотрим следующий пример кода (в этой статье для примеров используется язык PHP, но это может быть любой C-подобный язык с поддержкой ООП парадигмы):</p><pre><code class="php">class SomeFactory {
+   public function __construct(
+       private readonly ARepository $aRepository,
+   ) { }
+
+
+   /**
+    * @throws ErrorException
+    */
+   public function createByParameters(ObjectType $type, array $parameters): ObjectE|ObjectD|ObjectA|ObjectB|ObjectC {
+       switch ($type) {
+           case ObjectType::A:
+               if (!array_key_exists('id', $parameters) || !is_int($parameters['id'])) {
+                   throw new ErrorException('Some message');
+               }
+               $aEntity = $this-&gt;aRepository-&gt;findById($parameters['id']);
+               $data = [];
+               if ($aEntity !== null) {
+                   $data = $aEntity-&gt;getSomeParams();
+               }
+               if (count($data) === 0) {
+                   if (array_key_exists('default', $parameters) &amp;&amp; is_array($parameters['default'])) {
+                       $data = $parameters['default'];
+                   } else {
+                       throw new ErrorException('Some message');
+                   }
+               }
+               return new ObjectA($data);
+           case ObjectType::B:
+               // some code
+               return new ObjectB($parameters);
+           case ObjectType::C:
+               // some code
+               return new ObjectC($parameters);
+           case ObjectType::D:
+               // some code
+               return new ObjectD($parameters);
+           case ObjectType::E:
+               // some code
+               return new ObjectE($parameters);
+       }
+
+       throw new RuntimeException('some message');
+   }
+}
+</code></pre><p>Здесь мы специально нарушили все практики для демонстрации эффективности предлагаемого подхода, но заметим, что приведенный алгоритм вполне работоспособен, в зависимости от типа создается некая сущность с определенными параметрами. Тем не менее, наша основная задача - сделать так, чтобы данный код до ревью не дошел и разработчик самостоятельно привел его в надлежащий вид. Следуя условию 1, чтобы отправить код на проверку, нам нужно написать тесты, давайте напишем один такой тест:</p><pre><code class="php">class SomeFactoryTest extends TestCase {
+   public function testCreateByParametersReturnsObjectAWithDefaultMethods(): void {
+       $someFactory = new SomeFactory(
+           $aRepository = $this-&gt;createMock(ARepository::class),
+       );
+       $parameters = [
+           'id' =&gt; $id = 5,
+           'default' =&gt; ['someData'],
+       ];
+       $aRepository-&gt;expects($this-&gt;once())
+           -&gt;method('findById')
+           -&gt;with($id)
+           -&gt;willReturn(null);
+
+
+       $actualResult = $someFactory-&gt;createByParameters(ObjectType::A, $parameters);
+       $this-&gt;assertInstanceOf(ObjectA::class, $actualResult);
+       // additional checkers for $actualResult
+   }
+}</code></pre><p>Получилось довольно просто, но это всего один из необходимых восьми тестов для одного из пяти типов. После того, как все тесты были написаны, любое замечание на ревью может поломать их, и разработчику придется переписывать их заново или вносить правки. Например, добавление новой зависимости (допустим, логгера) приведет к тому, что во всех тестах изменится инициализация фабрики:</p><pre><code class="php"> $someFactory = new SomeFactory(
+    $aRepository = $this-&gt;createMock(ARepository::class),
+	$this-&gt;createMock(LoggerInterface::class)
+ );</code></pre><p>Отметим, как увеличилась цена замечания: если раньше добавление/изменение зависимости влекло за собой только изменения в классе SomeFactory, то теперь все тесты (которых вполне может быть более 40) тоже надо будет изменять. Естественно, что после нескольких итераций таких изменений, разработчику захочется минимизировать свои трудозатраты на исправления замечаний. Как это можно сделать? Ответ очевиден - изолировать логику создания сущности для каждого типа в отдельный класс. Прошу заметить, мы не опираемся на принципы SOLID/DRY и т.д., не ведем абстрактные разговоры о читаемости и дебаге кода, так как каждый из этих доводов можно оспорить. Мы просто упрощаем написания тестов, и аргументов против этого у разработчика нет.</p><p>После изменения у нас получится 5 фабрик для каждого типа (<code>ObjectType::A</code>, <code>ObjectType::B</code>, <code>ObjectType::C</code>, <code>ObjectType::D</code>, <code>ObjectType::E</code>), ниже приведен пример фабрики для <code>ObjectType::A</code> (<code>FactoryA</code>)</p><pre><code class="php">class FactoryA {
+   public function __construct(
+       private readonly ARepository $aRepository,
+   ) { }
+
+   public function createByParameters(array $parameters): ObjectA {
+       if (!array_key_exists('id', $parameters) || !is_int($parameters['id'])) {
+           throw new ErrorException('Some message');
+       }
+       $aEntity = $this-&gt;aRepository-&gt;findById($parameters['id']);
+       $data = [];
+       if ($aEntity !== null) {
+           $data = $aEntity-&gt;getSomeParams();
+       }
+       if (count($data) === 0) {
+           if (array_key_exists('default', $parameters) &amp;&amp; is_array($parameters['default'])) { // 6 7
+               $data = $parameters['default'];
+           } else {
+               throw new ErrorException('Some message');
+           }
+       }
+       return new ObjectA($data);
+   }
+}
+</code></pre><p>А общая фабрика будет иметь вид:</p><pre><code class="php">class SomeFactory {
+   public function __construct(
+       private readonly FactoryA $factoryA,
+       private readonly FactoryB $factoryB,
+       private readonly FactoryC $factoryC,
+       private readonly FactoryD $factoryD,
+       private readonly FactoryE $factoryE,
+   ) { }
+
+
+   /**
+    * @throws ErrorException
+    */
+   public function createByParameters(ObjectType $type, array $parameters): ObjectE|ObjectD|ObjectA|ObjectB|ObjectC {
+       switch ($type) {
+           case ObjectType::A:
+               return $this-&gt;factoryA-&gt;createByParameters($parameters);
+           case ObjectType::B:
+               return $this-&gt;factoryB-&gt;createByParameters($parameters);
+           case ObjectType::C:
+               return $this-&gt;factoryC-&gt;createByParameters($parameters);
+           case ObjectType::D:
+               return $this-&gt;factoryD-&gt;createByParameters($parameters);
+           case ObjectType::E:
+               return $this-&gt;factoryE-&gt;createByParameters($parameters);
+       }
+
+
+       throw new RuntimeException('some message');
+   }
+}</code></pre><p>Как мы видим, суммарно кода стало больше, рассмотрим тесты для <code>FactoryA</code> и измененный тест для <code>SomeFactory</code></p><pre><code class="php">class FactoryATest extends TestCase {
+   public function testCreateByParametersReturnsObjectAWithDefaultMethods(): void {
+       $factoryA = new FactoryA(
+           $aRepository = $this-&gt;createMock(ARepository::class),
+       );
+       $parameters = [
+           'id' =&gt; $id = 5,
+           'default' =&gt; ['someData'],
+       ];
+       $aRepository-&gt;expects($this-&gt;once())
+           -&gt;method('findById')
+           -&gt;with($id)
+           -&gt;willReturn(null);
+
+
+       $actualResult = $factoryA-&gt;createByParameters($parameters);
+       $this-&gt;assertInstanceOf(ObjectA::class, $actualResult);
+       // additional checkers for $actualResult
+   }
+}</code></pre><pre><code class="php">class SomeFactoryTest extends TestCase {
+   public function testCreateByParametersReturnsObjectA(): void {
+       $someFactory = new SomeFactory(
+           $factoryA = $this-&gt;createMock(FactoryA::class),
+           $this-&gt;createMock(FactoryB::class),
+           $this-&gt;createMock(FactoryC::class),
+           $this-&gt;createMock(FactoryD::class),
+           $this-&gt;createMock(FactoryE::class),
+       );
+       $parameters = ['someParameters'];
+
+
+       $factoryA-&gt;expects($this-&gt;once())
+           -&gt;method('createByParameters')
+           -&gt;with($parameters)
+           -&gt;willReturn($objectA = $this-&gt;createMock(ObjectA::class));
+
+
+       $this-&gt;assertSame($objectA, $someFactory-&gt;createByParameters(ObjectType::A, $parameters));
+   }
+
+
+   // the same test for another types and fabrics
+}</code></pre><p>Суммарно количество тестов увеличилось на 5 (количество возможных типов), в то время как количество тестов для фабрик осталось неизменно. Так чем же этот код стал лучше? Главное отличие - это уменьшение трудозатрат на внесения правок после ревью. Действительно, при изменении зависимостей в <code>FactoryA</code>, тесты меняются только для <code>FactoryA</code>. </p><p>Согласитесь, код уже выглядит лучше, и, сами того не подозревая, мы отчасти выполнили принцип single responsibility. На этом все? Как было сказано ранее, нам все еще надо написать 5 тестов для каждой сущности. Более того, фабрики для этого сервиса нужно бесконечно прокидывать в конструктор как аргументы, и ввод нового типа (или удаление старого) приводит к изменению всех тестов (хоть их уже не 40, а всего 5) для <code>SomeFactory</code>. Потому логичным решением - большинство разработчиков и сами увидят эту возможность - будет сделать registry (особенно если уже есть нативная поддержка регистрации классов по интерфейсу) и объявить интерфейсы для DTO и фабрик вида</p><pre><code class="php">interface ObjectInterface { }
+
+
+class ObjectA implements ObjectInterface {
+   // some logic
+}</code></pre><pre><code class="php">interface FactoryInterface {
+   public function createByParameters(array $parameters): ObjectInterface;
+
+
+   public static function getType(): ObjectType;
+}
+</code></pre><pre><code class="php">class FactoryB implements FactoryInterface {
+   public static function getType(): ObjectType {
+       return ObjectType::B;
+   }
+
+
+   public function createByParameters(array $parameters): ObjectB {
+       // some logic
+       return new ObjectB($parameters);
+   }
+}
+</code></pre><p>Отметим выбор определения метода <code>getType</code> как статический. В текущей реализации нет разницы, будет ли этот метод статическим или динамическим, однако, если начать писать тест на этот метод (какой бы абсурдной ни казалась эта идея), можно заметить, что в случае динамического метода, тест будет иметь вид:</p><pre><code class="php">public function testGetTypeReturnsTypeA(): void {
+   $mock = $this-&gt;getMockBuilder(FactoryA::class)
+       -&gt;disableOriginalConstructor()
+       -&gt;onlyMethods([])
+       -&gt;getMock();
+
+
+   $this-&gt;assertSame($mock-&gt;getType(), ObjectType::A);
+}</code></pre><p>В то время как для статического метода он будет выглядеть намного короче:</p><pre><code class="php">public function testGetTypeReturnsTypeA(): void {
+   $this-&gt;assertSame(FactoryA::getType(), ObjectType::A);
+}</code></pre><p>Тем самым, благодаря лени, мы выбрали правильное решение (возможно, сами того не подозревая) и запретили методу <code>getType</code> быть потенциально зависимым от состояния объекта класса <code>FactoryB</code>. </p><p>Рассмотрим код registry:<br/></p><pre><code class="php">class SomeRegistry {
+   /** @var array&lt;int, FactoryInterface&gt; */
+   private readonly array $factories;
+
+
+   /**
+    * @param FactoryInterface[] $factories
+    */
+   public function __construct(array $factories) {
+       $mappedFactory = [];
+       foreach ($factories as $factory) {
+           if (array_key_exists($factory::getType()-&gt;value, $mappedFactory)) {
+               throw new RuntimeException('Duplicate message');
+           }
+           $mappedFactory[$factory::getType()-&gt;value] = $factory;
+       }
+       $this-&gt;factories = $mappedFactory;
+   }
+  
+
+
+   public function createByParams(ObjectType $type, array $parameters): ObjectInterface {
+       $factory = $this-&gt;factories[$type-&gt;value] ?? null;
+       if ($factory === null) {
+           throw new RuntimeException('Not found exception');
+       }
+
+
+       return $factory-&gt;createByParameters($parameters);
+   }
+}
+</code></pre><p>Как мы видим, нам придется написать 3 теста: 1) тест на дубль, 2) тест, когда фабрика не найдена и 3) тест, когда фабрика найдена. Класс <code>SomeFactory</code> теперь же выглядит как прокси метод и тем самым подлежит удалению</p><pre><code class="php">class SomeFactory {
+   public function __construct(
+       private readonly SomeRegistry $someRegistry,
+   ) { }
+
+
+   public function createByParameters(ObjectType $type, array $parameters): ObjectInterface {
+       return $this-&gt;someRegistry-&gt;createByParams($type, $parameters);
+   }
+}
+</code></pre><p>Помимо того, что количество тестов уменьшилось (с 5 до 3), любое добавление/удаление новой фабрики не влечет за собой изменения старых тестов (при условии, что регистрация новых фабрик нативная и встроена во фреймворк).</p><p>Подведем промежуточный итог: в поисках решения для уменьшения цены исправлений замечаний после ревью, мы полностью переделали генерацию объектов в зависимости от типов. Наш код стал соответствовать single responsibility и open/closing принципам (буквы S и O из аббревиатуры SOLID), хотя в явном виде мы их нигде не упоминали.</p><p>Далее мы усложним задачу и сделаем ту же работу с менее очевидными изменениями в коде. Рассмотрим код в классе <code>FactoryA</code>:</p><pre><code class="php">class FactoryA implements FactoryInterface {
+   public function __construct(
+       private readonly ARepository $aRepository,
+   ) { }
+
+
+   public static function getType(): ObjectType {
+       return ObjectType::A;
+   }
+
+
+   public function createByParameters(array $parameters): ObjectA {
+       if (!array_key_exists('id', $parameters) || !is_int($parameters['id'])) {
+           throw new ErrorException('Some message');
+       }
+       $aEntity = $this-&gt;aRepository-&gt;findById($parameters['id']);
+       $data = [];
+       if ($aEntity !== null) {
+           $data = $aEntity-&gt;getSomeParams();
+       }
+       if (count($data) === 0) {
+           if (array_key_exists('default', $parameters) &amp;&amp; is_array($parameters['default'])) {
+               $data = $parameters['default'];
+           } else {
+               throw new ErrorException('Some message');
+           }
+       }
+       return new ObjectA($data);
+   }
+}
+</code></pre><p>Можем ли мы как-то упростить написание тестов для этого кода? Давайте разберем первый if-блок:</p><pre><code class="php">if (!array_key_exists('id', $parameters) || !is_int($parameters['id'])) {
+   throw new ErrorException('Some message');
+}</code></pre><p>Попробуем покрыть его тестами:</p><pre><code>public function testCreateByParametersThrowsErrorExceptionWhenParameterIdDoesntExist(): void {
+   $this-&gt;expectException(ErrorException::class);
+  
+   $factoryA = new FactoryA(
+       $this-&gt;createMock(ARepository::class),
+   );
+
+
+   $factoryA-&gt;createByParameters([]);
+}
+
+
+public function testCreateByParametersThrowsErrorExceptionWhenParameterIdNotInt(): void {
+   $this-&gt;expectException(ErrorException::class);
+
+
+   $factoryA = new FactoryA(
+       $this-&gt;createMock(ARepository::class),
+   );
+
+
+   $factoryA-&gt;createByParameters(['id' =&gt; 'test']);
+}
+</code></pre><p>Если вопрос существования покрывается легко, то тест для типа содержит множество подводных камней. В данном тесте мы пробросили строку, но что будет с другими типами? Считается ли большое число целым числом (integer) или типом с плавающей точкой <span class="habrahidden">(например, в PHP 10 в сотой степени вернет короткую запись вида 1.0E+100 типа float)</span>? Можно написать DataProvider для всех возможных вариантов, а можно вынести логику валидации в отдельный класс и получить что-то вроде:</p><pre><code class="php">class FactoryA implements FactoryInterface {
+   public function __construct(
+       private readonly ARepository        $aRepository,
+       private readonly ExtractorFactory   $extractorFactory
+   ) { }
+
+
+   public static function getType(): ObjectType {
+       return ObjectType::A;
+   }
+
+
+   public function createByParameters(array $parameters): ObjectA {
+       $extractor = $this-&gt;extractorFactory-&gt;createByArray($parameters);
+       try {
+           $id = $extractor-&gt;getIntByKey('id');
+       } catch (ExtractorException $extractorException) {
+           throw new ErrorException('Some message', previous: $extractorException);
+       }
+
+
+       $aEntity = $this-&gt;aRepository-&gt;findById($id);
+       $data = [];
+       if ($aEntity !== null) {
+           $data = $aEntity-&gt;getSomeParams();
+       }
+       if (count($data) === 0) {
+           if (array_key_exists('default', $parameters) &amp;&amp; is_array($parameters['default'])) {
+               $data = $parameters['default'];
+           } else {
+               throw new ErrorException('Some message');
+           }
+       }
+       return new ObjectA($data);
+   }
+}
+</code></pre><p>С одной стороны, мы добавили новую зависимость, возможно, нам даже пришлось ее создать. Но зато во всех других фабриках можно не беспокоиться о подобных проблемах, тест в текущей фабрике получается всего один, и он покрывает все возможные вариации параметра id:</p><pre><code>public function testCreateByParametersThrowsErrorExceptionWhenParameterIdDoesntExist(): void {
+   $this-&gt;expectException(ErrorException::class);
+
+
+   $factoryA = new FactoryA(
+       $this-&gt;createMock(ARepository::class),
+       $extractorFactory = $this-&gt;createMock(ExtractorFactory::class),
+   );
+   $parameters = ['someParameters'];
+
+
+   $extractorFactory-&gt;expects($this-&gt;once())
+       -&gt;method('createByArray')
+       -&gt;with($parameters)
+       -&gt;willReturn($extractor = $this-&gt;createMock(Extractor::class));
+   $extractor-&gt;expects($this-&gt;once())
+       -&gt;method('getIntByKey')
+       -&gt;with('id')
+       -&gt;willThrowException($this-&gt;createMock(ExtractorException::class));
+
+
+   $factoryA-&gt;createByParameters($parameters);
+}</code></pre><p>Рассмотрим следующий блок кода, а именно:</p><pre><code class="php">$aEntity = $this-&gt;aRepository-&gt;findById($id);
+$data = [];
+if ($aEntity !== null) {
+   $data = $aEntity-&gt;getSomeParams();
+}
+if (count($data) === 0) {
+// next code
+</code></pre><p>В данном блоке происходит вызов метода зависимости <code>aRepository</code> (<code>findById</code>), который возвращает null или некую сущность с методом <code>getSomeParams</code>, метод <code>getSomeParams</code>, в свою очередь, возвращает некий массив данных. Как мы видим, переменная <code>$aEntity</code> нам нужна только для того, чтобы вызвать метод <code>getSomeParams</code>, так почему бы нам не получить сразу результат getSomeParams, если он есть, и пустой массив, если его нет? </p><pre><code class="php">$data = $this-&gt;aRepository-&gt;findSomeParamsById($id);
+
+
+if (count($data) === 0) {</code></pre><p>Сравним тесты до и после. До изменений у нас было 3 возможных поведения: 1) когда сущность найдена и <code>getSomeParams</code> возвращал непустой массив данных, 2) когда сущность найдена и <code>getSomeParams</code> возвращал пустой массив данных, 3) когда сущность не найдена</p><pre><code class="php">// case 1
+$aRepository-&gt;expects($this-&gt;once())
+   -&gt;method('findById')
+   -&gt;with($id)
+   -&gt;willReturn($this-&gt;createConfiguredMock(SomeEntity::class, [
+       'getSomeParams' =&gt; ['not empty params']
+   ]));
+
+
+// case 2
+$aRepository-&gt;expects($this-&gt;once())
+   -&gt;method('findById')
+   -&gt;with($id)
+   -&gt;willReturn($this-&gt;createConfiguredMock(SomeEntity::class, [
+       'getSomeParams' =&gt; []
+   ]));
+
+
+// case 3
+$aRepository-&gt;expects($this-&gt;once())
+   -&gt;method('findById')
+   -&gt;with($id)
+   -&gt;willReturn(null);
+</code></pre><p>в измененном коде возможных сценариев всего два: <code>findSomeParamsById</code> возвращает пустой массив или нет</p><pre><code class="php">// case 1
+$aRepository-&gt;expects($this-&gt;once())
+   -&gt;method('findSomeParamsById')
+   -&gt;with($id)
+   -&gt;willReturn([]);
+
+
+// case 2
+$aRepository-&gt;expects($this-&gt;once())
+   -&gt;method('findSomeParamsById')
+   -&gt;with($id)
+   -&gt;willReturn(['not empty params']);</code></pre><p>Помимо того, что мы сократили количество тестов, мы избавились от <code>$this-&gt;createConfiguredMock(SomeEntity::class, [..])</code>.</p><p>Далее рассмотрим блок</p><pre><code class="php">if (count($data) === 0) {
+   if (array_key_exists('default', $parameters) &amp;&amp; is_array($parameters['default'])) {
+       $data = $parameters['default'];
+   } else {
+       throw new ErrorException('Some message');
+   }
+}</code></pre><p>Так как у нас уже есть класс, который умеет извлекать данные с нужным типом, мы можем использовать его, убрав проверки из кода фабрики:</p><pre><code class="php">if (count($data) === 0) {
+   try {
+       $data = $extractor-&gt;getArrayByKey('default');
+   } catch (ExtractorException $extractorException) {
+       throw new ErrorException('Some message', previous: $extractorException);
+   }
+}
+</code></pre><p>В итоге получим класс вида:</p><pre><code class="php">class FactoryA implements FactoryInterface {
+   public function __construct(
+       private readonly ARepository        $aRepository,
+       private readonly ExtractorFactory   $extractorFactory
+   ) { }
+
+
+   public static function getType(): ObjectType {
+       return ObjectType::A;
+   }
+
+
+   public function createByParameters(array $parameters): ObjectA {
+       $extractor = $this-&gt;extractorFactory-&gt;createByArray($parameters);
+       try {
+           $id = $extractor-&gt;getIntByKey('id');
+       } catch (ExtractorException $extractorException) {
+           throw new ErrorException('Some message', previous: $extractorException);
+       }
+
+
+       $data = $this-&gt;aRepository-&gt;findSomeParamsById($id);
+
+
+       if (count($data) === 0) {
+           try {
+               $data = $extractor-&gt;getArrayByKey('default');
+           } catch (ExtractorException $extractorException) {
+               throw new ErrorException('Some message', previous: $extractorException);
+           }
+
+
+       }
+
+
+       return new ObjectA($data);
+   }
+}
+</code></pre><p>Метод createByParameters будет иметь всего 4 теста, а именно:</p><ul><li><p>тест на первое исключение (<code>getIntByKey</code>),</p></li><li><p>тест, когда <code>findSomeParamsById</code> вернул не пустой результат,</p></li><li><p>тест, когда <code>findSomeParamsById</code> вернул пустой результат и срабатывание второго исключения (<code>getArrayByKey</code>),</p></li><li><p>тест, когда <code>findSomeParamsById</code> вернул пустой результат, и <code>ObjectA</code> создался со значениями из массива 'default'.</p></li></ul><p>Однако, если требования задачи позволяют, и <code>ErrorException</code> можно заменить на <code>ExtractorException</code>, код получится еще короче:</p><pre><code class="php">class FactoryA implements FactoryInterface {
+   public function __construct(
+       private readonly ARepository        $aRepository,
+       private readonly ExtractorFactory   $extractorFactory
+   ) { }
+
+
+   public static function getType(): ObjectType {
+       return ObjectType::A;
+   }
+
+
+   /**
+    * @throws ExtractorException
+    */
+   public function createByParameters(array $parameters): ObjectA {
+       $extractor = $this-&gt;extractorFactory-&gt;createByArray($parameters);
+       $id = $extractor-&gt;getIntByKey('id');
+       $data = $this-&gt;aRepository-&gt;findSomeParamsById($id);
+
+
+       if (count($data) === 0) {
+           $data = $extractor-&gt;getArrayByKey('default');
+       }
+
+
+       return new ObjectA($data);
+   }
+}
+</code></pre><p>и тестов будет только два:</p><ul><li><p>тест, когда <code>findSomeParamsById</code> вернул не пустой результат,</p></li><li><p>тест, когда <code>findSomeParamsById</code> вернул пустой результат, и ObjectA создался со значениями из массива 'default'.</p></li></ul><h2>Итог</h2><p>Изначально у нас был плохо написанный код, который необходимо было покрыть тестами. Так как любой разработчик уверен в своем коде (пока что-то не упало с ошибкой), написание тестов для него - долгая и монотонная работа, которую никто не любит. Единственный вариант писать меньше тестов - упростить код, который этими тестами надо покрыть. В конечном счете, разработчик, упрощая и уменьшая количество тестов, улучшает код, при этом не руководствуясь какими-то не было теоретическими практиками.</p><p>Безусловно, такой подход увеличивает время разработки, но в тоже время, он заставляет писать легко тестируемый, а, следовательно, хороший код, повышая как уровень разработчика, так и уровень команды в целом, так как этот процесс быстро входит в привычку.</p></div></div></div> <!-- --> <!-- --></div> <!-- --> <!-- --></div> <!-- --> <div class="tm-article-presenter__meta"><div class="tm-article-presenter__meta-list tm-separated-list"><span class="tm-separated-list__title">Теги:</span> <ul class="tm-separated-list__list"><li class="tm-separated-list__item"><a class="tm-tags-list__link" href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5Bunit-testing%5D">unit-testing</a></li><li class="tm-separated-list__item"><a class="tm-tags-list__link" href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5Boop%5D">oop</a></li><li class="tm-separated-list__item"><a class="tm-tags-list__link" href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5Bphp%5D">php</a></li><li class="tm-separated-list__item"><a class="tm-tags-list__link" href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5Brefactoring%5D">refactoring</a></li> <!-- --></ul></div> <div class="tm-article-presenter__meta-list tm-separated-list"><span class="tm-separated-list__title">Хабы:</span> <ul class="tm-separated-list__list"><li class="tm-separated-list__item"><a class="tm-hubs-list__link" href="/ru/hubs/php/">PHP</a></li><li class="tm-separated-list__item"><a class="tm-hubs-list__link" href="/ru/hubs/refactoring/">Проектирование и рефакторинг</a></li><li class="tm-separated-list__item"><a class="tm-hubs-list__link" href="/ru/hubs/oop/">ООП</a></li> <!-- --></ul></div></div> <!-- --></article></div> <!-- --></div> <div class="tm-article-sticky-panel"><div class="tm-data-icons tm-article-sticky-panel__icons"><div class="tm-article-rating tm-data-icons__item"><div class="tm-votes-lever tm-article-rating__votes-switcher tm-votes-lever tm-votes-lever_appearance-article" title="Всего голосов 9: ↑8 и ↓1"><button class="tm-votes-lever__button" title="Нравится" type="button"><svg class="tm-svg-img tm-votes-lever__icon" height="24" width="24"><title>Голосование</title> <use xlink:href="/img/megazord-v28.faec9762..svg#counter-vote"></use></svg></button> <div class="tm-votes-lever__score tm-votes-lever__score tm-votes-lever__score_appearance-article"><span><span class="tm-votes-lever__score-counter tm-votes-lever__score-counter tm-votes-lever__score-counter_positive">
+          +7
+        </span></span></div> <button class="tm-votes-lever__button" title="Не нравится" type="button"><svg class="tm-svg-img tm-votes-lever__icon tm-votes-lever__icon_arrow-down" height="24" width="24"><title>Голосование</title> <use xlink:href="/img/megazord-v28.faec9762..svg#counter-vote"></use></svg></button></div> <div class="v-portal" style="display:none;"></div> <!-- --></div> <!-- --> <!-- --> <button class="bookmarks-button tm-data-icons__item" title="Добавить в закладки" type="button"><span class="tm-svg-icon__wrapper bookmarks-button__icon"><svg class="tm-svg-img tm-svg-icon" height="24" width="24"><title>Добавить в закладки</title> <use xlink:href="/img/megazord-v28.faec9762..svg#counter-favorite"></use></svg></span> <span class="bookmarks-button__counter" title="Количество пользователей, добавивших публикацию в закладки">
+    10
+  </span></button> <div class="tm-sharing tm-data-icons__item" title="Поделиться"><button class="tm-sharing__button" type="button"><svg class="tm-sharing__icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13.8 13.8V18l7.2-6.6L13.8 5v3.9C5 8.9 3 18.6 3 18.6c2.5-4.4 6-4.8 10.8-4.8z" fill="currentColor"></path></svg></button> <div class="v-portal" style="display:none;"></div></div> <div class="tm-article-comments-counter-link tm-data-icons__item" title="Читать комментарии"><a class="tm-article-comments-counter-link__link" href="/ru/articles/794392/comments/"><svg class="tm-svg-img tm-article-comments-counter-link__icon" height="24" width="24"><title>Комментарии</title> <use xlink:href="/img/megazord-v28.faec9762..svg#counter-comments"></use></svg> <span class="tm-article-comments-counter-link__value">
+      5
+    </span></a> <!-- --></div> <!-- --> <div class="v-portal" style="display:none;"></div></div></div></div> <div class="tm-article-presenter__footer"><div class="tm-article-blocks"><!-- --> <section class="tm-block tm-block tm-block_spacing-bottom"><!-- --> <div class="tm-block__body tm-block__body tm-block__body_variant-balanced"><div class="tm-article-author"> <div class="tm-user-card tm-article-author__user-card tm-user-card tm-user-card_variant-article"><div class="tm-user-card__info-container"><div class="tm-user-card__header"><div class="tm-user-card__header-data"><a class="tm-user-card__userpic tm-user-card__userpic_size-40" href="/ru/users/zavodnoyapl/"><div class="tm-entity-image"><img alt="" class="tm-entity-image__pic" src="https://assets.habr.com/habr-web/img/avatars/008.png"/></div></a> <div class="tm-user-card__meta"><div class="tm-counter-container tm-karma tm-karma" title=" 3 голоса "><div class="tm-counter-container__header"><div class="tm-karma__votes tm-karma__votes_positive">
+      1
+    </div></div> <div class="tm-counter-container__footer"><div class="tm-karma__text">
+      Карма
+    </div> <div class="v-portal" style="display:none;"></div></div></div> <div class="tm-counter-container" title="Рейтинг пользователя"><div class="tm-counter-container__header"> <div class="tm-votes-lever tm-votes-lever tm-votes-lever_appearance-rating"><!-- --> <div class="tm-votes-lever__score tm-votes-lever__score tm-votes-lever__score_appearance-rating"><span><span class="tm-votes-lever__score-counter tm-votes-lever__score-counter tm-votes-lever__score-counter_rating">
+          7
+        </span></span></div> <!-- --></div></div> <div class="tm-counter-container__footer"><span class="tm-rating__text tm-rating__text">
+      Рейтинг
+    </span></div></div></div></div></div> <div class="tm-user-card__info tm-user-card__info tm-user-card__info_variant-article"><div class="tm-user-card__title tm-user-card__title tm-user-card__title_variant-article"><!-- --> <a class="tm-user-card__nickname tm-user-card__nickname tm-user-card__nickname_variant-article" href="/ru/users/zavodnoyapl/">
+          @zavodnoyapl
+        </a> <!-- --></div> <p class="tm-user-card__short-info tm-user-card__short-info tm-user-card__short-info_variant-article">Пользователь</p></div></div> <div class="tm-user-card__buttons tm-user-card__buttons tm-user-card__buttons_variant-article"><!-- --> <!-- --> <!-- --> <!-- --></div></div> <!-- --></div></div> <!-- --></section> <div class="tm-adfox-banner__container tm-page-article__banner"><!-- --> <div class="tm-adfox-banner tm-adfox-banner tm-adfox-banner_variant-leaderboard" id="adfox_164725660339535756"></div></div> <div class="tm-article-blocks__comments"><div class="tm-article-page-comments" id="publication-comments"><div class="tm-article-comments-counter-link tm-article-comments-counter-button"><a class="tm-article-comments-counter-link__link tm-article-comments-counter-link__link_button-style" href="/ru/articles/794392/comments/"><svg class="tm-svg-img tm-article-comments-counter-link__icon tm-article-comments-counter-link__icon_contrasted" height="24" width="24"><title>Комментарии</title> <use xlink:href="/img/megazord-v28.faec9762..svg#counter-comments"></use></svg> <span class="tm-article-comments-counter-link__value tm-article-comments-counter-link__value_contrasted">
+       Комментарии 5 
+    </span></a> <!-- --></div></div></div> <section class="tm-block tm-block tm-block_spacing-bottom"><header class="tm-block__header tm-block__header tm-block__header_variant-borderless"><div class="tm-block__header-container"><h2 class="tm-block__title tm-block__title tm-block__title_variant-large">Публикации</h2> </div> <!-- --></header> <div class="tm-block__body tm-block__body tm-block__body_variant-condensed-slim"><div class="tm-tabs tm-tabs"><div><span class="tm-tabs__tab-item"><button class="tm-tabs__tab-link tm-tabs__tab-link tm-tabs__tab-link_active tm-tabs__tab-link_slim">
+        Лучшие за сутки
+      </button></span><span class="tm-tabs__tab-item"><button class="tm-tabs__tab-link tm-tabs__tab-link tm-tabs__tab-link_slim">
+        Похожие
+      </button></span></div> <!-- --></div> <div class="similar-and-daily__tab-view"><div class="placeholder-wrapper"><!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <div class="tm-placeholder-article-cards"><div class="tm-placeholder-article-card"><div class="tm-placeholder__user"><div class="tm-placeholder__user-pic loads"></div> <div class="tm-placeholder__user-date loads"></div></div> <div class="tm-placeholder-article-card__title"><div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div></div> <div class="tm-placeholder-article-card__icons tm-placeholder__counters"><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div></div></div><div class="tm-placeholder-article-card"><div class="tm-placeholder__user"><div class="tm-placeholder__user-pic loads"></div> <div class="tm-placeholder__user-date loads"></div></div> <div class="tm-placeholder-article-card__title"><div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div></div> <div class="tm-placeholder-article-card__icons tm-placeholder__counters"><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div></div></div><div class="tm-placeholder-article-card"><div class="tm-placeholder__user"><div class="tm-placeholder__user-pic loads"></div> <div class="tm-placeholder__user-date loads"></div></div> <div class="tm-placeholder-article-card__title"><div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div></div> <div class="tm-placeholder-article-card__icons tm-placeholder__counters"><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div></div></div><div class="tm-placeholder-article-card"><div class="tm-placeholder__user"><div class="tm-placeholder__user-pic loads"></div> <div class="tm-placeholder__user-date loads"></div></div> <div class="tm-placeholder-article-card__title"><div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div></div> <div class="tm-placeholder-article-card__icons tm-placeholder__counters"><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div></div></div><div class="tm-placeholder-article-card"><div class="tm-placeholder__user"><div class="tm-placeholder__user-pic loads"></div> <div class="tm-placeholder__user-date loads"></div></div> <div class="tm-placeholder-article-card__title"><div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div></div> <div class="tm-placeholder-article-card__icons tm-placeholder__counters"><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div></div></div></div> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --></div> <!-- --></div></div> <!-- --></section> <section class="tm-block tm-stories-block tm-block tm-block_spacing-around" data-async-called="true" data-navigatable="" tabindex="0"><header class="tm-block__header tm-block__header"><div class="tm-block__header-container"><h2 class="tm-block__title tm-block__title">Истории</h2> </div> <!-- --></header> <div class="tm-block__body tm-block__body tm-block__body_variant-equal"><div class="tm-stories-empty"><div class="tm-stories-card-empty"><div class="tm-stories-card-empty__image"></div> <div class="tm-stories-card-empty__title"><div class="tm-stories-card-empty__title-block"></div> <div class="tm-stories-card-empty__title-block"></div> <div class="tm-stories-card-empty__title-block"></div></div></div><div class="tm-stories-card-empty"><div class="tm-stories-card-empty__image"></div> <div class="tm-stories-card-empty__title"><div class="tm-stories-card-empty__title-block"></div> <div class="tm-stories-card-empty__title-block"></div> <div class="tm-stories-card-empty__title-block"></div></div></div><div class="tm-stories-card-empty"><div class="tm-stories-card-empty__image"></div> <div class="tm-stories-card-empty__title"><div class="tm-stories-card-empty__title-block"></div> <div class="tm-stories-card-empty__title-block"></div> <div class="tm-stories-card-empty__title-block"></div></div></div><div class="tm-stories-card-empty"><div class="tm-stories-card-empty__image"></div> <div class="tm-stories-card-empty__title"><div class="tm-stories-card-empty__title-block"></div> <div class="tm-stories-card-empty__title-block"></div> <div class="tm-stories-card-empty__title-block"></div></div></div><div class="tm-stories-card-empty"><div class="tm-stories-card-empty__image"></div> <div class="tm-stories-card-empty__title"><div class="tm-stories-card-empty__title-block"></div> <div class="tm-stories-card-empty__title-block"></div> <div class="tm-stories-card-empty__title-block"></div></div></div><div class="tm-stories-card-empty"><div class="tm-stories-card-empty__image"></div> <div class="tm-stories-card-empty__title"><div class="tm-stories-card-empty__title-block"></div> <div class="tm-stories-card-empty__title-block"></div> <div class="tm-stories-card-empty__title-block"></div></div></div></div> <!-- --></div> <!-- --></section> <div><div class="placeholder-wrapper"><!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <div class="tm-placeholder-inset tm-placeholder-salary"><div class="tm-placeholder-inset__header"><div class="tm-placeholder__line tm-placeholder__line_inset-header loads"></div></div> <div class="tm-placeholder-salary__body"><div class="tm-placeholder-salary__text"><div class="tm-placeholder__line tm-placeholder__line_salary_average"></div> <div class="tm-placeholder-salary__description"><div class="tm-placeholder__line loads"></div> <div class="tm-placeholder__line loads"></div> <div class="tm-placeholder__line loads"></div> <div class="tm-placeholder__line loads"></div></div></div> <div class="tm-placeholder-salary__image loads"></div></div> <div class="tm-placeholder-inset__footer tm-placeholder-inset__footer_salary"><div class="tm-placeholder__line tm-placeholder__line_inset-footer loads"></div></div></div> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --></div></div> <!-- --> <div><div class="placeholder-wrapper"><!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <div class="tm-placeholder-promo"><div class="tm-placeholder-promo__header"><div class="tm-placeholder__line tm-placeholder__line_promo-title"></div></div> <div class="tm-placeholder-promo__body"><div class="tm-placeholder-promo__posts"><div class="tm-placeholder-promo__post"><div class="tm-placeholder-promo__image"></div> <div class="tm-placeholder__line tm-placeholder__line_post-title"></div></div> <div class="tm-placeholder-promo__post"><div class="tm-placeholder-promo__image"></div> <div class="tm-placeholder__line tm-placeholder__line_post-title"></div></div> <div class="tm-placeholder-promo__post"><div class="tm-placeholder-promo__image"></div> <div class="tm-placeholder__line tm-placeholder__line_post-title"></div></div></div> <div class="tm-placeholder-promo__dots"><div class="tm-placeholder-promo__dot"></div> <div class="tm-placeholder-promo__dot"></div> <div class="tm-placeholder-promo__dot"></div></div></div></div> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --></div></div> <section class="tm-block tm-block tm-block_spacing-top" data-async-called="true"><header class="tm-block__header tm-block__header"><div class="tm-block__header-container"><h2 class="tm-block__title tm-block__title">Работа</h2> </div> <!-- --></header> <div class="tm-block__body tm-block__body"><div class="tm-vacancies-block__item"><a class="tm-vacancies-block__vacancy-title" href="https://career.habr.com/vacancies/programmist_laravel" target="_blank">
+        Разработчик Laravel
+      </a> <div class="tm-vacancies-block__vacancies-count">
+        44
+    вакансии
+      </div></div><div class="tm-vacancies-block__item"><a class="tm-vacancies-block__vacancy-title" href="https://career.habr.com/vacancies/php_programmist" target="_blank">
+        PHP программист
+      </a> <div class="tm-vacancies-block__vacancies-count">
+        138
+    вакансий
+      </div></div></div> <footer class="tm-block__footer"><a class="tm-block-extralink" href="https://career.habr.com/catalog">
+      Все вакансии
+    </a></footer></section> <section class="tm-block tm-events-block tm-block tm-block_spacing-around" data-async-called="true" data-navigatable="" tabindex="0"><header class="tm-block__header tm-block__header tm-block__header_variant-borderless"><div class="tm-block__header-container"><h2 class="tm-block__title tm-block__title">Ближайшие события</h2> </div> <!-- --></header> <div class="tm-block__body tm-block__body tm-block__body_variant-equal"><div class="swiper-container tm-events-widget" style="--swiper-space-between:22px;"><div class="swiper-wrapper"><div class="swiper-slide"><section class="tm-block tm-block tm-block_spacing-none" id="events_130" tabindex="-1"><!-- --> <div class="tm-event-card tm-event-card_is-widget tm-event-card_responsive"><img alt="" class="tm-event-card__image" data-src="https://habrastorage.org/getpro/habr/upload_files/48c/817/f0b/48c817f0b52e6b603845a694cb2cd251.png" loading="lazy" src="https://habrastorage.org/r/w390/getpro/habr/upload_files/48c/817/f0b/48c817f0b52e6b603845a694cb2cd251.png" srcset="https://habrastorage.org/r/w390/getpro/habr/upload_files/48c/817/f0b/48c817f0b52e6b603845a694cb2cd251.png, https://habrastorage.org/getpro/habr/upload_files/48c/817/f0b/48c817f0b52e6b603845a694cb2cd251.png 2x"/> <!-- --> <div class="tm-event-card__info"><a class="tm-event-card__title-link" href="/ru/events/#events_130">Как использовать облачные платформы Сloud.ru: серия демо-встреч по четвергам</a> <div class="tm-event-card__date"><div class="tm-event-card__day"><svg class="tm-svg-img tm-event-card__icon" height="24" width="24"><title>Дата</title> <use xlink:href="/img/megazord-v28.faec9762..svg#calendar"></use></svg> <span>1 – 29  февраля  </span></div> <div class="tm-event-card__time"><svg class="tm-svg-img tm-event-card__icon" height="24" width="24"><title>Время</title> <use xlink:href="/img/megazord-v28.faec9762..svg#clock"></use></svg> <span>11:00</span></div></div> <div class="tm-event-card__places"><svg class="tm-svg-img tm-event-card__icon tm-event-card__icon_place" height="24" width="24"><title>Место</title> <use xlink:href="/img/megazord-v28.faec9762..svg#geo"></use></svg> <div class="tm-event-card__places-list"><span class="tm-event-card__places-item"><span>Онлайн</span> <!-- --></span></div></div> <div class="tm-event-card__footer"><a class="tm-event-card__link" href="/ru/events/#events_130">
+            Подробнее в календаре
+          </a></div></div> <!-- --></div> <!-- --></section></div><div class="swiper-slide"><section class="tm-block tm-block tm-block_spacing-none" id="events_154" tabindex="-1"><!-- --> <div class="tm-event-card tm-event-card_is-widget tm-event-card_responsive"><img alt="" class="tm-event-card__image" data-src="https://habrastorage.org/getpro/habr/upload_files/79a/ee8/11d/79aee811d3b1883b61032cc3a14949d7.png" loading="lazy" src="https://habrastorage.org/r/w390/getpro/habr/upload_files/79a/ee8/11d/79aee811d3b1883b61032cc3a14949d7.png" srcset="https://habrastorage.org/r/w390/getpro/habr/upload_files/79a/ee8/11d/79aee811d3b1883b61032cc3a14949d7.png, https://habrastorage.org/getpro/habr/upload_files/79a/ee8/11d/79aee811d3b1883b61032cc3a14949d7.png 2x"/> <!-- --> <div class="tm-event-card__info"><a class="tm-event-card__title-link" href="/ru/events/#events_154">Конкурс грантов на обучение IT-профессиям от Хекслета</a> <div class="tm-event-card__date"><div class="tm-event-card__day"><svg class="tm-svg-img tm-event-card__icon" height="24" width="24"><title>Дата</title> <use xlink:href="/img/megazord-v28.faec9762..svg#calendar"></use></svg> <span>5 – 29  февраля  </span></div> <!-- --></div> <div class="tm-event-card__places"><svg class="tm-svg-img tm-event-card__icon tm-event-card__icon_place" height="24" width="24"><title>Место</title> <use xlink:href="/img/megazord-v28.faec9762..svg#geo"></use></svg> <div class="tm-event-card__places-list"><span class="tm-event-card__places-item"><span>Онлайн</span> <!-- --></span></div></div> <div class="tm-event-card__footer"><a class="tm-event-card__link" href="/ru/events/#events_154">
+            Подробнее в календаре
+          </a></div></div> <!-- --></div> <!-- --></section></div><div class="swiper-slide"><section class="tm-block tm-block tm-block_spacing-none" id="events_162" tabindex="-1"><!-- --> <div class="tm-event-card tm-event-card_is-widget tm-event-card_responsive"><img alt="" class="tm-event-card__image" data-src="https://habrastorage.org/getpro/habr/upload_files/6d4/136/22c/6d413622ccff3c25ae26659f337e7dca.png" loading="lazy" src="https://habrastorage.org/r/w390/getpro/habr/upload_files/6d4/136/22c/6d413622ccff3c25ae26659f337e7dca.png" srcset="https://habrastorage.org/r/w390/getpro/habr/upload_files/6d4/136/22c/6d413622ccff3c25ae26659f337e7dca.png, https://habrastorage.org/getpro/habr/upload_files/6d4/136/22c/6d413622ccff3c25ae26659f337e7dca.png 2x"/> <!-- --> <div class="tm-event-card__info"><a class="tm-event-card__title-link" href="/ru/events/#events_162">One Day Offer от УЦСБ</a> <div class="tm-event-card__date"><div class="tm-event-card__day"><svg class="tm-svg-img tm-event-card__icon" height="24" width="24"><title>Дата</title> <use xlink:href="/img/megazord-v28.faec9762..svg#calendar"></use></svg> <span>17  февраля  </span></div> <div class="tm-event-card__time"><svg class="tm-svg-img tm-event-card__icon" height="24" width="24"><title>Время</title> <use xlink:href="/img/megazord-v28.faec9762..svg#clock"></use></svg> <span>10:00</span></div></div> <div class="tm-event-card__places"><svg class="tm-svg-img tm-event-card__icon tm-event-card__icon_place" height="24" width="24"><title>Место</title> <use xlink:href="/img/megazord-v28.faec9762..svg#geo"></use></svg> <div class="tm-event-card__places-list"><span class="tm-event-card__places-item"><span>Онлайн</span> <!-- --></span></div></div> <div class="tm-event-card__footer"><a class="tm-event-card__link" href="/ru/events/#events_162">
+            Подробнее в календаре
+          </a></div></div> <!-- --></div> <!-- --></section></div><div class="swiper-slide"><section class="tm-block tm-block tm-block_spacing-none" id="events_142" tabindex="-1"><!-- --> <div class="tm-event-card tm-event-card_is-widget tm-event-card_responsive"><img alt="" class="tm-event-card__image" data-src="https://habrastorage.org/getpro/habr/upload_files/d1e/a22/4cd/d1ea224cd82ae67817b7cac7f7fc052c.png" loading="lazy" src="https://habrastorage.org/r/w390/getpro/habr/upload_files/d1e/a22/4cd/d1ea224cd82ae67817b7cac7f7fc052c.png" srcset="https://habrastorage.org/r/w390/getpro/habr/upload_files/d1e/a22/4cd/d1ea224cd82ae67817b7cac7f7fc052c.png, https://habrastorage.org/getpro/habr/upload_files/d1e/a22/4cd/d1ea224cd82ae67817b7cac7f7fc052c.png 2x"/> <!-- --> <div class="tm-event-card__info"><a class="tm-event-card__title-link" href="/ru/events/#events_142">Первая всероссийская студенческая олимпиада по фронтенду</a> <div class="tm-event-card__date"><div class="tm-event-card__day"><svg class="tm-svg-img tm-event-card__icon" height="24" width="24"><title>Дата</title> <use xlink:href="/img/megazord-v28.faec9762..svg#calendar"></use></svg> <span>18 – 19  февраля  </span></div> <!-- --></div> <div class="tm-event-card__places"><svg class="tm-svg-img tm-event-card__icon tm-event-card__icon_place" height="24" width="24"><title>Место</title> <use xlink:href="/img/megazord-v28.faec9762..svg#geo"></use></svg> <div class="tm-event-card__places-list"><span class="tm-event-card__places-item"><span>Онлайн</span> <!-- --></span></div></div> <div class="tm-event-card__footer"><a class="tm-event-card__link" href="/ru/events/#events_142">
+            Подробнее в календаре
+          </a></div></div> <!-- --></div> <!-- --></section></div><div class="swiper-slide"><section class="tm-block tm-block tm-block_spacing-none" id="events_174" tabindex="-1"><!-- --> <div class="tm-event-card tm-event-card_is-widget tm-event-card_responsive"><img alt="" class="tm-event-card__image" data-src="https://habrastorage.org/getpro/habr/upload_files/320/03e/2a8/32003e2a83ad34dc656a4fcd93974ea7.png" loading="lazy" src="https://habrastorage.org/r/w390/getpro/habr/upload_files/320/03e/2a8/32003e2a83ad34dc656a4fcd93974ea7.png" srcset="https://habrastorage.org/r/w390/getpro/habr/upload_files/320/03e/2a8/32003e2a83ad34dc656a4fcd93974ea7.png, https://habrastorage.org/getpro/habr/upload_files/320/03e/2a8/32003e2a83ad34dc656a4fcd93974ea7.png 2x"/> <!-- --> <div class="tm-event-card__info"><a class="tm-event-card__title-link" href="/ru/events/#events_174">СБП Dev Meetup: онлайн-митап для backend-разработчиков</a> <div class="tm-event-card__date"><div class="tm-event-card__day"><svg class="tm-svg-img tm-event-card__icon" height="24" width="24"><title>Дата</title> <use xlink:href="/img/megazord-v28.faec9762..svg#calendar"></use></svg> <span>19  февраля  </span></div> <div class="tm-event-card__time"><svg class="tm-svg-img tm-event-card__icon" height="24" width="24"><title>Время</title> <use xlink:href="/img/megazord-v28.faec9762..svg#clock"></use></svg> <span>17:00</span></div></div> <div class="tm-event-card__places"><svg class="tm-svg-img tm-event-card__icon tm-event-card__icon_place" height="24" width="24"><title>Место</title> <use xlink:href="/img/megazord-v28.faec9762..svg#geo"></use></svg> <div class="tm-event-card__places-list"><span class="tm-event-card__places-item"><span>Онлайн</span> <!-- --></span></div></div> <div class="tm-event-card__footer"><a class="tm-event-card__link" href="/ru/events/#events_174">
+            Подробнее в календаре
+          </a></div></div> <!-- --></div> <!-- --></section></div><div class="swiper-slide"><section class="tm-block tm-block tm-block_spacing-none" id="events_156" tabindex="-1"><!-- --> <div class="tm-event-card tm-event-card_is-widget tm-event-card_responsive"><img alt="" class="tm-event-card__image" data-src="https://habrastorage.org/getpro/habr/upload_files/ed3/70c/212/ed370c212aac499c0289e66545c1c82e.png" loading="lazy" src="https://habrastorage.org/r/w390/getpro/habr/upload_files/ed3/70c/212/ed370c212aac499c0289e66545c1c82e.png" srcset="https://habrastorage.org/r/w390/getpro/habr/upload_files/ed3/70c/212/ed370c212aac499c0289e66545c1c82e.png, https://habrastorage.org/getpro/habr/upload_files/ed3/70c/212/ed370c212aac499c0289e66545c1c82e.png 2x"/> <!-- --> <div class="tm-event-card__info"><a class="tm-event-card__title-link" href="/ru/events/#events_156">Практический урок «Hard Skills корпоративного архитектора»</a> <div class="tm-event-card__date"><div class="tm-event-card__day"><svg class="tm-svg-img tm-event-card__icon" height="24" width="24"><title>Дата</title> <use xlink:href="/img/megazord-v28.faec9762..svg#calendar"></use></svg> <span>19  февраля  </span></div> <div class="tm-event-card__time"><svg class="tm-svg-img tm-event-card__icon" height="24" width="24"><title>Время</title> <use xlink:href="/img/megazord-v28.faec9762..svg#clock"></use></svg> <span>19:00</span></div></div> <div class="tm-event-card__places"><svg class="tm-svg-img tm-event-card__icon tm-event-card__icon_place" height="24" width="24"><title>Место</title> <use xlink:href="/img/megazord-v28.faec9762..svg#geo"></use></svg> <div class="tm-event-card__places-list"><span class="tm-event-card__places-item"><span>Онлайн</span> <!-- --></span></div></div> <div class="tm-event-card__footer"><a class="tm-event-card__link" href="/ru/events/#events_156">
+            Подробнее в календаре
+          </a></div></div> <!-- --></div> <!-- --></section></div><div class="swiper-slide"><section class="tm-block tm-block tm-block_spacing-none" id="events_164" tabindex="-1"><!-- --> <div class="tm-event-card tm-event-card_is-widget tm-event-card_responsive"><img alt="" class="tm-event-card__image" data-src="https://habrastorage.org/getpro/habr/upload_files/c75/441/935/c7544193515536c86f9e6dce2908340b.png" loading="lazy" src="https://habrastorage.org/r/w390/getpro/habr/upload_files/c75/441/935/c7544193515536c86f9e6dce2908340b.png" srcset="https://habrastorage.org/r/w390/getpro/habr/upload_files/c75/441/935/c7544193515536c86f9e6dce2908340b.png, https://habrastorage.org/getpro/habr/upload_files/c75/441/935/c7544193515536c86f9e6dce2908340b.png 2x"/> <!-- --> <div class="tm-event-card__info"><a class="tm-event-card__title-link" href="/ru/events/#events_164">Открытый урок «Stand Up "Team Lead". Открытый микрофон. 5 спикеров курса»</a> <div class="tm-event-card__date"><div class="tm-event-card__day"><svg class="tm-svg-img tm-event-card__icon" height="24" width="24"><title>Дата</title> <use xlink:href="/img/megazord-v28.faec9762..svg#calendar"></use></svg> <span>19  февраля  </span></div> <div class="tm-event-card__time"><svg class="tm-svg-img tm-event-card__icon" height="24" width="24"><title>Время</title> <use xlink:href="/img/megazord-v28.faec9762..svg#clock"></use></svg> <span>20:00</span></div></div> <div class="tm-event-card__places"><svg class="tm-svg-img tm-event-card__icon tm-event-card__icon_place" height="24" width="24"><title>Место</title> <use xlink:href="/img/megazord-v28.faec9762..svg#geo"></use></svg> <div class="tm-event-card__places-list"><span class="tm-event-card__places-item"><span>Онлайн</span> <!-- --></span></div></div> <div class="tm-event-card__footer"><a class="tm-event-card__link" href="/ru/events/#events_164">
+            Подробнее в календаре
+          </a></div></div> <!-- --></div> <!-- --></section></div><div class="swiper-slide"><section class="tm-block tm-block tm-block_spacing-none" id="events_170" tabindex="-1"><!-- --> <div class="tm-event-card tm-event-card_is-widget tm-event-card_responsive"><img alt="" class="tm-event-card__image" data-src="https://habrastorage.org/getpro/habr/upload_files/a9b/40b/bbb/a9b40bbbbd5a1f307dcc513f764bbecc.png" loading="lazy" src="https://habrastorage.org/r/w390/getpro/habr/upload_files/a9b/40b/bbb/a9b40bbbbd5a1f307dcc513f764bbecc.png" srcset="https://habrastorage.org/r/w390/getpro/habr/upload_files/a9b/40b/bbb/a9b40bbbbd5a1f307dcc513f764bbecc.png, https://habrastorage.org/getpro/habr/upload_files/a9b/40b/bbb/a9b40bbbbd5a1f307dcc513f764bbecc.png 2x"/> <!-- --> <div class="tm-event-card__info"><a class="tm-event-card__title-link" href="/ru/events/#events_170">Вебинар «Разрабатываем pipeline в ClearML и удаленный запуск на сервер»</a> <div class="tm-event-card__date"><div class="tm-event-card__day"><svg class="tm-svg-img tm-event-card__icon" height="24" width="24"><title>Дата</title> <use xlink:href="/img/megazord-v28.faec9762..svg#calendar"></use></svg> <span>21  февраля  </span></div> <div class="tm-event-card__time"><svg class="tm-svg-img tm-event-card__icon" height="24" width="24"><title>Время</title> <use xlink:href="/img/megazord-v28.faec9762..svg#clock"></use></svg> <span>20:00</span></div></div> <div class="tm-event-card__places"><svg class="tm-svg-img tm-event-card__icon tm-event-card__icon_place" height="24" width="24"><title>Место</title> <use xlink:href="/img/megazord-v28.faec9762..svg#geo"></use></svg> <div class="tm-event-card__places-list"><span class="tm-event-card__places-item"><span>Онлайн</span> <!-- --></span></div></div> <div class="tm-event-card__footer"><a class="tm-event-card__link" href="/ru/events/#events_170">
+            Подробнее в календаре
+          </a></div></div> <!-- --></div> <!-- --></section></div><div class="swiper-slide"><section class="tm-block tm-block tm-block_spacing-none" id="events_172" tabindex="-1"><!-- --> <div class="tm-event-card tm-event-card_is-widget tm-event-card_responsive"><img alt="" class="tm-event-card__image" data-src="https://habrastorage.org/getpro/habr/upload_files/313/b18/417/313b1841795dcbd1f8389131f4b5d3e8.png" loading="lazy" src="https://habrastorage.org/r/w390/getpro/habr/upload_files/313/b18/417/313b1841795dcbd1f8389131f4b5d3e8.png" srcset="https://habrastorage.org/r/w390/getpro/habr/upload_files/313/b18/417/313b1841795dcbd1f8389131f4b5d3e8.png, https://habrastorage.org/getpro/habr/upload_files/313/b18/417/313b1841795dcbd1f8389131f4b5d3e8.png 2x"/> <!-- --> <div class="tm-event-card__info"><a class="tm-event-card__title-link" href="/ru/events/#events_172">Онлайн-урок «Компетенции и личные навыки операционного директора в IT»</a> <div class="tm-event-card__date"><div class="tm-event-card__day"><svg class="tm-svg-img tm-event-card__icon" height="24" width="24"><title>Дата</title> <use xlink:href="/img/megazord-v28.faec9762..svg#calendar"></use></svg> <span>21  февраля  </span></div> <div class="tm-event-card__time"><svg class="tm-svg-img tm-event-card__icon" height="24" width="24"><title>Время</title> <use xlink:href="/img/megazord-v28.faec9762..svg#clock"></use></svg> <span>20:00</span></div></div> <div class="tm-event-card__places"><svg class="tm-svg-img tm-event-card__icon tm-event-card__icon_place" height="24" width="24"><title>Место</title> <use xlink:href="/img/megazord-v28.faec9762..svg#geo"></use></svg> <div class="tm-event-card__places-list"><span class="tm-event-card__places-item"><span>Онлайн</span> <!-- --></span></div></div> <div class="tm-event-card__footer"><a class="tm-event-card__link" href="/ru/events/#events_172">
+            Подробнее в календаре
+          </a></div></div> <!-- --></div> <!-- --></section></div><div class="swiper-slide"><section class="tm-block tm-block tm-block_spacing-none" id="events_122" tabindex="-1"><!-- --> <div class="tm-event-card tm-event-card_is-widget tm-event-card_responsive"><img alt="" class="tm-event-card__image" data-src="https://habrastorage.org/getpro/habr/upload_files/d6e/1b0/4c8/d6e1b04c878148e37a547e03a37c18ee.png" loading="lazy" src="https://habrastorage.org/r/w390/getpro/habr/upload_files/d6e/1b0/4c8/d6e1b04c878148e37a547e03a37c18ee.png" srcset="https://habrastorage.org/r/w390/getpro/habr/upload_files/d6e/1b0/4c8/d6e1b04c878148e37a547e03a37c18ee.png, https://habrastorage.org/getpro/habr/upload_files/d6e/1b0/4c8/d6e1b04c878148e37a547e03a37c18ee.png 2x"/> <!-- --> <div class="tm-event-card__info"><a class="tm-event-card__title-link" href="/ru/events/#events_122">Вебинар «Лихие джуновские: что нужно знать про найм в ML/DS в начале карьеры»</a> <div class="tm-event-card__date"><div class="tm-event-card__day"><svg class="tm-svg-img tm-event-card__icon" height="24" width="24"><title>Дата</title> <use xlink:href="/img/megazord-v28.faec9762..svg#calendar"></use></svg> <span>27  февраля  </span></div> <div class="tm-event-card__time"><svg class="tm-svg-img tm-event-card__icon" height="24" width="24"><title>Время</title> <use xlink:href="/img/megazord-v28.faec9762..svg#clock"></use></svg> <span>20:00</span></div></div> <div class="tm-event-card__places"><svg class="tm-svg-img tm-event-card__icon tm-event-card__icon_place" height="24" width="24"><title>Место</title> <use xlink:href="/img/megazord-v28.faec9762..svg#geo"></use></svg> <div class="tm-event-card__places-list"><span class="tm-event-card__places-item"><span>Онлайн</span> <!-- --></span></div></div> <div class="tm-event-card__footer"><a class="tm-event-card__link" href="/ru/events/#events_122">
+            Подробнее в календаре
+          </a></div></div> <!-- --></div> <!-- --></section></div><div class="swiper-slide"><section class="tm-block tm-block tm-block_spacing-none" id="events_176" tabindex="-1"><!-- --> <div class="tm-event-card tm-event-card_is-widget tm-event-card_responsive"><img alt="" class="tm-event-card__image" data-src="https://habrastorage.org/getpro/habr/upload_files/ac9/383/51c/ac938351c65f564f8b0bf373c436de53.png" loading="lazy" src="https://habrastorage.org/r/w390/getpro/habr/upload_files/ac9/383/51c/ac938351c65f564f8b0bf373c436de53.png" srcset="https://habrastorage.org/r/w390/getpro/habr/upload_files/ac9/383/51c/ac938351c65f564f8b0bf373c436de53.png, https://habrastorage.org/getpro/habr/upload_files/ac9/383/51c/ac938351c65f564f8b0bf373c436de53.png 2x"/> <!-- --> <div class="tm-event-card__info"><a class="tm-event-card__title-link" href="/ru/events/#events_176">Серия занятий «Тренировки по алгоритмам 5.0» от Яндекса</a> <div class="tm-event-card__date"><div class="tm-event-card__day"><svg class="tm-svg-img tm-event-card__icon" height="24" width="24"><title>Дата</title> <use xlink:href="/img/megazord-v28.faec9762..svg#calendar"></use></svg> <span>1  марта   – 19  апреля  </span></div> <div class="tm-event-card__time"><svg class="tm-svg-img tm-event-card__icon" height="24" width="24"><title>Время</title> <use xlink:href="/img/megazord-v28.faec9762..svg#clock"></use></svg> <span>19:00</span></div></div> <div class="tm-event-card__places"><svg class="tm-svg-img tm-event-card__icon tm-event-card__icon_place" height="24" width="24"><title>Место</title> <use xlink:href="/img/megazord-v28.faec9762..svg#geo"></use></svg> <div class="tm-event-card__places-list"><span class="tm-event-card__places-item"><span>Онлайн</span> <!-- --></span></div></div> <div class="tm-event-card__footer"><a class="tm-event-card__link" href="/ru/events/#events_176">
+            Подробнее в календаре
+          </a></div></div> <!-- --></div> <!-- --></section></div><div class="swiper-slide"><section class="tm-block tm-block tm-block_spacing-none" id="events_140" tabindex="-1"><!-- --> <div class="tm-event-card tm-event-card_is-widget tm-event-card_responsive"><img alt="" class="tm-event-card__image" data-src="https://habrastorage.org/getpro/habr/upload_files/2a5/b6d/6fc/2a5b6d6fc13caf3dabce9c8ab833e282.png" loading="lazy" src="https://habrastorage.org/r/w390/getpro/habr/upload_files/2a5/b6d/6fc/2a5b6d6fc13caf3dabce9c8ab833e282.png" srcset="https://habrastorage.org/r/w390/getpro/habr/upload_files/2a5/b6d/6fc/2a5b6d6fc13caf3dabce9c8ab833e282.png, https://habrastorage.org/getpro/habr/upload_files/2a5/b6d/6fc/2a5b6d6fc13caf3dabce9c8ab833e282.png 2x"/> <!-- --> <div class="tm-event-card__info"><a class="tm-event-card__title-link" href="/ru/events/#events_140">DevOpsConf 2024: конференция для инженеров и всех, кто должен понимать инженеров</a> <div class="tm-event-card__date"><div class="tm-event-card__day"><svg class="tm-svg-img tm-event-card__icon" height="24" width="24"><title>Дата</title> <use xlink:href="/img/megazord-v28.faec9762..svg#calendar"></use></svg> <span>4 – 5  марта  </span></div> <div class="tm-event-card__time"><svg class="tm-svg-img tm-event-card__icon" height="24" width="24"><title>Время</title> <use xlink:href="/img/megazord-v28.faec9762..svg#clock"></use></svg> <span>10:00 – 20:00</span></div></div> <div class="tm-event-card__places"><svg class="tm-svg-img tm-event-card__icon tm-event-card__icon_place" height="24" width="24"><title>Место</title> <use xlink:href="/img/megazord-v28.faec9762..svg#geo"></use></svg> <div class="tm-event-card__places-list"><span class="tm-event-card__places-item"><span>Москва</span> <span class="tm-event-card__places-separator"> • </span></span><span class="tm-event-card__places-item"><span>Онлайн</span> <!-- --></span></div></div> <div class="tm-event-card__footer"><a class="tm-event-card__link" href="/ru/events/#events_140">
+            Подробнее в календаре
+          </a></div></div> <!-- --></div> <!-- --></section></div><div class="swiper-slide"><section class="tm-block tm-block tm-block_spacing-none" id="events_160" tabindex="-1"><!-- --> <div class="tm-event-card tm-event-card_is-widget tm-event-card_responsive"><img alt="" class="tm-event-card__image" data-src="https://habrastorage.org/getpro/habr/upload_files/9e2/1fc/f5c/9e21fcf5cb7e9bae5b0f7cb2fafd6a99.png" loading="lazy" src="https://habrastorage.org/r/w390/getpro/habr/upload_files/9e2/1fc/f5c/9e21fcf5cb7e9bae5b0f7cb2fafd6a99.png" srcset="https://habrastorage.org/r/w390/getpro/habr/upload_files/9e2/1fc/f5c/9e21fcf5cb7e9bae5b0f7cb2fafd6a99.png, https://habrastorage.org/getpro/habr/upload_files/9e2/1fc/f5c/9e21fcf5cb7e9bae5b0f7cb2fafd6a99.png 2x"/> <!-- --> <div class="tm-event-card__info"><a class="tm-event-card__title-link" href="/ru/events/#events_160">«GoCloud 2024. Облачные грани будущего» — IT-конференция Cloud.ru про облака</a> <div class="tm-event-card__date"><div class="tm-event-card__day"><svg class="tm-svg-img tm-event-card__icon" height="24" width="24"><title>Дата</title> <use xlink:href="/img/megazord-v28.faec9762..svg#calendar"></use></svg> <span>21  марта  </span></div> <div class="tm-event-card__time"><svg class="tm-svg-img tm-event-card__icon" height="24" width="24"><title>Время</title> <use xlink:href="/img/megazord-v28.faec9762..svg#clock"></use></svg> <span>09:00 – 18:00</span></div></div> <div class="tm-event-card__places"><svg class="tm-svg-img tm-event-card__icon tm-event-card__icon_place" height="24" width="24"><title>Место</title> <use xlink:href="/img/megazord-v28.faec9762..svg#geo"></use></svg> <div class="tm-event-card__places-list"><span class="tm-event-card__places-item"><span>Москва</span> <span class="tm-event-card__places-separator"> • </span></span><span class="tm-event-card__places-item"><span>Онлайн</span> <!-- --></span></div></div> <div class="tm-event-card__footer"><a class="tm-event-card__link" href="/ru/events/#events_160">
+            Подробнее в календаре
+          </a></div></div> <!-- --></div> <!-- --></section></div></div> <!-- --> <button class="swiper-button-prev"><span class="tm-svg-icon__wrapper swiper-button-icon"><svg class="tm-svg-img tm-svg-icon" height="24" width="24"><title>Влево</title> <use xlink:href="/img/megazord-v28.faec9762..svg#arrow-back"></use></svg></span></button> <button class="swiper-button-next"><span class="tm-svg-icon__wrapper swiper-button-icon"><svg class="tm-svg-img tm-svg-icon" height="24" width="24"><title>Вправо</title> <use xlink:href="/img/megazord-v28.faec9762..svg#arrow-back"></use></svg></span></button></div></div> <!-- --></section></div></div></div></div></div> <div class="tm-page__sidebar"><!-- --></div></div></div></div></main> <!-- --></div> <!-- --> <div class="tm-footer"><div class="tm-page-width"><div class="tm-footer__container"><div class="tm-footer__title"><a class="tm-svg-icon__wrapper tm-footer__title-link" href="/ru/"><svg class="tm-svg-img tm-svg-icon" height="16" width="16"><title>Хабр</title> <use xlink:href="/img/habr-logo-ru.svg#logo"></use></svg></a></div> <div class="tm-footer__social"><a class="tm-svg-icon__wrapper tm-social-icons__icon" href="https://www.facebook.com/habrahabr.ru" rel="nofollow noopener noreferrer" target="_blank"><svg class="tm-svg-img tm-svg-icon" height="36" width="36"><title>Facebook</title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-facebook"></use></svg></a><a class="tm-svg-icon__wrapper tm-social-icons__icon" href="https://twitter.com/habr_com" rel="nofollow noopener noreferrer" target="_blank"><svg class="tm-svg-img tm-svg-icon" height="36" width="36"><title>Twitter</title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-twitter"></use></svg></a><a class="tm-svg-icon__wrapper tm-social-icons__icon" href="https://vk.com/habr" rel="nofollow noopener noreferrer" target="_blank"><svg class="tm-svg-img tm-svg-icon" height="36" width="36"><title>VK</title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-vk"></use></svg></a><a class="tm-svg-icon__wrapper tm-social-icons__icon" href="https://telegram.me/habr_com" rel="nofollow noopener noreferrer" target="_blank"><svg class="tm-svg-img tm-svg-icon" height="36" width="36"><title>Telegram</title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-telegram"></use></svg></a><a class="tm-svg-icon__wrapper tm-social-icons__icon" href="https://www.youtube.com/channel/UCd_sTwKqVrweTt4oAKY5y4w" rel="nofollow noopener noreferrer" target="_blank"><svg class="tm-svg-img tm-svg-icon" height="36" width="36"><title>Youtube</title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-youtube"></use></svg></a><a class="tm-svg-icon__wrapper tm-social-icons__icon" href="https://dzen.ru/habr" rel="nofollow noopener noreferrer" target="_blank"><svg class="tm-svg-img tm-svg-icon" height="36" width="36"><title>Яндекс Дзен</title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-dzen"></use></svg></a></div> <div class="v-portal" style="display:none;"></div> <button class="tm-footer__link"><svg class="tm-svg-img tm-footer__icon" height="16" width="16"><title>Язык</title> <use xlink:href="/img/megazord-v28.faec9762..svg#lang"></use></svg>
+        Настройка языка
+      </button> <a class="tm-footer__link" href="/ru/feedback/">
+        Техническая поддержка
+      </a> <div class="tm-footer-copyright"><span class="tm-copyright"><span class="tm-copyright__years">© 2006–2024, </span> <span class="tm-copyright__name"><a class="tm-copyright__link" href="https://company.habr.com/" rel="noopener" target="_blank">Habr</a></span></span></div></div></div></div> <!-- --></div> <div class="vue-portal-target"></div></div>
+
+
+
+
+
+<noscript>
+<div>
+<img alt="" src="https://mc.yandex.ru/watch/24049213" style="position:absolute; left:-9999px;">
+</img></div>
+</noscript>
+
+
+</body>
+</html>

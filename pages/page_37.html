@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+
+<html data-vue-meta="%7B%22lang%22:%7B%22ssr%22:%22ru%22%7D%7D" lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1.0,viewport-fit=cover,maximum-scale=1,user-scalable=0" name="viewport"/>
+<meta content="unsafe-url" name="referrer"/>
+<title>Запускаем Steam игры в Proton c поддержкой Native Wayland / Хабр</title>
+
+
+
+
+
+
+
+<meta content="2.165.0" name="habr-version"/>
+<meta content="444736788986613" data-vue-meta="ssr" property="fb:app_id"/><meta content="472597926099084" data-vue-meta="ssr" property="fb:pages"/><meta content="summary_large_image" data-vue-meta="ssr" name="twitter:card"/><meta content="@habr_com" data-vue-meta="ssr" name="twitter:site"/><meta content="Хабр" data-vmid="og:site_name" data-vue-meta="ssr" property="og:site_name"/><meta content="Запускаем Steam игры в Proton c поддержкой Native Wayland" data-vmid="og:title" data-vue-meta="ssr" property="og:title"/><meta content="Запускаем Steam игры в Proton c поддержкой Native Wayland" data-vmid="twitter:title" data-vue-meta="ssr" name="twitter:title"/><meta content="Запускаем Steam игры в Proton c поддержкой Native Wayland" data-vmid="aiturec:title" data-vue-meta="ssr" name="aiturec:title"/><meta content="Иллюстрации к статье подготовлены нейросетью freepik.com. В первой части нашей статьи, мы научились собирать Wine с поддержкой Wayland и запустили игру Overwatch 2. Но для большинства геймеров..." data-vmid="description" data-vue-meta="ssr" name="description"/><meta content="Иллюстрации к статье подготовлены нейросетью freepik.com. В первой части нашей статьи, мы научились собирать Wine с поддержкой Wayland и запустили игру Overwatch 2. Но для большинства геймеров..." data-vmid="description:itemprop" data-vue-meta="ssr" itemprop="description"/><meta content="Иллюстрации к статье подготовлены нейросетью freepik.com. В первой части нашей статьи, мы научились собирать Wine с поддержкой Wayland и запустили игру Overwatch 2. Но для большинства геймеров..." data-vmid="og:description" data-vue-meta="ssr" property="og:description"/><meta content="Иллюстрации к статье подготовлены нейросетью freepik.com. В первой части нашей статьи, мы научились собирать Wine с поддержкой Wayland и запустили игру Overwatch 2. Но для большинства геймеров..." data-vmid="twitter:description" data-vue-meta="ssr" name="twitter:description"/><meta content="Иллюстрации к статье подготовлены нейросетью freepik.com. В первой части нашей статьи, мы научились собирать Wine с поддержкой Wayland и запустили игру Overwatch 2. Но для большинства геймеров..." data-vmid="aiturec:description" data-vue-meta="ssr" property="aiturec:description"/><meta content="https://habrastorage.org/webt/lh/k3/mc/lhk3mc59ms-cjwlcsan1lcmufus.jpeg" data-vmid="image:itemprop" data-vue-meta="ssr" itemprop="image"/><meta content="https://habrastorage.org/webt/lh/k3/mc/lhk3mc59ms-cjwlcsan1lcmufus.jpeg" data-vmid="og:image" data-vue-meta="ssr" property="og:image"/><meta content="1200" data-vmid="og:image:width" data-vue-meta="ssr" property="og:image:width"/><meta content="630" data-vmid="og:image:height" data-vue-meta="ssr" property="og:image:height"/><meta content="https://habrastorage.org/webt/lh/k3/mc/lhk3mc59ms-cjwlcsan1lcmufus.jpeg" data-vmid="aiturec:image" data-vue-meta="ssr" property="aiturec:image"/><meta content="https://habrastorage.org/webt/lh/k3/mc/lhk3mc59ms-cjwlcsan1lcmufus.jpeg" data-vmid="twitter:image" data-vue-meta="ssr" name="twitter:image"/><meta content="https://habrastorage.org/webt/lh/k3/mc/lhk3mc59ms-cjwlcsan1lcmufus.jpeg?format=vk" data-vmid="vk:image" data-vue-meta="ssr" property="vk:image"/><meta content="791570" data-vmid="aiturec:item_id" data-vue-meta="ssr" property="aiturec:item_id"/><meta content="2024-02-16T08:01:14.000Z" data-vmid="aiturec:datetime" data-vue-meta="ssr" property="aiturec:datetime"/><meta content="https://habr.com/ru/companies/timeweb/articles/791570/" data-vmid="og:url" data-vue-meta="ssr" property="og:url"/><meta content="article" data-vmid="og:type" data-vue-meta="ssr" property="og:type"/><meta content="ru_RU" data-vmid="og:locale" data-vue-meta="ssr" property="og:locale"/><meta content="timeweb_статьи, linux, games, wine, proton, wayland, steam, python, nvidia, valve, overwatch 2, apex legends" data-vue-meta="ssr" name="keywords"/>
+
+<meta content="#303b44" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="#629FBC" name="msapplication-TileColor"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+<body>
+<div data-async-called="true" data-server-rendered="true" id="app"><div class="tm-layout__wrapper"><!-- --> <div></div> <div class="tm-feature tm-feature"><!-- --></div> <header class="tm-header"><div class="tm-page-width"><div class="tm-header__container"><div class="tm-header__burger-nav"><button class="tm-header__button tm-header__button_burger" type="button"><svg class="tm-svg-img tm-header__icon tm-header__icon-burger" height="16" width="16"><title>Меню</title> <use xlink:href="/img/megazord-v28.faec9762..svg#header-burger"></use></svg></button></div> <span class="tm-header__logo-wrap"><a class="tm-header__logo tm-header__logo tm-header__logo_hl-ru" href="/ru/"><svg class="tm-svg-img tm-header__icon" height="16" width="16"><title>Хабр</title> <use xlink:href="/img/habr-logo-ru.svg#logo"></use></svg></a> <span class="tm-header__beta-sign" style="display:none;">β</span></span> <!-- --> <div class="tm-header-user-menu tm-header_user-menu"><a class="tm-header-user-menu__item tm-header-user-menu__search" href="/ru/search/"><svg class="tm-svg-img tm-header-user-menu__icon tm-header-user-menu__icon_search" height="24" width="24"><title>Поиск</title> <use xlink:href="/img/megazord-v28.faec9762..svg#search"></use></svg></a> <!-- --> <!-- --> <!-- --> <div class="tm-header-user-menu__item"><button class="tm-header-user-menu__toggle"><svg class="tm-svg-img tm-header-user-menu__icon" height="24" width="24"><title>Настройки</title> <use xlink:href="/img/megazord-v28.faec9762..svg#page-settings"></use></svg></button></div> <a class="tm-header-user-menu__item" href="https://habr.com/kek/v1/auth/habrahabr/?back=/ru/companies/timeweb/articles/791570/&amp;hl=ru" rel="nofollow"><button class="tm-header-user-menu__login btn btn_solid btn_small" type="button">
+        Войти
+      </button></a> <!-- --> <div class="v-portal" style="display:none;"></div></div></div></div></header> <div class="tm-layout"><div class="tm-page-progress-bar"></div> <!-- --> <!-- --> <div class="tm-page-width"></div> <main class="tm-layout__container"><div class="tm-page" companyname="timeweb" data-async-called="true" hl="ru"><div class="tm-page-width"><!-- --> <div class="tm-page__wrapper"><div class="tm-page__main tm-page__main_has-sidebar"><div class="pull-down"><!-- --> <div class="pull-down__header" style="height:0px;"><div class="pull-down__content" style="bottom:10px;"><svg class="tm-svg-img pull-down__icon pull-down__arrow" height="24" width="24"><title>Обновить</title> <use xlink:href="/img/megazord-v28.faec9762..svg#pull-arrow"></use></svg></div></div> <div class="tm-article-presenter"><!-- --> <!-- --> <!-- --> <div class="tm-article-presenter__body"><div class="tm-misprint-area"><div class="tm-misprint-area__wrapper"><article class="tm-article-presenter__content tm-article-presenter__content_narrow"><div class="tm-article-presenter__header"> <div class="tm-article-snippet tm-article-presenter__snippet tm-article-snippet"> <div class="tm-article-snippet__meta-container"><div class="tm-article-snippet__meta"><span class="tm-user-info tm-article-snippet__author"><a class="tm-user-info__userpic" href="/ru/users/nullc0de/" title="nullc0de"><div class="tm-entity-image"><img alt="" class="tm-entity-image__pic" height="32" src="//habrastorage.org/r/w64/getpro/habr/avatars/a18/1c6/b62/a181c6b62b48ebc9ff526cbf11fe04ff.png" width="32"/></div></a> <span class="tm-user-info__user tm-user-info__user_appearance-default"><a class="tm-user-info__username" href="/ru/users/nullc0de/">
+      nullc0de
+      <!-- --></a> <span class="tm-article-datetime-published"><time datetime="2024-02-16T08:01:14.000Z" title="2024-02-16, 11:01">вчера в 11:01</time></span></span></span></div> <!-- --></div> <h1 class="tm-title tm-title_h1" lang="ru"><span>Запускаем Steam игры в Proton c поддержкой Native Wayland</span></h1> <div class="tm-article-snippet__stats"><div class="tm-article-complexity tm-article-complexity_complexity-medium"><span class="tm-svg-icon__wrapper tm-article-complexity__icon"><svg class="tm-svg-img tm-svg-icon" height="24" width="24"><title>Уровень сложности</title> <use xlink:href="/img/megazord-v28.faec9762..svg#complexity-medium"></use></svg></span> <span class="tm-article-complexity__label">
+    Средний
+  </span></div> <div class="tm-article-reading-time"><span class="tm-svg-icon__wrapper tm-article-reading-time__icon"><svg class="tm-svg-img tm-svg-icon" height="24" width="24"><title>Время на прочтение</title> <use xlink:href="/img/megazord-v28.faec9762..svg#clock"></use></svg></span> <span class="tm-article-reading-time__label">
+    17 мин
+  </span></div> <span class="tm-icon-counter tm-data-icons__item"><svg class="tm-svg-img tm-icon-counter__icon" height="24" width="24"><title>Количество просмотров</title> <use xlink:href="/img/megazord-v28.faec9762..svg#counter-views"></use></svg> <span class="tm-icon-counter__value">3.5K</span></span></div> <div class="tm-publication-hubs__container"><div class="tm-publication-hubs"><span class="tm-publication-hub__link-container"><a class="router-link-active tm-publication-hub__link" href="/ru/companies/timeweb/articles/"><span>Блог компании Timeweb Cloud</span> <!-- --></a></span><span class="tm-publication-hub__link-container"><a class="tm-publication-hub__link" href="/ru/hubs/linux/"><span>Настройка Linux</span> <span class="tm-article-snippet__profiled-hub" title="Профильный хаб">*</span></a></span><span class="tm-publication-hub__link-container"><a class="tm-publication-hub__link" href="/ru/hubs/open_source/"><span>Open source</span> <span class="tm-article-snippet__profiled-hub" title="Профильный хаб">*</span></a></span><span class="tm-publication-hub__link-container"><a class="tm-publication-hub__link" href="/ru/hubs/nix/"><span>*nix</span> <span class="tm-article-snippet__profiled-hub" title="Профильный хаб">*</span></a></span><span class="tm-publication-hub__link-container"><a class="tm-publication-hub__link" href="/ru/hubs/games/"><span>Игры и игровые консоли</span> <!-- --></a></span></div></div> <div class="tm-article-labels"><div class="tm-article-labels__container"><div class="tm-publication-label tm-publication-label_variant-tutorial"><span>
+    Туториал
+  </span></div> </div></div> <!-- --> <!-- --></div></div> <!-- --> <div class="tm-article-body" data-gallery-root="" lang="ru"><div></div> <div id="post-content-body"><div><div class="article-formatted-body article-formatted-body article-formatted-body_version-1"><div xmlns="http://www.w3.org/1999/xhtml"><p><a href="https://habr.com/ru/companies/timeweb/articles/791570/" rel="Proton Wayland"><img alt="Proton Wayland" data-blurred="true" data-src="https://habrastorage.org/webt/lh/k3/mc/lhk3mc59ms-cjwlcsan1lcmufus.jpeg" src="https://habrastorage.org/r/w780q1/webt/lh/k3/mc/lhk3mc59ms-cjwlcsan1lcmufus.jpeg"/></a></p><br/>
+<p><em>Иллюстрации к статье подготовлены нейросетью freepik.com.</em></p><br/>
+<p>В <a href="https://habr.com/ru/companies/timeweb/articles/791562/">первой части</a> нашей статьи, мы научились собирать Wine с поддержкой Wayland и запустили игру Overwatch 2. Но для большинства геймеров конечно же больший интерес представляет <a href="https://timeweb.cloud/blog/v-marketplejse-po-poyavilis-kategorii">запуск игр</a> Steam, и этот вопрос мы не пройдем стороной. Преимущество нашей сборки Proton будет ещё и в том, что она будет работать напрямую с системными библиотеками и оборудованием, когда обычный Proton и GE Proton Custom загружаются в виртуальном контейнере, подгружают свои библиотеки и драйвера. Тем самым мы получим чуть лучшую производительность и избавимся от еще одного ненужного слоя.</p><br/>
+<p>Если вас заинтересовала статья, то добро пожаловать под cut.</p><a name="habracut"></a><br/>
+<p>Мы не будем полностью копировать работу Proton, так как сам по себе Proton является не стабильным, содержит большое количество ошибок из-за множества грязных хаков в коде Wine. Эти хаки не принимают в основной код Wine и не редко они написаны очень безалаберно, хаотично и где попало в коде. Большинство этих хаков избыточны, не нужны большинству игр и добавлены лишь для запуска каких-то специфичных старых игр в Steam.</p><br/>
+<h2 id="protoniruem-wine">Протонируем Wine</h2><br/>
+<p><img data-blurred="true" data-src="https://habrastorage.org/webt/qu/-d/ac/qu-dac1_meebv4r-wrxndrgyum4.jpeg" src="https://habrastorage.org/r/w780q1/webt/qu/-d/ac/qu-dac1_meebv4r-wrxndrgyum4.jpeg"/></p><br/>
+<p>Первым делом нам необходимо создать дерево каталогов для нашего Proton и скопировать Wine. В большинстве систем Steam хранит свои файлы в <code>${HOME}/.steam/root</code>, но у вас может не быть этой директории, а может быть к примеру <code>${HOME}/.local/share/Steam</code>, или какая-то другая директория, поэтому замените <code>STEAM_DIR</code> на ваш путь к директории Steam в bash скриптах ниже.</p><br/>
+<p>По умолчанию <a href="https://github.com/ValveSoftware/Proton/blob/proton_8.0/toolmanifest_runtime.vdf">манифест для запуска Proton</a> выглядит так:</p><br/>
+<pre><code class="json">"manifest"
+{
+  "version" "2"
+  "commandline" "/proton %verb%"
+  "require_tool_appid" "1628350"
+  "use_sessions" "1"
+  "compatmanager_layer_name" "proton"
+}</code></pre><br/>
+<p>Файл манифеста определяет, какие команды будет выполнять Steam для запуска Proton. Проблема этого манифеста заключается в том, что если манифест содержит поля <code>require_tool_appid</code> и <code>use_sessions</code>, то Proton запустится в виртуальном контейнере с библиотеками Steam. Минус таких библиотек в том, что они собраны только с поддержкой X11 и ничего не знают про Wayland. Таким образом наш манифест должен прийти к виду ниже, что заставит Steam использовать системные библиотеки нашей ОС.</p><br/>
+<pre><code class="json">"manifest"
+{
+  "version" "2"
+  "commandline" "/proton %verb%"
+}</code></pre><br/>
+<p>Так же хочется отметить, что основной python скрипт — <code>proton</code>, является не стандартным, и был адаптирован мной для создания своего Proton с поддержкой Wayland, плюс добавлена опция запуска Wine с приоритетом реального времени. Отличия вы сможете найти, сравнив файлы с помощью утилиты <code>diff</code>. Оригинальный скрипт отыщется по ссылке <a href="https://github.com/ValveSoftware/Proton/blob/proton_8.0/proton">proton</a>.</p><br/>
+<p>Выполним скрипт:</p><br/>
+<pre><code class="bash">#!/usr/bin/bash
+
+# Имя нашей Proton сборки.
+PROTON_NAME="ProtonWay-9.2"
+# Директория в которой хранятся файлы Steam.
+STEAM_DIR="${HOME:?}/.steam/root"
+# Директория в которой хранятся исходные коды.
+SOURCE_DIR="${HOME:?}/code"
+# Директория в которой установлен наш собранный Wine.
+WINE_DIR="${HOME:?}/wine"
+
+# Если возникает ошибка, то прекращаем выполнение дальнейших команд.
+set -euo pipefail
+
+# Создаем директорию для нашего Proton, если она не существует.
+if [ ! -d "${STEAM_DIR:?}/compatibilitytools.d/${PROTON_NAME:?}" ]; then
+    mkdir -p "${STEAM_DIR:?}/compatibilitytools.d/${PROTON_NAME:?}"
+fi
+
+# Создаем директорию files где будут файлы нашего Wine.
+if [ ! -d "${STEAM_DIR:?}/compatibilitytools.d/${PROTON_NAME:?}/files" ]; then
+    mkdir -p "${STEAM_DIR:?}/compatibilitytools.d/${PROTON_NAME:?}/files"
+fi
+
+# Копируем файлы нашего Wine.
+cp -rv "${WINE_DIR:?}/bin" "${STEAM_DIR:?}/compatibilitytools.d/${PROTON_NAME:?}/files/bin"
+cp -rv "${WINE_DIR:?}/lib" "${STEAM_DIR:?}/compatibilitytools.d/${PROTON_NAME:?}/files/lib"
+cp -rv "${WINE_DIR:?}/lib64" "${STEAM_DIR:?}/compatibilitytools.d/${PROTON_NAME:?}/files/lib64"
+cp -rv "${WINE_DIR:?}/share" "${STEAM_DIR:?}/compatibilitytools.d/${PROTON_NAME:?}/files/share"
+
+# Генерируем файл версии unix time + уникальное имя.
+echo "$(date +%s) ${PROTON_NAME:?}" &gt; "${STEAM_DIR:?}/compatibilitytools.d/${PROTON_NAME:?}/version"
+
+# Создаем манифест.
+cat &lt;&lt; EOF &gt; "${STEAM_DIR:?}/compatibilitytools.d/${PROTON_NAME:?}/toolmanifest.vdf"
+"manifest"
+{
+  "version" "2"
+  "commandline" "/proton %verb%"
+}
+
+EOF
+
+# Создаем файл совместимости.
+cat &lt;&lt; EOF &gt; "${STEAM_DIR:?}/compatibilitytools.d/${PROTON_NAME:?}/compatibilitytool.vdf"
+"compatibilitytools"
+{
+  "compat_tools"
+  {
+    "###PROTON_NAME###"
+    {
+      "install_path" "."
+      "display_name" "###PROTON_NAME###"
+      "from_oslist"  "windows"
+      "to_oslist"    "linux"
+    }
+  }
+}
+
+EOF
+
+sed -i "s/###PROTON_NAME###/${PROTON_NAME:?}/g" "${STEAM_DIR:?}/compatibilitytools.d/${PROTON_NAME:?}/compatibilitytool.vdf"
+
+# Копируем python скрипты Proton и меняем имя сборки.
+cp -vf "${SOURCE_DIR:?}/wine-wayland/proton/proton" "${STEAM_DIR:?}/compatibilitytools.d/${PROTON_NAME:?}/proton"
+cp -vf "${SOURCE_DIR:?}/wine-wayland/proton/settings.py" "${STEAM_DIR:?}/compatibilitytools.d/${PROTON_NAME:?}/settings.py"
+cp -vf "${SOURCE_DIR:?}/wine-wayland/proton/filelock.py" "${STEAM_DIR:?}/compatibilitytools.d/${PROTON_NAME:?}/filelock.py"
+sed -i "s/###PROTON_NAME###/${PROTON_NAME:?}/g" "${STEAM_DIR:?}/compatibilitytools.d/${PROTON_NAME:?}/proton"
+chmod +x "${STEAM_DIR:?}/compatibilitytools.d/${PROTON_NAME:?}/proton"
+
+# Создадим директории где будем хранить наши dxvk, vkd3d-proton, nvapi.
+mkdir -p "${STEAM_DIR:?}/compatibilitytools.d/${PROTON_NAME:?}/files/lib/wine/dxvk"
+mkdir -p "${STEAM_DIR:?}/compatibilitytools.d/${PROTON_NAME:?}/files/lib/wine/vkd3d-proton"
+mkdir -p "${STEAM_DIR:?}/compatibilitytools.d/${PROTON_NAME:?}/files/lib/wine/nvapi"
+
+mkdir -p "${STEAM_DIR:?}/compatibilitytools.d/${PROTON_NAME:?}/files/lib64/wine/dxvk"
+mkdir -p "${STEAM_DIR:?}/compatibilitytools.d/${PROTON_NAME:?}/files/lib64/wine/vkd3d-proton"
+mkdir -p "${STEAM_DIR:?}/compatibilitytools.d/${PROTON_NAME:?}/files/lib64/wine/nvapi"</code></pre><br/>
+<h2 id="ustanovka-dxvk-vkd3d-proton-nvapi">Установка dxvk, vkd3d-proton, nvapi</h2><br/>
+<p>В первой части мы скачали и распаковали нужные файлы, поэтому скопируем файлы <code>dxvk</code>, <code>vkd3d-proton</code>, <code>nvapi</code> в соответствующие директории. Если у вас нет видеокарты Nvidia, то можно пропустить копирование файлов <code>nvapi.dll</code>, <code>nvapi64.dll</code>.</p><br/>
+<pre><code class="bash"># Имя нашей Proton сборки.
+PROTON_NAME="ProtonWay-9.2"
+# Директория в которой хранятся файлы Steam.
+STEAM_DIR="${HOME:?}/.steam/root"
+# Директория в которой хранятся исходные коды.
+SOURCE_DIR="${HOME:?}/code"
+
+# Скопируем dxvk.
+cp -vf "${SOURCE_DIR:?}/dxvk-2.3/x64/"*.dll "${STEAM_DIR:?}/compatibilitytools.d/${PROTON_NAME:?}/files/lib64/wine/dxvk/"
+cp -vf "${SOURCE_DIR:?}/dxvk-2.3/x32/"*.dll "${STEAM_DIR:?}/compatibilitytools.d/${PROTON_NAME:?}/files/lib/wine/dxvk/"
+# Скопируем vkd3d-proton.
+cp -vf "${SOURCE_DIR:?}/vkd3d-proton-2.11.1/x64/"*.dll "${STEAM_DIR:?}/compatibilitytools.d/${PROTON_NAME:?}/files/lib64/wine/vkd3d-proton/"
+cp -vf "${SOURCE_DIR:?}/vkd3d-proton-2.11.1/x86/"*.dll "${STEAM_DIR:?}/compatibilitytools.d/${PROTON_NAME:?}/files/lib/wine/vkd3d-proton/"
+
+# Скопируем dxvk-nvapi.
+cp -vf "${SOURCE_DIR:?}/dxvk-nvapi-v0.6.4/x64/"*.dll "${STEAM_DIR:?}/compatibilitytools.d/${PROTON_NAME:?}/files/lib64/wine/nvapi"
+cp -vf "${SOURCE_DIR:?}/dxvk-nvapi-v0.6.4/x32/"*.dll "${STEAM_DIR:?}/compatibilitytools.d/${PROTON_NAME:?}/files/lib/wine/nvapi"</code></pre><br/>
+<h2 id="ustanovka-shriftov">Установка шрифтов</h2><br/>
+<p>Чтобы Proton мог автоматически устанавливать шрифты при установке игр, нам необходимо скопировать шрифты в директорию <code>fonts</code> в <code>files/share</code> нашего Proton. Если мы не создадим эту директорию со шрифтами, то наш Proton будет зависать при запуске. Такова специфика работы скриптов Proton. Самое простое — это взять шрифты из GE Proton Custom, но мы не ищем легких путей и поэтому сгенерируем их самостоятельно. Да-да, здесь нет ошибки, мы именно будем генерировать шрифты на основе открытых шрифтов: <code>Liberation Sans</code>, <code>Liberation Serif</code>, <code>Liberation Mono</code>, <code>Noto Sans</code>, изменяя метаданные исходных шрифтов. Данный метод не дает возможности получить оригинальные Windows шрифты, и лишь заменяет их переименованными открытыми. Это позволяет обойти проблему с авторскими правами на шрифты, и таким методом генерации пользуется компания Valve в <a href="https://github.com/ValveSoftware/Proton/blob/proton_8.0/Makefile.in#L733">Proton</a>. В своей работе мы пропустим генерацию специфичных шрифтов для китайского, японского, индийского, арабского языков, который генерирует Proton, но зато добавим дополнительные начертания для основных русско-английских шрифтов, такие как: жирный, курсив, жирный-курсив. Proton их не все генерирует и часто ограничен только основным Regular шрифтом. Наши шрифты при этом будут весить в 10 раз меньше чем в Proton, что даст более быструю их загрузку.</p><br/>
+<p>Для генерации шрифтов нам необходимо установить пакет <code>fontforge</code> и python модуль <code>fonttools</code>. В Fedora Linux это можно сделать командами:</p><br/>
+<pre><code class="bash">sudo dnf install fontforge
+pip install fonttools</code></pre><br/>
+<p>Выполним скрипт:</p><br/>
+<pre><code class="bash">#!/usr/bin/bash
+
+# Имя нашей Proton сборки.
+PROTON_NAME="ProtonWay-9.2"
+# Директория в которой хранятся файлы Steam.
+STEAM_DIR="${HOME:?}/.steam/root"
+# Директория в которой хранятся исходные коды.
+SOURCE_DIR="${HOME:?}/code"
+# Директория в которой будет происходить сборка шрифтов.
+BUILD_DIR="/tmp/build-fonts"
+# Директория в которой находится Proton, в которую мы установим шрифты.
+INSTALL_DIR="${STEAM_DIR:?}/compatibilitytools.d/${PROTON_NAME:?}"
+
+FONTS_DIR="${SOURCE_DIR:?}/proton/fonts"
+LIBERATION_SRCDIR="${FONTS_DIR:?}/liberation-fonts/src"
+NOTO_SANS_SRCDIR="${FONTS_DIR:?}/noto"
+
+# Если возникает ошибка, то прекращаем выполнение дальнейших команд.
+set -euo pipefail
+
+# Создаем директорию в которой будет проходить сборка, если существует удаляем и создаем заново.
+rm -fr "${BUILD_DIR:?}"
+mkdir -p "${BUILD_DIR:?}"
+
+# Генерируем основные шрифты: Arial, Times New Roman, Georgia, Courier New
+fontforge -quiet -script "${FONTS_DIR:?}/scripts/generatefont.pe" \
+    "${LIBERATION_SRCDIR:?}/LiberationSans-Regular.sfd" "Arial" "Arial" "Arial" "${BUILD_DIR:?}/arial.ttf"
+fontforge -quiet -script "${FONTS_DIR:?}/scripts/generatefont.pe" \
+    "${LIBERATION_SRCDIR:?}/LiberationSans-Bold.sfd" "Arial-Bold" "Arial" "Arial Bold" "${BUILD_DIR:?}/arialbd.ttf"
+fontforge -quiet -script "${FONTS_DIR:?}/scripts/generatefont.pe" \
+    "${LIBERATION_SRCDIR:?}/LiberationSans-Italic.sfd" "Arial-Italic" "Arial" "Arial Italic" "${BUILD_DIR:?}/arialit.ttf"
+fontforge -quiet -script "${FONTS_DIR:?}/scripts/generatefont.pe" \
+    "${LIBERATION_SRCDIR:?}/LiberationSans-BoldItalic.sfd" "Arial-BoldItalic" "Arial" "Arial Bold Italic" "${BUILD_DIR:?}/arialbdit.ttf"
+
+fontforge -quiet -script "${FONTS_DIR:?}/scripts/generatefont.pe" \
+    "${LIBERATION_SRCDIR:?}/LiberationSerif-Regular.sfd" "TimesNewRoman" "Times New Roman" "Times New Roman" "${BUILD_DIR:?}/times.ttf"
+fontforge -quiet -script "${FONTS_DIR:?}/scripts/generatefont.pe" \
+    "${LIBERATION_SRCDIR:?}/LiberationSerif-Bold.sfd" "TimesNewRoman-Bold" "Times New Roman" "Times New Roman Bold" "${BUILD_DIR:?}/timesbd.ttf"
+fontforge -quiet -script "${FONTS_DIR:?}/scripts/generatefont.pe" \
+    "${LIBERATION_SRCDIR:?}/LiberationSerif-Italic.sfd" "TimesNewRoman-Italic" "Times New Roman" "Times New Roman Italic" "${BUILD_DIR:?}/timesit.ttf"
+fontforge -quiet -script "${FONTS_DIR:?}/scripts/generatefont.pe" \
+    "${LIBERATION_SRCDIR:?}/LiberationSerif-BoldItalic.sfd" "TimesNewRoman-BoldItalic" "Times New Roman" "Times New Roman Bold Italic" "${BUILD_DIR:?}/timesbdit.ttf"
+
+fontforge -quiet -script "${FONTS_DIR:?}/scripts/generatefont.pe" \
+    "${LIBERATION_SRCDIR:?}/LiberationSerif-Regular.sfd" "Georgia" "Georgia" "Georgia" "${BUILD_DIR:?}/georgia.ttf"
+fontforge -quiet -script "${FONTS_DIR:?}/scripts/generatefont.pe" \
+    "${LIBERATION_SRCDIR:?}/LiberationSerif-Bold.sfd" "Georgia-Bold" "Georgia" "Georgia Bold" "${BUILD_DIR:?}/georgiabd.ttf"
+fontforge -quiet -script "${FONTS_DIR:?}/scripts/generatefont.pe" \
+    "${LIBERATION_SRCDIR:?}/LiberationSerif-Italic.sfd" "Georgia-Italic" "Georgia" "Georgia Italic" "${BUILD_DIR:?}/georgiait.ttf"
+fontforge -quiet -script "${FONTS_DIR:?}/scripts/generatefont.pe" \
+    "${LIBERATION_SRCDIR:?}/LiberationSerif-BoldItalic.sfd" "Georgia-BoldItalic" "Georgia" "Georgia Bold Italic" "${BUILD_DIR:?}/georgiabdit.ttf"
+
+patch -Np1 -d "${LIBERATION_SRCDIR:?}" -i "${FONTS_DIR:?}/patches/LiberationMono-Regular.patch" -o "${BUILD_DIR:?}/LiberationMono-Regular.sfd"
+fontforge -quiet -script "${FONTS_DIR:?}/scripts/generatefont.pe" \
+    "${BUILD_DIR:?}/LiberationMono-Regular.sfd" "CourierNew" "Courier New" "Courier New" "${BUILD_DIR:?}/cour.ttf"
+rm "${BUILD_DIR:?}/LiberationMono-Regular.sfd"
+fontforge -quiet -script "${FONTS_DIR:?}/scripts/generatefont.pe" \
+    "${LIBERATION_SRCDIR:?}/LiberationMono-Bold.sfd" "CourierNew-Bold" "Courier New" "Courier New Bold" "${BUILD_DIR:?}/courbd.ttf"
+fontforge -quiet -script "${FONTS_DIR:?}/scripts/generatefont.pe" \
+    "${LIBERATION_SRCDIR:?}/LiberationMono-Italic.sfd" "CourierNew-Italic" "Courier New" "Courier New Italic" "${BUILD_DIR:?}/courit.ttf"
+fontforge -quiet -script "${FONTS_DIR:?}/scripts/generatefont.pe" \
+    "${LIBERATION_SRCDIR:?}/LiberationMono-BoldItalic.sfd" "CourierNew-BoldItalic" "Courier New" "Courier New Bold Italic" "${BUILD_DIR:?}/courbdit.ttf"
+
+# Копируем скрипт объединения шрифтов семейства Noto Sans в один файл, и включаем игнорирование отсутствующих unicode символов в шрифтах.
+cp -v "${FONTS_DIR:?}/scripts/merge.py" "${BUILD_DIR:?}/merge.py"
+sed -i "s/ignore_missing_unicodes=False/ignore_missing_unicodes=True/" "${BUILD_DIR:?}/merge.py"
+
+# Создаем шрифт Microsoft Sans Serif на основе Noto Sans.
+"${BUILD_DIR:?}/merge.py" \
+    "${NOTO_SANS_SRCDIR:?}/NotoSans-Regular.ttf" \
+    "${NOTO_SANS_SRCDIR:?}/NotoSansMath-Regular.ttf" \
+    "${NOTO_SANS_SRCDIR:?}/NotoSansMono-Regular.ttf" \
+    "${NOTO_SANS_SRCDIR:?}/NotoSansSymbols-Regular.ttf" \
+    "${NOTO_SANS_SRCDIR:?}/NotoSansSymbols2-Regular.ttf" \
+    "MicrosoftSansSerif" "Microsoft Sans Serif" "Regular" \
+    "${FONTS_DIR:?}/ranges/micross" "${BUILD_DIR:?}/micross.ttf"
+
+# Создаем альтернативную версию шрифта Arial на основе Noto Sans.
+mkdir -p "${BUILD_DIR:?}/alt"
+"${BUILD_DIR:?}/merge.py" \
+    "${NOTO_SANS_SRCDIR:?}/NotoSans-Regular.ttf" \
+    "${NOTO_SANS_SRCDIR:?}/NotoSansMath-Regular.ttf" \
+    "${NOTO_SANS_SRCDIR:?}/NotoSansMono-Regular.ttf" \
+    "${NOTO_SANS_SRCDIR:?}/NotoSansSymbols-Regular.ttf" \
+    "${NOTO_SANS_SRCDIR:?}/NotoSansSymbols2-Regular.ttf" \
+    "Arial" "Arial" "Regular" \
+    "${FONTS_DIR:?}/ranges/arial" "${BUILD_DIR:?}/alt/arial.ttf"
+
+rm -vf "${BUILD_DIR:?}/merge.py"
+
+# Создаем директорию шрифтов в нашем Proton.
+if [ ! -d "${INSTALL_DIR:?}/files/share/fonts" ]; then
+    mkdir -p "${INSTALL_DIR:?}/files/share/fonts"
+fi
+
+# Копируем наши шрифты.
+cp -rv ${BUILD_DIR:?}/* "${INSTALL_DIR:?}/files/share/fonts/"
+
+# Очищаем директорию сборки.
+rm -fr "${BUILD_DIR:?}"</code></pre><br/>
+<p>Если все прошло успешно, то мы увидим наши шрифты в директории <code>files/share/fonts</code>.</p><br/>
+<h2 id="sborka-lsteamclient-i-steam_helper">Сборка lsteamclient и steam_helper</h2><br/>
+<p>После того, как мы создали дерево каталогов и скопировали файлы, нам нужно собрать <code>lsteamclient</code> и <code>steam_helper</code>, которые необходимы для авторизации игр. Сделать это можно с помощью скрипта ниже:</p><br/>
+<pre><code class="bash">#!/usr/bin/bash
+
+# Имя нашей Proton сборки.
+PROTON_NAME="ProtonWay-9.2"
+# Директория в которой хранятся файлы Steam.
+STEAM_DIR="${HOME:?}/.steam/root"
+# Директория в которой установлен наш собранный Wine.
+WINE_DIR="${HOME:?}/wine"
+# Директория в которой хранятся исходные коды.
+SOURCE_DIR="${HOME:?}/code"
+# Директория в которой будет происходить сборка.
+BUILD_DIR="/tmp/build-proton"
+# Флаги компиляции 64 битной версии версии lsteamclient и steam_helper.
+BUILD_CFLAGS="-march=native -mtune=native"
+# Флаги компиляции 32 битной версии lsteamclient и steam_helper.
+BUILD_CFLAGS_32="-mtune=native"
+# Директория в которой находится Proton, в который мы установим lsteamclient и steam_helper.
+INSTALL_DIR="${STEAM_DIR:?}/compatibilitytools.d/${PROTON_NAME:?}"
+
+# Если возникает ошибка, то прекращаем выполнение дальнейших команд.
+set -euo pipefail
+
+# Сбрасываем все флаги сборки, если наши переменные окружения установлены.
+unset CPPFLAGS
+unset CFLAGS
+unset CXXFLAGS
+unset LDFLAGS
+
+# Добавим в PATH директорию bin нашего Wine. Это необходимо для поиска инструментов сборки, который устанавливаются вместе с Wine.
+export PATH="${WINE_DIR:?}/bin:${PATH}"
+
+# Создаем директорию, в которой будет проходить сборка, если существует — удаляем и создаем заново.
+rm -fr "${BUILD_DIR:?}"
+mkdir -p "${BUILD_DIR:?}"
+
+# Устанавливаем флаги для сборки 32 битных библиотек.
+export CFLAGS="${BUILD_CFLAGS_32} -Wno-attributes"
+export CXXFLAGS="${BUILD_CFLAGS_32} -fpermissive -Wno-attributes"
+MAKEFLAGS="--nosource-fix --nolower-include --nodlls --nomsvcrt -I${SOURCE_DIR:?}/wine/include -I${SOURCE_DIR:?}/wine/include/wine"
+
+# Создаем директорию для сборки 32 битной версии lsteamclient, копируем исходный код и переходим в нее.
+rm -fr "${BUILD_DIR:?}/lsteamclient.win32"
+cp -r "${SOURCE_DIR:?}/proton/lsteamclient" "${BUILD_DIR:?}/lsteamclient.win32"
+cd "${BUILD_DIR:?}/lsteamclient.win32"
+
+# Собираем lsteamclient.
+winemaker --wine32 --dll ${MAKEFLAGS:?} \
+    -DSTEAM_API_EXPORTS \
+    -Dprivate=public \
+    -Dprotected=public \
+    .
+
+sed -re 's@_LDFLAGS=@_LDFLAGS= -static-libgcc -static-libstdc++ -ldl @' -i Makefile
+make -e CC="winegcc -m32" CXX="wineg++ -m32 -std=gnu++11" -j$(nproc)
+
+# Собираем fake dll для lsteamclient.
+winebuild --dll --fake-module -m32 -o lsteamclient.dll.fake -E lsteamclient.spec
+mv lsteamclient.dll.fake lsteamclient.dll
+
+# Создаем директорию для сборки 32 битной версии steam_helper, копируем исходный код и переходим в нее.
+rm -fr "${BUILD_DIR:?}/steam.win32"
+cp -r "${SOURCE_DIR:?}/proton/steam_helper" "${BUILD_DIR:?}/steam.win32"
+cd "${BUILD_DIR:?}/steam.win32"
+
+# Собираем steam_helper.
+winemaker --wine32 --guiexe ${MAKEFLAGS:?} \
+    -I${SOURCE_DIR:?}/proton/openvr/headers \
+    -I${SOURCE_DIR:?}/proton/lsteamclient/steamworks_sdk_142 \
+    .
+
+make -e CC="winegcc -m32" CXX="wineg++ -m32" LIBRARIES="-L${SOURCE_DIR:?}/proton/steam_helper/32 -static-libgcc -static-libstdc++ -lsteam_api -lshlwapi -lmsi -lole32 -ldl" -j$(nproc)
+
+# Собираем fake exe для steam_helper
+touch steam.spec
+winebuild --exe --fake-module -m32 -o steam.exe -E steam.spec
+
+# Устанавливаем флаги для сборки 64 битных библиотек.
+export CFLAGS="${BUILD_CFLAGS} -Wno-attributes"
+export CXXFLAGS="${BUILD_CFLAGS} -fpermissive -Wno-attributes"
+
+# Создаем директорию для сборки 32 битной версии lsteamclient, копируем исходный код и переходим в нее.
+rm -fr "${BUILD_DIR:?}/lsteamclient.win64"
+cp -r "${SOURCE_DIR:?}/proton/lsteamclient" "${BUILD_DIR:?}/lsteamclient.win64"
+cd "${BUILD_DIR:?}/lsteamclient.win64"
+
+# Собираем lsteamclient.
+winemaker --dll ${MAKEFLAGS:?} \
+    -DSTEAM_API_EXPORTS \
+    -Dprivate=public \
+    -Dprotected=public \
+    .
+
+sed -re 's@_LDFLAGS=@_LDFLAGS= -static-libgcc -static-libstdc++ -ldl @' -i Makefile
+make -e CC="winegcc -m64" CXX="wineg++ -m64 -std=gnu++11" -j$(nproc) 
+
+# Собираем fake dll для lsteamclient.
+winebuild --dll --fake-module -m64 -o lsteamclient.dll.fake -E lsteamclient.spec
+mv lsteamclient.dll.fake lsteamclient.dll
+
+# Создаем директорию для сборки 64 битной версии steam_helper, копируем исходный код и переходим в нее.
+rm -fr "${BUILD_DIR:?}/steam.win64"
+cp -r "${SOURCE_DIR:?}/proton/steam_helper" "${BUILD_DIR:?}/steam.win64"
+cd "${BUILD_DIR:?}/steam.win64"
+
+# Собираем steam_helper.
+winemaker --guiexe ${MAKEFLAGS:?} \
+    -I${SOURCE_DIR:?}/proton/openvr/headers \
+    -I${SOURCE_DIR:?}/proton/lsteamclient/steamworks_sdk_142 \
+    .
+
+make -e CC="winegcc -m64" CXX="wineg++ -m64" LIBRARIES="-L${SOURCE_DIR:?}/proton/steam_helper/64 -static-libgcc -static-libstdc++ -lsteam_api -lshlwapi -lmsi -lole32 -ldl" -j$(nproc)
+
+# Собираем fake exe для steam_helper.
+touch steam.spec
+winebuild --exe --fake-module -m64 -o steam.exe -E steam.spec
+
+# Установка библиотек.
+cp -v "${BUILD_DIR:?}/lsteamclient.win32/lsteamclient.dll.so" "${INSTALL_DIR}/files/lib/wine/i386-unix/lsteamclient.dll.so"
+cp -v "${BUILD_DIR:?}/lsteamclient.win32/lsteamclient.dll" "${INSTALL_DIR}/files/lib/wine/i386-windows/lsteamclient.dll"
+cp -v "${BUILD_DIR:?}/steam.win32/steam.exe.so" "${INSTALL_DIR}/files/lib/wine/i386-unix/steam.exe.so"
+cp -v "${BUILD_DIR:?}/steam.win32/steam.exe" "${INSTALL_DIR}/files/lib/wine/i386-windows/steam.exe"
+cp -v "${BUILD_DIR:?}/steam.win32/32/libsteam_api.so" "${INSTALL_DIR}/files/lib/libsteam_api.so"
+
+cp -v "${BUILD_DIR:?}/lsteamclient.win64/lsteamclient.dll.so" "${INSTALL_DIR}/files/lib64/wine/x86_64-unix/lsteamclient.dll.so"
+cp -v "${BUILD_DIR:?}/lsteamclient.win64/lsteamclient.dll" "${INSTALL_DIR}/files/lib64/wine/x86_64-windows/lsteamclient.dll"
+cp -v "${BUILD_DIR:?}/steam.win64/steam.exe.so" "${INSTALL_DIR}/files/lib64/wine/x86_64-unix/steam.exe.so"
+cp -v "${BUILD_DIR:?}/steam.win64/steam.exe" "${INSTALL_DIR}/files/lib64/wine/x86_64-windows/steam.exe"
+cp -v "${BUILD_DIR:?}/steam.win64/64/libsteam_api.so" "${INSTALL_DIR}/files/lib64/libsteam_api.so"
+
+# Удаляем директории сборки.
+rm -fr "${BUILD_DIR:?}/steam.win32"
+rm -fr "${BUILD_DIR:?}/steam.win64"
+rm -fr "${BUILD_DIR:?}/lsteamclient.win32"
+rm -fr "${BUILD_DIR:?}/lsteamclient.win64"
+rm -fr "${BUILD_DIR:?}"</code></pre><br/>
+<p>Далее запускаем Steam. Переходим в меню <code>Steam-&gt;Settings</code>, пункт <code>Compatibility</code>.<br/>
+Включаем все переключатели и выбираем наш Proton из списка. Перезапускаем Steam.</p><br/>
+<p><img data-src="https://habrastorage.org/webt/49/c6/ao/49c6aouiwhduizguvzwq3px5-vm.png" src="https://habrastorage.org/r/w1560/webt/49/c6/ao/49c6aouiwhduizguvzwq3px5-vm.png"/></p><br/>
+<p>Далее устанавливаем необходимую игру. Мною проверены игры: Overwatch 2, Aimbeast, KovaaK's, Apex Legends и это игры, в которые играю сам.</p><br/>
+<p>После установки игры, чтобы Proton-Wine мог использовать Wayland драйвер, нам необходимо добавить соответствующие записи в реестр. Сделать это очень просто. Сначала нам необходимо узнать ID игры. Для этого жмем ПКМ по игре и выбираем <code>Properties</code>, переходим в пункт <code>Updates</code>, смотрим <code>App ID</code>. Это и есть наш идентификатор. Для Aimbeast он равен <code>1100990</code>.</p><br/>
+<p><img data-src="https://habrastorage.org/webt/lh/4p/71/lh4p71i9zgyhkvk7yrxzzbchwss.png" src="https://habrastorage.org/r/w1560/webt/lh/4p/71/lh4p71i9zgyhkvk7yrxzzbchwss.png"/></p><br/>
+<p>Для запуска программ в нашем префиксе игры, например <code>winecfg</code> или <code>regedit</code>, мы можем использовать команду <code>proton runinprefix</code>,<br/>
+которая возьмет пути из переменных <code>STEAM_COMPAT_DATA_PATH</code>, <code>STEAM_COMPAT_INSTALL_PATH</code>, <code>STEAM_COMPAT_LIBRARY_PATHS</code>, <code>STEAM_COMPAT_CLIENT_INSTALL_PATH</code> и запустит необходимую программу.</p><br/>
+<pre><code class="bash"># Путь где находится Wine префикс игры.
+export STEAM_COMPAT_DATA_PATH="${HOME:?}/.local/share/Steam/steamapps/compatdata/1100990"
+# Путь куда установлена игра.
+export STEAM_COMPAT_INSTALL_PATH="${HOME:?}/.local/share/Steam/steamapps/common/Aimbeast"
+# Директория steamapps в Steam.
+export STEAM_COMPAT_LIBRARY_PATHS="${HOME:?}/.local/share/Steam/steamapps"
+# Главная директория Steam.
+export STEAM_COMPAT_CLIENT_INSTALL_PATH="${HOME:?}/.local/share/Steam"
+
+# Перейдем в директорию нашего Proton.
+cd "${HOME:?}/.steam/root/compatibilitytools.d/ProtonWay-9.2"
+
+# Добавим необходимые записи в реестр.
+./proton runinprefix reg.exe add HKCU\\Software\\Wine\\Drivers /v Graphics /d x11,wayland
+./proton runinprefix reg.exe add HKCU\\Software\\Wine\\Wayland\ Driver /v unaccelerated_pointer /t REG_DWORD /d 1</code></pre><br/>
+<p>Повторить необходимо для каждой установленной игры, если вы не делали это ранее.</p><br/>
+<p>Следующим шагом нам необходимо раскомментировать строку <code>"WAYLAND": "1"</code> в <code>settings.py</code> нашего Proton, что включит Wayland для всех игр, или можно установить параметры запуска игры <code>DISPLAY="" %command%</code> для конкретной игры. Также вы можете включить запуск игр с приоритетом планировщика в реальном времени <code>"REALTIME": "1"</code> или установить любые кастомные переменные окружения. Смотрите <code>settings.py</code>.</p><br/>
+<p><img data-src="https://habrastorage.org/webt/wr/bl/3m/wrbl3m6ineksr1azlvgk48vhpfy.png" src="https://habrastorage.org/r/w1560/webt/wr/bl/3m/wrbl3m6ineksr1azlvgk48vhpfy.png"/></p><br/>
+<p>Теперь вы можете запускать игру и наслаждаться ей в Wayland.</p><br/>
+<blockquote>Игру Apex Legends желательно запускать в режиме Direct X 12, так производительность игры лучше. Сделать это можно с помощью параметров запуска <code>%command% -eac_launcher_settings SettingsDX12.json</code>. Так же я советую использовать патчи NtSync из первой части.</blockquote><p><img data-blurred="true" data-src="https://habrastorage.org/webt/6r/ev/z5/6revz5g7uufc-3o2okyzll1uuju.jpeg" src="https://habrastorage.org/r/w780q1/webt/6r/ev/z5/6revz5g7uufc-3o2okyzll1uuju.jpeg"/></p><br/>
+<p>Поздравляю, теперь вы разбираетесь в том, как работает Wine и Proton. Можете создавать свои собственные сборки, запускать игры, наслаждаться плавной их работой в Wayland. Это хорошая отправная точка. Надеюсь, ваш путь не остановиться на прочтении этой статьи и вы пойдете дальше, сможете решать более сложные задачи связанные с Wine и Proton.</p><br/>
+<blockquote>PS. Для подготовки данной статьи была проведена огромная работа по изучению работы Proton, портированы патчи в Wine 9.0, написаны скрипты. Также на этом пути было встречено куча сложных проблем, на решение которых ушло не мало времени, и данная статья в реальности сложнее, чем может подумать читатель, где даны уже полуготовые решения. Спасибо за прочтение и до встречи на Хабре!</blockquote><br/>
+<hr/><br/>
+<p><a href="https://timeweb.cloud/?i=106909"><img data-src="https://habrastorage.org/webt/b5/pj/of/b5pjofdoxth14ro-rjsrn7sbmiy.png" src="https://habrastorage.org/r/w1560/webt/b5/pj/of/b5pjofdoxth14ro-rjsrn7sbmiy.png"/></a></p></div></div></div> <!-- --> <!-- --></div> <!-- --> <!-- --></div> <!-- --> <div class="tm-article-presenter__meta"><div class="tm-article-presenter__meta-list tm-separated-list"><span class="tm-separated-list__title">Теги:</span> <ul class="tm-separated-list__list"><li class="tm-separated-list__item"><a class="tm-tags-list__link" href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5Btimeweb_%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8%5D">timeweb_статьи</a></li><li class="tm-separated-list__item"><a class="tm-tags-list__link" href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5Blinux%5D">linux</a></li><li class="tm-separated-list__item"><a class="tm-tags-list__link" href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5Bgames%5D">games</a></li><li class="tm-separated-list__item"><a class="tm-tags-list__link" href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5Bwine%5D">wine</a></li><li class="tm-separated-list__item"><a class="tm-tags-list__link" href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5Bproton%5D">proton</a></li><li class="tm-separated-list__item"><a class="tm-tags-list__link" href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5Bwayland%5D">wayland</a></li><li class="tm-separated-list__item"><a class="tm-tags-list__link" href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5Bsteam%5D">steam</a></li><li class="tm-separated-list__item"><a class="tm-tags-list__link" href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5Bpython%5D">python</a></li><li class="tm-separated-list__item"><a class="tm-tags-list__link" href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5Bnvidia%5D">nvidia</a></li><li class="tm-separated-list__item"><a class="tm-tags-list__link" href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5Bvalve%5D">valve</a></li><li class="tm-separated-list__item"><a class="tm-tags-list__link" href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5Boverwatch%202%5D">overwatch 2</a></li><li class="tm-separated-list__item"><a class="tm-tags-list__link" href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5Bapex%20legends%5D">apex legends</a></li> <!-- --></ul></div> <div class="tm-article-presenter__meta-list tm-separated-list"><span class="tm-separated-list__title">Хабы:</span> <ul class="tm-separated-list__list"><li class="tm-separated-list__item"><a class="tm-hubs-list__link router-link-active" href="/ru/companies/timeweb/articles/">Блог компании Timeweb Cloud</a></li><li class="tm-separated-list__item"><a class="tm-hubs-list__link" href="/ru/hubs/linux/">Настройка Linux</a></li><li class="tm-separated-list__item"><a class="tm-hubs-list__link" href="/ru/hubs/open_source/">Open source</a></li><li class="tm-separated-list__item"><a class="tm-hubs-list__link" href="/ru/hubs/nix/">*nix</a></li><li class="tm-separated-list__item"><a class="tm-hubs-list__link" href="/ru/hubs/games/">Игры и игровые консоли</a></li> <!-- --></ul></div></div> <!-- --></article></div> <!-- --></div> <div class="tm-article-sticky-panel"><div class="tm-data-icons tm-article-sticky-panel__icons"><div class="tm-article-rating tm-data-icons__item"><div class="tm-votes-lever tm-article-rating__votes-switcher tm-votes-lever tm-votes-lever_appearance-article" title="Всего голосов 26: ↑26 и ↓0"><button class="tm-votes-lever__button" title="Нравится" type="button"><svg class="tm-svg-img tm-votes-lever__icon" height="24" width="24"><title>Голосование</title> <use xlink:href="/img/megazord-v28.faec9762..svg#counter-vote"></use></svg></button> <div class="tm-votes-lever__score tm-votes-lever__score tm-votes-lever__score_appearance-article"><span><span class="tm-votes-lever__score-counter tm-votes-lever__score-counter tm-votes-lever__score-counter_positive">
+          +26
+        </span></span></div> <button class="tm-votes-lever__button" title="Не нравится" type="button"><svg class="tm-svg-img tm-votes-lever__icon tm-votes-lever__icon_arrow-down" height="24" width="24"><title>Голосование</title> <use xlink:href="/img/megazord-v28.faec9762..svg#counter-vote"></use></svg></button></div> <div class="v-portal" style="display:none;"></div> <!-- --></div> <!-- --> <!-- --> <button class="bookmarks-button tm-data-icons__item" title="Добавить в закладки" type="button"><span class="tm-svg-icon__wrapper bookmarks-button__icon"><svg class="tm-svg-img tm-svg-icon" height="24" width="24"><title>Добавить в закладки</title> <use xlink:href="/img/megazord-v28.faec9762..svg#counter-favorite"></use></svg></span> <span class="bookmarks-button__counter" title="Количество пользователей, добавивших публикацию в закладки">
+    41
+  </span></button> <div class="tm-sharing tm-data-icons__item" title="Поделиться"><button class="tm-sharing__button" type="button"><svg class="tm-sharing__icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13.8 13.8V18l7.2-6.6L13.8 5v3.9C5 8.9 3 18.6 3 18.6c2.5-4.4 6-4.8 10.8-4.8z" fill="currentColor"></path></svg></button> <div class="v-portal" style="display:none;"></div></div> <div class="tm-article-comments-counter-link tm-data-icons__item" title="Читать комментарии"><a class="tm-article-comments-counter-link__link" href="/ru/companies/timeweb/articles/791570/comments/"><svg class="tm-svg-img tm-article-comments-counter-link__icon" height="24" width="24"><title>Комментарии</title> <use xlink:href="/img/megazord-v28.faec9762..svg#counter-comments"></use></svg> <span class="tm-article-comments-counter-link__value">
+      11
+    </span></a> <!-- --></div> <!-- --> <div class="v-portal" style="display:none;"></div></div></div></div> <div class="tm-article-presenter__footer"><div class="tm-article-blocks"><!-- --> <section class="tm-block tm-block tm-block_spacing-bottom"><!-- --> <div class="tm-block__body tm-block__body tm-block__body_variant-balanced"><div class="tm-article-author"><div class="tm-article-author__company"><div class="tm-article-author__company-card"><div class="tm-company-snippet"><a class="tm-company-snippet__logo-link" href="/ru/companies/timeweb/profile/"><div class="tm-entity-image"><img alt="" class="tm-entity-image__pic" height="40" src="//habrastorage.org/getpro/habr/company/cbc/d7d/4bc/cbcd7d4bc33f3cdfa5e0401133ef9c4e.png" width="40"/></div></a> <div class="tm-company-snippet__info"><a class="tm-company-snippet__title" href="/ru/companies/timeweb/profile/">Timeweb Cloud</a> <div class="tm-company-snippet__description">Компания</div></div></div> <div class="tm-article-author__buttons"><!-- --> <!-- --></div></div> <!-- --> <div class="tm-article-author__separator"></div></div> <div class="tm-user-card tm-article-author__user-card tm-user-card tm-user-card_variant-article"><div class="tm-user-card__info-container"><div class="tm-user-card__header"><div class="tm-user-card__header-data"><a class="tm-user-card__userpic tm-user-card__userpic_size-40" href="/ru/users/nullc0de/"><div class="tm-entity-image"><img alt="" class="tm-entity-image__pic" src="//habrastorage.org/getpro/habr/avatars/a18/1c6/b62/a181c6b62b48ebc9ff526cbf11fe04ff.png"/></div></a> <div class="tm-user-card__meta"><div class="tm-counter-container tm-karma tm-karma" title=" 185 голосов "><div class="tm-counter-container__header"><div class="tm-karma__votes tm-karma__votes_positive">
+      11
+    </div></div> <div class="tm-counter-container__footer"><div class="tm-karma__text">
+      Карма
+    </div> <div class="v-portal" style="display:none;"></div></div></div> <div class="tm-counter-container" title="Рейтинг пользователя"><div class="tm-counter-container__header"> <div class="tm-votes-lever tm-votes-lever tm-votes-lever_appearance-rating"><!-- --> <div class="tm-votes-lever__score tm-votes-lever__score tm-votes-lever__score_appearance-rating"><span><span class="tm-votes-lever__score-counter tm-votes-lever__score-counter tm-votes-lever__score-counter_rating">
+          57
+        </span></span></div> <!-- --></div></div> <div class="tm-counter-container__footer"><span class="tm-rating__text tm-rating__text">
+      Рейтинг
+    </span></div></div></div></div></div> <div class="tm-user-card__info tm-user-card__info tm-user-card__info_variant-article"><div class="tm-user-card__title tm-user-card__title tm-user-card__title_variant-article"><!-- --> <a class="tm-user-card__nickname tm-user-card__nickname tm-user-card__nickname_variant-article" href="/ru/users/nullc0de/">
+          @nullc0de
+        </a> <!-- --></div> <p class="tm-user-card__short-info tm-user-card__short-info tm-user-card__short-info_variant-article">Software developer</p></div></div> <div class="tm-user-card__buttons tm-user-card__buttons tm-user-card__buttons_variant-article"><!-- --> <!-- --> <!-- --> <!-- --></div></div> <!-- --></div></div> <!-- --></section> <!-- --> <!-- --> <div class="tm-article-blocks__comments"><div class="tm-article-page-comments" id="publication-comments"><div class="tm-article-comments-counter-link tm-article-comments-counter-button"><a class="tm-article-comments-counter-link__link tm-article-comments-counter-link__link_button-style" href="/ru/companies/timeweb/articles/791570/comments/"><svg class="tm-svg-img tm-article-comments-counter-link__icon tm-article-comments-counter-link__icon_contrasted" height="24" width="24"><title>Комментарии</title> <use xlink:href="/img/megazord-v28.faec9762..svg#counter-comments"></use></svg> <span class="tm-article-comments-counter-link__value tm-article-comments-counter-link__value_contrasted">
+       Комментарии 11 
+    </span></a> <!-- --></div></div></div> <section class="tm-block tm-block tm-block_spacing-bottom"><header class="tm-block__header tm-block__header tm-block__header_variant-borderless"><div class="tm-block__header-container"><h2 class="tm-block__title tm-block__title tm-block__title_variant-large">Публикации</h2> </div> <!-- --></header> <div class="tm-block__body tm-block__body tm-block__body_variant-condensed-slim"><div class="tm-tabs tm-tabs"><div><span class="tm-tabs__tab-item"><button class="tm-tabs__tab-link tm-tabs__tab-link tm-tabs__tab-link_active tm-tabs__tab-link_slim">
+        Лучшие за сутки
+      </button></span><span class="tm-tabs__tab-item"><button class="tm-tabs__tab-link tm-tabs__tab-link tm-tabs__tab-link_slim">
+        Похожие
+      </button></span></div> <!-- --></div> <div class="similar-and-daily__tab-view"><div class="placeholder-wrapper"><!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <div class="tm-placeholder-article-cards"><div class="tm-placeholder-article-card"><div class="tm-placeholder__user"><div class="tm-placeholder__user-pic loads"></div> <div class="tm-placeholder__user-date loads"></div></div> <div class="tm-placeholder-article-card__title"><div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div></div> <div class="tm-placeholder-article-card__icons tm-placeholder__counters"><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div></div></div><div class="tm-placeholder-article-card"><div class="tm-placeholder__user"><div class="tm-placeholder__user-pic loads"></div> <div class="tm-placeholder__user-date loads"></div></div> <div class="tm-placeholder-article-card__title"><div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div></div> <div class="tm-placeholder-article-card__icons tm-placeholder__counters"><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div></div></div><div class="tm-placeholder-article-card"><div class="tm-placeholder__user"><div class="tm-placeholder__user-pic loads"></div> <div class="tm-placeholder__user-date loads"></div></div> <div class="tm-placeholder-article-card__title"><div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div></div> <div class="tm-placeholder-article-card__icons tm-placeholder__counters"><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div></div></div><div class="tm-placeholder-article-card"><div class="tm-placeholder__user"><div class="tm-placeholder__user-pic loads"></div> <div class="tm-placeholder__user-date loads"></div></div> <div class="tm-placeholder-article-card__title"><div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div></div> <div class="tm-placeholder-article-card__icons tm-placeholder__counters"><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div></div></div><div class="tm-placeholder-article-card"><div class="tm-placeholder__user"><div class="tm-placeholder__user-pic loads"></div> <div class="tm-placeholder__user-date loads"></div></div> <div class="tm-placeholder-article-card__title"><div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div></div> <div class="tm-placeholder-article-card__icons tm-placeholder__counters"><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div></div></div></div> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --></div> <!-- --></div></div> <!-- --></section> <div class="placeholder-wrapper"><!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <div class="tm-placeholder-inset tm-placeholder-vacancies"><div class="tm-placeholder-inset__header"><div class="tm-placeholder__line tm-placeholder__line_inset-header loads"></div></div> <div class="tm-placeholder-inset__body"><ul class="tm-placeholder-list"><li class="tm-placeholder-list__item tm-placeholder-list__item_inset"><div class="tm-placeholder-list__title-container"><div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div></div> <div class="tm-project-block-items__properties"><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span></div></li><li class="tm-placeholder-list__item tm-placeholder-list__item_inset"><div class="tm-placeholder-list__title-container"><div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div></div> <div class="tm-project-block-items__properties"><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span></div></li><li class="tm-placeholder-list__item tm-placeholder-list__item_inset"><div class="tm-placeholder-list__title-container"><div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div></div> <div class="tm-project-block-items__properties"><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span></div></li><li class="tm-placeholder-list__item tm-placeholder-list__item_inset"><div class="tm-placeholder-list__title-container"><div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div></div> <div class="tm-project-block-items__properties"><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span></div></li><li class="tm-placeholder-list__item tm-placeholder-list__item_inset"><div class="tm-placeholder-list__title-container"><div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div></div> <div class="tm-project-block-items__properties"><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span></div></li></ul></div> <div class="tm-placeholder-inset__footer"><div class="tm-placeholder__line tm-placeholder__line_inset-footer loads"></div></div></div> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --></div> <!-- --> </div></div></div></div></div> <div class="tm-page__sidebar"><!-- --></div></div></div></div></main> <!-- --></div> <!-- --> <div class="tm-footer"><div class="tm-page-width"><div class="tm-footer__container"><div class="tm-footer__title"><a class="tm-svg-icon__wrapper tm-footer__title-link" href="/ru/"><svg class="tm-svg-img tm-svg-icon" height="16" width="16"><title>Хабр</title> <use xlink:href="/img/habr-logo-ru.svg#logo"></use></svg></a></div> <div class="tm-footer__social"><a class="tm-svg-icon__wrapper tm-social-icons__icon" href="https://www.facebook.com/habrahabr.ru" rel="nofollow noopener noreferrer" target="_blank"><svg class="tm-svg-img tm-svg-icon" height="36" width="36"><title>Facebook</title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-facebook"></use></svg></a><a class="tm-svg-icon__wrapper tm-social-icons__icon" href="https://twitter.com/habr_com" rel="nofollow noopener noreferrer" target="_blank"><svg class="tm-svg-img tm-svg-icon" height="36" width="36"><title>Twitter</title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-twitter"></use></svg></a><a class="tm-svg-icon__wrapper tm-social-icons__icon" href="https://vk.com/habr" rel="nofollow noopener noreferrer" target="_blank"><svg class="tm-svg-img tm-svg-icon" height="36" width="36"><title>VK</title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-vk"></use></svg></a><a class="tm-svg-icon__wrapper tm-social-icons__icon" href="https://telegram.me/habr_com" rel="nofollow noopener noreferrer" target="_blank"><svg class="tm-svg-img tm-svg-icon" height="36" width="36"><title>Telegram</title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-telegram"></use></svg></a><a class="tm-svg-icon__wrapper tm-social-icons__icon" href="https://www.youtube.com/channel/UCd_sTwKqVrweTt4oAKY5y4w" rel="nofollow noopener noreferrer" target="_blank"><svg class="tm-svg-img tm-svg-icon" height="36" width="36"><title>Youtube</title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-youtube"></use></svg></a><a class="tm-svg-icon__wrapper tm-social-icons__icon" href="https://dzen.ru/habr" rel="nofollow noopener noreferrer" target="_blank"><svg class="tm-svg-img tm-svg-icon" height="36" width="36"><title>Яндекс Дзен</title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-dzen"></use></svg></a></div> <div class="v-portal" style="display:none;"></div> <button class="tm-footer__link"><svg class="tm-svg-img tm-footer__icon" height="16" width="16"><title>Язык</title> <use xlink:href="/img/megazord-v28.faec9762..svg#lang"></use></svg>
+        Настройка языка
+      </button> <a class="tm-footer__link" href="/ru/feedback/">
+        Техническая поддержка
+      </a> <div class="tm-footer-copyright"><span class="tm-copyright"><span class="tm-copyright__years">© 2006–2024, </span> <span class="tm-copyright__name"><a class="tm-copyright__link" href="https://company.habr.com/" rel="noopener" target="_blank">Habr</a></span></span></div></div></div></div> <!-- --></div> <div class="vue-portal-target"></div></div>
+
+
+
+
+
+<noscript>
+<div>
+<img alt="" src="https://mc.yandex.ru/watch/24049213" style="position:absolute; left:-9999px;">
+</img></div>
+</noscript>
+
+
+</body>
+</html>

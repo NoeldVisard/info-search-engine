@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+
+<html data-vue-meta="%7B%22lang%22:%7B%22ssr%22:%22ru%22%7D%7D" lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1.0,viewport-fit=cover,maximum-scale=1,user-scalable=0" name="viewport"/>
+<meta content="unsafe-url" name="referrer"/>
+<title>Азы поисковой оптимизации для веб-разработчика: прокачиваем SEO с помощью кода и здравого смысла / Хабр</title>
+
+
+
+
+
+
+
+<meta content="2.165.0" name="habr-version"/>
+<meta content="444736788986613" data-vue-meta="ssr" property="fb:app_id"/><meta content="472597926099084" data-vue-meta="ssr" property="fb:pages"/><meta content="summary_large_image" data-vue-meta="ssr" name="twitter:card"/><meta content="@habr_com" data-vue-meta="ssr" name="twitter:site"/><meta content="Хабр" data-vmid="og:site_name" data-vue-meta="ssr" property="og:site_name"/><meta content="Азы поисковой оптимизации для веб-разработчика: прокачиваем SEO с помощью кода и здравого смысла" data-vmid="og:title" data-vue-meta="ssr" property="og:title"/><meta content="Азы поисковой оптимизации для веб-разработчика: прокачиваем SEO с помощью кода и здравого смысла" data-vmid="twitter:title" data-vue-meta="ssr" name="twitter:title"/><meta content="Азы поисковой оптимизации для веб-разработчика: прокачиваем SEO с помощью кода и здравого смысла" data-vmid="aiturec:title" data-vue-meta="ssr" name="aiturec:title"/><meta content="Привет, Хабр! Поисковая оптимизация обычно ассоциируется только с производством контента, а роль веб-разработчиков в ней часто недооценивают. Мы с этим не согласны. В этой статье обсудим технические..." data-vmid="description" data-vue-meta="ssr" name="description"/><meta content="Привет, Хабр! Поисковая оптимизация обычно ассоциируется только с производством контента, а роль веб-разработчиков в ней часто недооценивают. Мы с этим не согласны. В этой статье обсудим технические..." data-vmid="description:itemprop" data-vue-meta="ssr" itemprop="description"/><meta content="Привет, Хабр! Поисковая оптимизация обычно ассоциируется только с производством контента, а роль веб-разработчиков в ней часто недооценивают. Мы с этим не согласны. В этой статье обсудим технические..." data-vmid="og:description" data-vue-meta="ssr" property="og:description"/><meta content="Привет, Хабр! Поисковая оптимизация обычно ассоциируется только с производством контента, а роль веб-разработчиков в ней часто недооценивают. Мы с этим не согласны. В этой статье обсудим технические..." data-vmid="twitter:description" data-vue-meta="ssr" name="twitter:description"/><meta content="Привет, Хабр! Поисковая оптимизация обычно ассоциируется только с производством контента, а роль веб-разработчиков в ней часто недооценивают. Мы с этим не согласны. В этой статье обсудим технические..." data-vmid="aiturec:description" data-vue-meta="ssr" property="aiturec:description"/><meta content="https://habrastorage.org/webt/zo/md/lw/zomdlwhwiq9nzeyp8nak3bfxvuq.jpeg" data-vmid="image:itemprop" data-vue-meta="ssr" itemprop="image"/><meta content="https://habrastorage.org/webt/zo/md/lw/zomdlwhwiq9nzeyp8nak3bfxvuq.jpeg" data-vmid="og:image" data-vue-meta="ssr" property="og:image"/><meta content="1200" data-vmid="og:image:width" data-vue-meta="ssr" property="og:image:width"/><meta content="630" data-vmid="og:image:height" data-vue-meta="ssr" property="og:image:height"/><meta content="https://habrastorage.org/webt/zo/md/lw/zomdlwhwiq9nzeyp8nak3bfxvuq.jpeg" data-vmid="aiturec:image" data-vue-meta="ssr" property="aiturec:image"/><meta content="https://habrastorage.org/webt/zo/md/lw/zomdlwhwiq9nzeyp8nak3bfxvuq.jpeg" data-vmid="twitter:image" data-vue-meta="ssr" name="twitter:image"/><meta content="https://habrastorage.org/webt/zo/md/lw/zomdlwhwiq9nzeyp8nak3bfxvuq.jpeg?format=vk" data-vmid="vk:image" data-vue-meta="ssr" property="vk:image"/><meta content="794146" data-vmid="aiturec:item_id" data-vue-meta="ssr" property="aiturec:item_id"/><meta content="2024-02-16T11:40:31.000Z" data-vmid="aiturec:datetime" data-vue-meta="ssr" property="aiturec:datetime"/><meta content="https://habr.com/ru/companies/selectel/articles/794146/" data-vmid="og:url" data-vue-meta="ssr" property="og:url"/><meta content="article" data-vmid="og:type" data-vue-meta="ssr" property="og:type"/><meta content="ru_RU" data-vmid="og:locale" data-vue-meta="ssr" property="og:locale"/><meta content="selectel, html, seo, веб-разработка" data-vue-meta="ssr" name="keywords"/>
+
+<meta content="#303b44" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="#629FBC" name="msapplication-TileColor"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+<body>
+<div data-async-called="true" data-server-rendered="true" id="app"><div class="tm-layout__wrapper"><!-- --> <div></div> <div class="tm-feature tm-feature"><!-- --></div> <header class="tm-header"><div class="tm-page-width"><div class="tm-header__container"><div class="tm-header__burger-nav"><button class="tm-header__button tm-header__button_burger" type="button"><svg class="tm-svg-img tm-header__icon tm-header__icon-burger" height="16" width="16"><title>Меню</title> <use xlink:href="/img/megazord-v28.faec9762..svg#header-burger"></use></svg></button></div> <span class="tm-header__logo-wrap"><a class="tm-header__logo tm-header__logo tm-header__logo_hl-ru" href="/ru/"><svg class="tm-svg-img tm-header__icon" height="16" width="16"><title>Хабр</title> <use xlink:href="/img/habr-logo-ru.svg#logo"></use></svg></a> <span class="tm-header__beta-sign" style="display:none;">β</span></span> <!-- --> <div class="tm-header-user-menu tm-header_user-menu"><a class="tm-header-user-menu__item tm-header-user-menu__search" href="/ru/search/"><svg class="tm-svg-img tm-header-user-menu__icon tm-header-user-menu__icon_search" height="24" width="24"><title>Поиск</title> <use xlink:href="/img/megazord-v28.faec9762..svg#search"></use></svg></a> <!-- --> <!-- --> <!-- --> <div class="tm-header-user-menu__item"><button class="tm-header-user-menu__toggle"><svg class="tm-svg-img tm-header-user-menu__icon" height="24" width="24"><title>Настройки</title> <use xlink:href="/img/megazord-v28.faec9762..svg#page-settings"></use></svg></button></div> <a class="tm-header-user-menu__item" href="https://habr.com/kek/v1/auth/habrahabr/?back=/ru/companies/selectel/articles/794146/&amp;hl=ru" rel="nofollow"><button class="tm-header-user-menu__login btn btn_solid btn_small" type="button">
+        Войти
+      </button></a> <!-- --> <div class="v-portal" style="display:none;"></div></div></div></div></header> <div class="tm-layout"><div class="tm-page-progress-bar"></div> <!-- --> <!-- --> <div class="tm-page-width"></div> <main class="tm-layout__container"><div class="tm-page" companyname="selectel" data-async-called="true" hl="ru"><div class="tm-page-width"><!-- --> <div class="tm-page__wrapper"><div class="tm-page__main tm-page__main_has-sidebar"><div class="pull-down"><!-- --> <div class="pull-down__header" style="height:0px;"><div class="pull-down__content" style="bottom:10px;"><svg class="tm-svg-img pull-down__icon pull-down__arrow" height="24" width="24"><title>Обновить</title> <use xlink:href="/img/megazord-v28.faec9762..svg#pull-arrow"></use></svg></div></div> <div class="tm-article-presenter"><!-- --> <!-- --> <!-- --> <div class="tm-article-presenter__body"><div class="tm-misprint-area"><div class="tm-misprint-area__wrapper"><article class="tm-article-presenter__content tm-article-presenter__content_narrow"><div class="tm-article-presenter__header"> <div class="tm-article-snippet tm-article-presenter__snippet tm-article-snippet"> <div class="tm-article-snippet__meta-container"><div class="tm-article-snippet__meta"><span class="tm-user-info tm-article-snippet__author"><a class="tm-user-info__userpic" href="/ru/users/El_Gato_Grande/" title="El_Gato_Grande"><div class="tm-entity-image"><img alt="" class="tm-entity-image__pic" height="32" src="//habrastorage.org/r/w64/getpro/habr/avatars/c91/4e8/b9a/c914e8b9a51b9895cbd142eb7fc36aed.jpg" width="32"/></div></a> <span class="tm-user-info__user tm-user-info__user_appearance-default"><a class="tm-user-info__username" href="/ru/users/El_Gato_Grande/">
+      El_Gato_Grande
+      <!-- --></a> <span class="tm-article-datetime-published"><time datetime="2024-02-16T11:40:31.000Z" title="2024-02-16, 14:40">вчера в 14:40</time></span></span></span></div> <!-- --></div> <h1 class="tm-title tm-title_h1" lang="ru"><span>Азы поисковой оптимизации для веб-разработчика: прокачиваем SEO с помощью кода и здравого смысла</span></h1> <div class="tm-article-snippet__stats"><!-- --> <div class="tm-article-reading-time"><span class="tm-svg-icon__wrapper tm-article-reading-time__icon"><svg class="tm-svg-img tm-svg-icon" height="24" width="24"><title>Время на прочтение</title> <use xlink:href="/img/megazord-v28.faec9762..svg#clock"></use></svg></span> <span class="tm-article-reading-time__label">
+    15 мин
+  </span></div> <span class="tm-icon-counter tm-data-icons__item"><svg class="tm-svg-img tm-icon-counter__icon" height="24" width="24"><title>Количество просмотров</title> <use xlink:href="/img/megazord-v28.faec9762..svg#counter-views"></use></svg> <span class="tm-icon-counter__value">1.5K</span></span></div> <div class="tm-publication-hubs__container"><div class="tm-publication-hubs"><span class="tm-publication-hub__link-container"><a class="router-link-active tm-publication-hub__link" href="/ru/companies/selectel/articles/"><span>Блог компании Selectel</span> <!-- --></a></span><span class="tm-publication-hub__link-container"><a class="tm-publication-hub__link" href="/ru/hubs/webdev/"><span>Веб-разработка</span> <span class="tm-article-snippet__profiled-hub" title="Профильный хаб">*</span></a></span><span class="tm-publication-hub__link-container"><a class="tm-publication-hub__link" href="/ru/hubs/html5/"><span>HTML</span> <span class="tm-article-snippet__profiled-hub" title="Профильный хаб">*</span></a></span><span class="tm-publication-hub__link-container"><a class="tm-publication-hub__link" href="/ru/hubs/seo/"><span>Поисковая оптимизация</span> <span class="tm-article-snippet__profiled-hub" title="Профильный хаб">*</span></a></span></div></div> <!-- --> <!-- --> <!-- --></div></div> <!-- --> <div class="tm-article-body" data-gallery-root="" lang="ru"><div></div> <div id="post-content-body"><div><div class="article-formatted-body article-formatted-body article-formatted-body_version-1"><div xmlns="http://www.w3.org/1999/xhtml"><div style="text-align:center;"><img data-blurred="true" data-src="https://habrastorage.org/webt/zo/md/lw/zomdlwhwiq9nzeyp8nak3bfxvuq.jpeg" src="https://habrastorage.org/r/w780q1/webt/zo/md/lw/zomdlwhwiq9nzeyp8nak3bfxvuq.jpeg"/></div><br/>
+Привет, Хабр! Поисковая оптимизация обычно ассоциируется только с производством контента, а роль веб-разработчиков в ней часто недооценивают. Мы с этим не согласны.<br/>
+<br/>
+В этой статье обсудим технические детали верстки оптимизированных под поисковые движки веб-страниц, а для закрепления знаний создадим по всем правилам и задеплоим на <a href="https://selectel.ru/services/cloud/servers/?utm_source=habr.com&amp;utm_medium=referral&amp;utm_campaign=cloud_article_ulbi_160224_content">сервер</a> небольшой сайт. Это не ультимативный гайд, а скорее шпаргалка о том, как сделать красиво, функционально и так, чтобы целевая страница попадала в топ выдачи. Материал будет полезен веб-разработчикам, которые только начинают заниматься SEO. Опытных специалистов приглашаем в комментарии — поделитесь своими лайфхаками и кейсами поисковой оптимизации.<a name="habracut"></a><br/>
+<br/>
+<blockquote>Интересными лайфхаками на тему SEO-оптимизации с нами поделился наш давний партнер и фулстек-разработчик <a href="https://www.youtube.com/@UlbiTV">Ulbi TV</a>.</blockquote><br/>
+<b>Используйте навигацию, если не хотите читать текст полностью:</b><br/>
+<br/>
+→ <a href="#1">Кратко о SEO</a><br/>
+→ <a href="#2">Роль семантики в SEO</a><br/>
+→ <a href="#3">Open Graph и красивые ссылки</a><br/>
+→ <a href="#4">Деплой HTML-кода на облачный сервер</a><br/>
+→ <a href="#5">Работа со ссылками в контексте SEO</a><br/>
+→ <a href="#6">Другие важные особенности SEO</a><br/>
+→ <a href="#7">Проверка поисковой оптимизации</a><br/>
+→ <a href="#8">Заключение</a><br/>
+<br/>
+<a name="1"></a><font color="#EB4247"><h2>Кратко о SEO</h2></font><br/>
+<blockquote>SEO (search engine optimization, или поисковая оптимизация) — это оптимизация сайта для повышения его позиции в поисковой выдаче по запросам пользователей.</blockquote><br/>
+Когда мы делаем запрос в Google или другой поисковой системе, она стремится показать максимально релевантные страницы. То есть задача поисковика — из всего множества сайтов, в которых упоминаются ключевые слова, отдать нам самые подходящие.<br/>
+<br/>
+Поисковики отбирают страницы по множеству факторов и ранжируют результаты в соответствии с ними. Очевидно, владельцы сайтов хотят оказаться как можно выше в поисковой выдаче. При этом все поисковики работают по-разному: по одному и тому же запросу Google и Яндекс могут выдать разную подборку страниц.<br/>
+<br/>
+Основной фактор, который влияет на ранжирование, — контент. Но вместе с тем есть много технических деталей, над которыми работают SEO-специалисты, оптимизируя сайты под разные поисковые движки.<br/>
+<br/>
+Как поисковики собирают информацию о веб-страницах, чтобы в дальнейшем ранжировать их по релевантности? Представим сайт в виде паутины: каждая ниточка — это ссылка, по которой можно попасть с одной страницы на другую. По этой паутине ползают пауки — краулеры. Они заходят на страницы, анализируют их, изучают контент, заголовки, настройки и прочее. Краулер зашел на страницу, что-то о ней записал, куда-то эту запись сохранил — он проиндексировал страницу.<br/>
+<br/>
+В результате такой индексации формируются огромные справочники, в которых поисковые движки могут быстро найти нужную информацию, чтобы затем ранжировать сайты по релевантности и выдать их пользователю.<br/>
+<br/>
+<a href="https://selectel.ru/services/cloud/servers/?utm_source=habr.com&amp;utm_medium=referral&amp;utm_campaign=cloud_article_ulbi_160224_banner_001_ord"><div style="text-align:center;"><img data-src="https://habrastorage.org/webt/nb/lo/t_/nblot_ve1t3hcw5bluwc_-did08.png" src="https://habrastorage.org/r/w1560/webt/nb/lo/t_/nblot_ve1t3hcw5bluwc_-did08.png"/></div></a><br/>
+<br/>
+<a name="2"></a><font color="#EB4247"><h2>Роль семантики в SEO</h2></font><br/>
+Чтобы показать SEO с позиции веб-разработчика, сверстаем простой сайт.<br/>
+<br/>
+<h3>1. Создаем файл index.html</h3><br/>
+В нем проделываем базовые вещи: указываем язык, кодировку и вьюпорт, который отвечает за отображение страницы на разных устройствах.<br/>
+<br/>
+<h3>2. Указываем метатеги</h3><br/>
+<b>Title</b>. Это заголовок нашей страницы, один из самых важных параметров. Он отображается на странице с результатами поисковой выдачи и на вкладке с открытой страницей. В заголовок помещаем как можно больше ключевых слов. Его текст должен быть осознанным, а сам метатег — уникальным на каждой странице. Не забываем, что заголовок страницы значительно влияет на ее позицию в поисковой выдаче.<br/>
+<br/>
+<pre><code class="bash">&lt;title&gt;Книга по JavaScript. Обучение с нуля&lt;/title&gt;
+</code></pre><br/>
+<b>Description</b>. Это описание страницы. Оно может быть любым, но в него стоит добавить максимально много ключевых слов. Описание находится под заголовком в поисковой выдаче.<br/>
+<br/>
+<pre><code class="bash">&lt;meta name="description" content="Эта книга научит вас с нуля программированию на JavaScript ...."&gt;
+</code></pre><br/>
+<b>Keywords</b>. Вокруг ключевых слов идет много споров. Кто-то уверяет, что они уже не влияют на продвижение, а кто-то говорит, что лучше их написать. Мы на всякий случай укажем несколько слов.<br/>
+<br/>
+<pre><code class="bash">&lt;meta name="keywords" content="JS, JavaScript, Обучение JS"&gt;
+</code></pre><br/>
+<h3>3. Делаем семантическую верстку</h3><br/>
+Поисковые роботы, которые будут парсить нашу страницу, обязательно будут учитывать ее семантику. Ничего не мешает нам сверстать сайт на div-блоках, навешать нужные классы, якоря вроде onclick и так далее — это будет работать и красиво выглядеть. Однако с точки зрения удобства использования, доступности и семантики это неверно.<br/>
+<br/>
+Существует так называемая семантическая верстка, когда для каждого блока страницы (секции, хедера, артикла, навигации, футера) используются семантически правильные теги. Например, если вы используете кнопку, то пусть это будет не div или span с классом button, а прямо тег button. Тогда на странице по умолчанию кнопка будет работать не только по клику мышкой, но и через нажатие клавиши Enter. Кстати, доступность страницы для людей с ограниченными возможностями тоже влияет на ее ранжирование.<br/>
+<br/>
+То же касается и остальных элементов HTML. Соответствующие теги используем для ссылок (а для внешних ссылок — target="_blank", чтобы ссылка открывалась в новом окне), списков, подзаголовков и прочего. Еще раз: с точки зрения внешнего вида тот же подзаголовок можно сделать с помощью div-блока с тегом header — пользователь будет воспринимать такой элемент именно как заголовок или подзаголовок. Но с точки зрения семантики (и, как следствие, SEO) это не оптимальный подход. Кстати, основной текст страницы тоже пишем не в div-блоках, а в параграфах.<br/>
+<br/>
+А вот закрытые для пользователей страницы, например с админкой, в SEO не нуждаются и даже индексироваться поисковиками не должны (дальше мы разберемся, как отключить индексацию отдельных страниц). На таких страницах как раз можно по-быстрому сверстать все в div-блоках.<br/>
+<br/>
+<a name="3"></a><font color="#EB4247"><h2>Open Graph и красивые ссылки</h2></font><br/>
+Open Graph, или OG, — протокол разметки, который позволяет делать ссылки привлекательными и понятными. Придумали это разработчики из Facebook, а сейчас поддержка Open Graph имеется практически во всех соцсетях.<br/>
+<br/>
+Например, ссылка без Open Graph в соцсетях будет просто кликабельным текстом. А ссылка с Open Graph отправляется вместе с заголовком, описанием и картинкой:<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/ou/m2/hp/oum2hpu4xdrwmo3qfhal5gfqjau.png" src="https://habrastorage.org/r/w1560/webt/ou/m2/hp/oum2hpu4xdrwmo3qfhal5gfqjau.png"/></div><br/>
+Нужно это не просто для красоты: хотя применение Open Graph напрямую не влияет на поисковую выдачу, оно улучшает отображение ссылок в соцсетях и дает пользователю дополнительную информацию о странице, на которую ведет линк.<br/>
+<br/>
+Добавление Open Graph начинаем с заполнения метатегов. Основных их пять: тип, url, заголовок, описание и изображение. В коде все это выглядит так:<br/>
+<br/>
+<pre><code class="bash">    &lt;meta property="og:type" content="website"&gt;
+    &lt;meta property="og:url" content="https://ya.ru/"&gt;
+    &lt;meta property="og:title" content="Это og дескрипшн"&gt;
+    &lt;meta property="og:description" content="это og дескрипшн"&gt;
+    &lt;meta property="og:image" content="https://ir.ozone.ru/s3/multimedia-d/wc1000/6029228593.jpg"&gt;
+</code></pre><br/>
+<blockquote>Если хотите увидеть OG-разметку на любом сайте, зайдите на страницу, выберите в контекстном меню опцию <b>Просмотреть код</b>, в поиске по странице введите «og». На крупных сайтах, особенно маркетплейсах, вы точно найдете теги og:title, og:description, og:image, og:url и прочее. Бывает интересно походить по разным сайтам и посмотреть, как там заполнены теги: иногда можно извлечь для себя что-то полезное.</blockquote><br/>
+В итоге наш простой HTML будет выглядеть вот так:<br/>
+<br/>
+<pre><code class="bash">&lt;!doctype html&gt;
+&lt;html lang="ru"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"&gt;
+    &lt;meta http-equiv="X-UA-Compatible" content="ie=edge"&gt;
+    &lt;title&gt;Книга по JavaScript. Обучение с нуля&lt;/title&gt;
+    &lt;meta name="description" content="Эта книга научит вас с нуля программированию на JavaScript ...."&gt;
+    &lt;meta name="keywords" content="JS, JavaScript, Обучение JS"&gt;
+    &lt;meta property="og:type" content="website"&gt;
+    &lt;meta property="og:url" content="https://ya.ru"&gt;
+    &lt;meta property="og:title" content="Это og дескрипшн"&gt;
+    &lt;meta property="og:description" content="это og дескрипшн"&gt;
+    &lt;meta property="og:image" content="https://ir.ozone.ru/s3/multimedia-d/wc1000/6029228593.jpg"&gt;
+&lt;!--    &lt;meta name="robots" content="index"&gt;--&gt;
+&lt;!--    &lt;meta name="robots" content="index, nofollow"&gt;--&gt;
+&lt;!--    &lt;meta name="robots" content="noindex"&gt;--&gt;
+&lt;!--    &lt;meta name="robots" content="follow"&gt;--&gt;
+&lt;!--    &lt;meta name="robots" content="nofollow"&gt;--&gt;
+&lt;!--    &lt;meta name="robots" content="all"&gt;--&gt;
+&lt;!--    &lt;meta name="googlebot" content="index"&gt;--&gt;
+&lt;!--    &lt;meta name="yandex" content="noindex"&gt;--&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;img src="" alt="надо заполнять" srcset="400x400.png 500w, 700x700.png 800w"&gt;
+&lt;h1&gt;
+    Hello world
+&lt;/h1&gt;
+&lt;!--&lt;h2&gt;&lt;/h2&gt;--&gt;
+&lt;!--&lt;h3&gt;&lt;/h3&gt; именно заголовки--&gt;
+&lt;!--&lt;p class="header5"&gt;--&gt;
+
+&lt;!--&lt;/p&gt;--&gt;
+&lt;!--&lt;ul&gt;--&gt;
+&lt;!--    &lt;li&gt;1&lt;/li&gt;--&gt;
+&lt;!--    &lt;li&gt;2&lt;/li&gt;--&gt;
+&lt;!--    &lt;li&gt;3&lt;/li&gt;--&gt;
+&lt;!--&lt;/ul&gt;--&gt;
+&lt;!--&lt;header&gt;--&gt;
+&lt;!--    &lt;div class="button"&gt;&lt;/div&gt;--&gt;
+&lt;!--    &lt;button&gt;&lt;/button&gt;--&gt;
+&lt;!--&lt;/header&gt;--&gt;
+&lt;!--&lt;article&gt;&lt;/article&gt;--&gt;
+&lt;!--&lt;section&gt;&lt;/section&gt;--&gt;
+&lt;!--&lt;nav&gt;&lt;/nav&gt;--&gt;
+&lt;!--&lt;footer&gt;&lt;/footer&gt;--&gt;
+&lt;!--&lt;a href="ya.ru" target="_blank"&gt;&lt;/a&gt;--&gt;
+&lt;!--&lt;p&gt;текст в параграфы&lt;/p&gt;--&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+
+</code></pre><br/>
+<blockquote><a href="https://habr.com/ru/companies/selectel/posts/794030/">Расскажите</a> нам, какой контент вам нравится. Так мы сможем публиковать наиболее интересные статьи, новости и подборки, а пяти участникам опроса подарим наш мерч!</blockquote><br/>
+<a name="4"></a><font color="#EB4247"><h2>Деплой HTML-кода на облачный сервер</h2></font><br/>
+Итак, мы создали HTML-документ по всем правилам семантической верстки и применили OG-разметку. Теперь задеплоим его на <a href="https://slc.tl/c6976">облачный сервер</a>. Можно собрать минимальную конфигурацию за 30 рублей в день, потому что сейчас большие мощности нам не нужны.<br/>
+<br/>
+Идем в <a href="https://my.selectel.ru/?_gl=1*r4744b*_ga*ZmFsc2UuLg..*_ga_H3R3VJH01B*MTcwNjA4MDIyNC44LjEuMTcwNjA4MDM5OC42MC4wLjA.">панель управления</a> и переходим в раздел <b>Облачная платформа</b>.<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/a5/a1/wo/a5a1wo3snkaucqlhdxtjep0k6jg.png" src="https://habrastorage.org/r/w1560/webt/a5/a1/wo/a5a1wo3snkaucqlhdxtjep0k6jg.png"/></div><br/>
+Здесь создаем сервер произвольной конфигурации. Для простого HTML мы можем обойтись одним ядром vCPU, 512 МБ оперативной памяти и 8 ГБ места на SSD:<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/ha/vd/hz/havdhzhnfaqjmh77m1ux0nyr5-k.png" src="https://habrastorage.org/r/w1560/webt/ha/vd/hz/havdhzhnfaqjmh77m1ux0nyr5-k.png"/></div><br/>
+Создаем сервер и подключаемся к серверу по SSH — отлично, осталось подготовить веб-сервер.<br/>
+<br/>
+1. Чтобы устанавливать только актуальные пакеты, обновляем репозиторий:<br/>
+<br/>
+<pre><code class="plaintext">sudo apt update
+</code></pre><br/>
+2. Устанавливаем Nginx, чтобы раздавать наш index.html:<br/>
+<br/>
+<pre><code class="plaintext">sudo apt install nginx
+</code></pre><br/>
+3. В папке sites enabled устанавливаем Vim, чтобы редактировать текстовые файлы.<br/>
+<br/>
+<pre><code class="bash">/etc/nginx/sites-enabled# apt install vim
+</code></pre><br/>
+4. Находим root — это место, где будет храниться HTML-файл. В нашем случае это папка var/www/html. Идем туда и создаем index.html:<br/>
+<br/>
+<pre><code class="plaintext">vim index.html
+</code></pre><br/>
+5. Копируем в открывшийся текстовый редактор наш HTML-код, выходим из Vim.<br/>
+<br/>
+6. Перезапускаем Nginx:<br/>
+<br/>
+<pre><code class="plaintext">sudo service nginx restart
+</code></pre><br/>
+<br/>
+Чтобы убедиться, что все работает, вставляем в адресную строку браузера публичный IP-адрес облачного сервера. Видим заветную строку «Hello world», все работает.<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/2i/cz/bh/2iczbhsmxjkqssvrmpztjyyansk.png" src="https://habrastorage.org/r/w1560/webt/2i/cz/bh/2iczbhsmxjkqssvrmpztjyyansk.png"/></div><br/>
+<br/>
+Но IP-адреса все же недостаточно: если мы вставим его, например, в Telegram, мессенджер его никак не обработает, потому что это не ссылка.<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/yz/hh/ca/yzhhcaabnbra4sqzp2cmack0bfm.png" src="https://habrastorage.org/r/w1560/webt/yz/hh/ca/yzhhcaabnbra4sqzp2cmack0bfm.png"/></div><br/>
+<br/>
+Чтобы получить ссылку, нужен домен. Мы берем готовый от Ulbi TV, но вообще получить новый домен можно на любом регистраторе.<br/>
+<br/>
+Указываем для домена IP-адрес нашего сервера, чтобы связать их. DNS-серверу потребуется какое-то время, чтобы все обработать — от 2 часов до суток. И вот, домен уже выдает «Hello world».<br/>
+<br/>
+Теперь самое интересное. Скидываем эту ссылку в соцсети и видим, как красиво туда подтянулась наша OG-разметка:<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/dw/1l/sz/dw1lsze4ssrquobgbwst4kftgz0.png" src="https://habrastorage.org/r/w1560/webt/dw/1l/sz/dw1lsze4ssrquobgbwst4kftgz0.png"/></div><br/>
+<a name="5"></a><font color="#EB4247"><h2>Работа со ссылками в контексте SEO</h2></font><br/>
+<h3>Человекопонятные ссылки</h3><br/>
+Когда вы видите ссылку <a href="https://cars.qq/auto/123/model/456">cars.qq/auto/123/model/456</a>, что вы можете предположить о содержании страницы, на которую она ведет? Из домена очевидно, что это что-то о машинах, и на этом все. А когда вам присылают ссылку <a href="https://cars.qq/auto/bmw/model/m5">cars.qq/auto/bmw/model/m5</a>, вы сходу понимаете, что она ведет на страницу, связанную с BMW М5: это какая-то статья или объявление о продаже автомобиля. Этот url понятен человеку, там нет никаких идентификаторов или непонятных чисел.<br/>
+<br/>
+Вот еще пара примеров из интернета. Ссылки слева — неинформативные, включающие index.php, category и цифры. Ссылки справа — осмысленные и легкочитаемые. Кстати, ключевые слова в ссылках тоже помогают в ранжировании страницы.<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/o-/tn/go/o-tngokhie_yt7z00pgas3alht4.png" src="https://habrastorage.org/r/w1560/webt/o-/tn/go/o-tngokhie_yt7z00pgas3alht4.png"/></div><br/>
+Числовой идентификатор в линках вполне уместен. Например, в ссылке на страницу сайта объявлений он точно будет. Но при этом первая часть ссылки все равно должна быть «человекопонятной», и только во второй ее половине, которая почти не влияет на ранжирование, появится уникальный идентификатор с набором цифр и букв. «Человекопонятностью» ссылок не стоит пренебрегать, если хотите выводить свои страницы в топ поисковой выдачи.<br/>
+<br/>
+<h3>Канонические ссылки</h3><br/>
+Представим, что у нас есть две ссылки, которые ведут на одну и ту же страницу: исходный прямой url и тот, что сформировался при работе с категориями или фильтрами. Получается, у нас есть дубликат ссылки — это плохо. По сути, это мусорный контент, который тратит краулинговый бюджет и конкурирует с исходным линком при индексации поисковиками.<br/>
+<br/>
+Чтобы этого избежать, указываем каноническую ссылку — индексироваться будет только она, а остальные перестанут восприниматься как дубликаты. Для этого идем в блок header HTML-документа и указываем линк, в котором rel=«canonical», а в href размещаем прямую ссылку на страницу. Вот так это выглядит в коде со страницы Хабра:<br/>
+<br/>
+<pre><code class="bash">&lt;link data-vue-meta="ssr" href="https://habr.com/ru/companies/selectel/articles/788694/" rel="canonical" data-vmid="canonical"&gt;
+</code></pre><br/>
+<blockquote>Чтобы канонические ссылки всегда имели унифицированный вид, используются базовые редиректы. Их можно настроить на уровне Nginx-конфига. Редиректы автоматически перенаправляют пользователей со страницы с www в адресе на страницу без www, с http — на https (http вообще нигде не должен фигурировать), со страниц без / в конце адреса — на страницы с / в конце.</blockquote><br/>
+<a name="6"></a><font color="#EB4247"><h2>Другие важные особенности SEO</h2></font><br/>
+Теперь разберем несколько важных нюансов, которые помогут более тонко настроить индексацию страниц, а также улучшить пользовательский опыт.<br/>
+<br/>
+<h3>Контроль поисковых движков</h3><br/>
+<h4>Метатег robots</h4><br/>
+При индексации поисковые роботы действуют по определенным алгоритмам, которые нас не всегда устраивают. Мы можем запретить роботам некоторые действия.<br/>
+<br/>
+В HTML-документе указываем метатег:<br/>
+<br/>
+<pre><code class="plaintext">&lt;meta name="robots" content="index"&gt;
+</code></pre><br/>
+Содержание его контентной части определяет действия робота. Запись index — значение по умолчанию, при нем робот будет индексировать страницу. Если указать «noindex», страница индексироваться не будет.<br/>
+<br/>
+То же работает и с другими контентными значениями:<br/>
+<br/>
+<ul>
+<li>follow разрешает роботу ходить по ссылкам, nofollow — запрещает;</li>
+<li>archive — показывать ссылку на сохраненную копию в результатах поиска, noarchive — не показывать;</li>
+<li>noyaca — не использовать сформированное автоматически описание;</li>
+<li>all — использовать директивы index и follow;</li>
+<li>none — использовать директивы noindex и nofollow.</li>
+</ul><br/>
+С помощью метатега robots можно запретить индексировать страницу в Яндексе, но сохранить индексацию для Google:<br/>
+<br/>
+<pre><code class="bash">&lt;meta name="googlebot" content="index"&gt;
+&lt;meta name="yandex" content="noindex"&gt;
+</code></pre><br/>
+Разрешающие директивы имеют приоритет над запрещающими: если не прописывать метатег noindex, страница и ссылки по умолчанию будут индексироваться всеми поисковиками. Метатеги нужны только тогда, когда мы хотим что-то запретить.<br/>
+<br/>
+<h4>Файл robots.txt</h4><br/>
+Этот файл нужен, чтобы разрешить или запретить индексирование разделов или страниц сайта для разных роботов. Хотим исключить какую-то страницу сайта из индексации для всех поисковиков — без проблем. То же самое, если хотим сделать, чтобы какая-то страница индексировалась Яндексом, но не индексировалась системой Google.<br/>
+<br/>
+Вот так мы запрещаем поисковику Google индексировать страницу с контактами:<br/>
+<br/>
+<pre><code class="plaintext">User-agent: Googlebot
+disallow: /contacts
+</code></pre><br/>
+А так, поставив *, запрещаем Яндексу индексировать все страницы раздела с админкой:<br/>
+<br/>
+<pre><code class="plaintext">User-agent: Yandex
+disallow: /admin/*
+</code></pre><br/>
+Из важного: этот файл должен находиться в корне проекта, чтобы робот смог до него достучаться, и быть не более 500 КБ.<br/>
+<br/>
+Посмотреть содержимое файла robots.txt для любого сайта просто: достаточно к ссылке на главную страницу добавить robots.txt после /. Например, содержимое файла для сайта Selectel смотрим здесь: <a href="https://selectel.ru/robots.txt">https://selectel.ru/robots.txt</a>.<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/_1/bl/x_/_1blx_tuh00z97agxbks4j_scz4.png" src="https://habrastorage.org/r/w1560/webt/_1/bl/x_/_1blx_tuh00z97agxbks4j_scz4.png"/></div><br/>
+Все, что не запрещено, считаем разрешенным.<br/>
+<br/>
+В конце документа есть ссылки, ведущие на sitemap.<br/>
+<br/>
+<div style="text-align:center;"><img data-src="https://habrastorage.org/webt/kn/jw/-w/knjw-w76hnc-ioxjq4gx4_ekd4o.png" src="https://habrastorage.org/r/w1560/webt/kn/jw/-w/knjw-w76hnc-ioxjq4gx4_ekd4o.png"/></div><br/>
+Sitemap, или карта сайта, — это XML-документ, в котором указывается актуальная структура сайта со всеми ссылками и датами, когда эти ссылки изменялись. Здесь для каждой страницы можно задать четыре свойства: адрес самой страницы (тег loc), дата последнего обновления (lastmod), частота изменения страницы (changefreq) и приоритет (priority). Например, если вы хотите, чтобы какие-то страницы индексировались лучше других, для каждой их них можно установить приоритет индексации от 0 до 1 с шагом 0,1.<br/>
+<br/>
+Sitemap строится из канонических ссылок и имеет ограничение по размеру в 50 МБ. Если страниц и ссылок так много, что 50 МБ не хватает, или вы хотите создать большую древовидную структуру, то внутри базового sitemap можно разместить ссылки на другие файлы sitemap. Чтобы индексатор узнал о том, что у вас есть эта карта сайта, указываем в robots.txt ссылку на sitemapindex.xml (как на скрине выше).<br/>
+<br/>
+Важно понимать, что sitemap не нужен, если сайт содержит всего пару десятков страниц. Это необходимо только для сайтов с большой сложной структурой ссылок и страниц, когда требуется гарантированно проиндексировать нужные канонические ссылки и исключить из индексации некоторые страницы. Огромный XML-файл не заполняется руками. Это делается автоматически: с помощью скрипта или генератора.<br/>
+<br/>
+<h3>Поддержка мобильных устройств</h3><br/>
+Есть такая технология — AMP, или Accelerated Mobile Pages. Проще говоря, она позволяет разрабатывать быстрые версии страниц для мобильных устройств. При этом Google лучше ранжирует такие страницы.<br/>
+<br/>
+Естественно, эта технология, как и в целом оптимизация сайта под мобильные устройства, нужна не всем. Скажем, Хабр очевидно заточен под десктопных пользователей, а на какой-нибудь маркетплейс или сайт с объявлениями, наоборот, почти все заходят со смартфонов.<br/>
+<br/>
+Как именно работает AMP, можно почитать в <a href="https://developers.google.com/amp?hl=ru">документации</a>. В контексте SEO самое важное, что Google при индексации и ранжировании результатов отдает предпочтение именно быстрым AMP-страницам. Он определяет их по специальным тегам, которые добавляются при разработке.<br/>
+<br/>
+<h3>Микроразметка</h3><br/>
+Микроразметка с точки зрения пользователя — это дополнительная информация под ссылкой в поисковой выдаче. Здесь могут отображаться цены на товары, расписание сеансов в кино или театре, хлебные крошки и так далее. Во всех случаях смысл микроразметки в том, чтобы дать пользователю дополнительную полезную информацию прямо на странице с результатами поиска.<br/>
+<br/>
+Микроразметка пишется достаточно легко, подробная и понятная инструкция лежит <a href="https://yandex.ru/support/webmaster/schema-org/">здесь</a>. Благодаря микроразметке можно вынести в результаты поиска наиболее важную для пользователя информацию: контакты, расписания, цены и прочее. Убедиться, что разметка сделана правильно, можно с помощью <a href="https://validator.schema.org/">валидатора</a>.<br/>
+<br/>
+<a name="7"></a><font color="#EB4247"><h2>Проверка поисковой оптимизации</h2></font><br/>
+<h3>Метрики</h3><br/>
+Есть три наиболее важные метрики с технической точки зрения.<br/>
+<br/>
+<ul>
+<li>LCP (Largest Contentful Paint) — время, за которое загрузился самый большой видимый элемент страницы. Хороший показатель — не более 4 секунд, отличный — не более 2,5 секунд. Очевидно, если весь бандл и фронтенд весят 200 КБ, они загрузятся быстро. Если же бандл не оптимизирован, весит 5 МБ и все подгружается одним цельным куском, на загрузку страницы может уйти секунд 10, а в случае с нестабильным интернетом — еще больше.</li>
+<li>FID (First Input Delay) — время до первой интерактивности. Другими словами, это время с момента загрузки страницы до появления у пользователя возможности взаимодействовать с ней: вводить текст, нажимать кнопки, переходить по ссылкам и так далее. Если FID укладывается в 0,3 секунды, все хорошо. Если нет, над сайтом стоит поработать. FID значительно меньше LCP, потому что какие-то элементы страницы могут подгружаться медленно или асинхронно и, пока они не загрузились, пользователь уже может взаимодействовать с другими элементами.</li>
+<li>CLS (Cumulative Layout Shift) — метрика, которая отвечает за визуальную стабильность. Сталкивались с ситуацией, когда хотите нажать на какую-нибудь кнопку, а тут «Бах!» — где-то сверху подгружается еще один блок, кнопка смещается вниз, и вы нажимаете на что-то не то? Это пример визуально нестабильной страницы, и такого, конечно, быть не должно. Даже если элементы страницы подгружаются асинхронно, до полной загрузки вместо них должна быть заглушка, чтобы верстка не съезжала и пользователи не испытывали дискомфорта. CLS измеряется в баллах, показатель не должен превышать 0,25.</li>
+</ul><br/>
+Для измерения метрик удобно использовать сервис <a href="https://pagespeed.web.dev/">Page Speed Insights</a> от Google. Разумеется, кроме LCP, FID и CLS здесь можно посмотреть огромное количество других параметров, связанных с производительностью, доступностью, безопасностью и так далее. Удобно, что можно измерять параметры и для десктопной, и для мобильной версии сайта.<br/>
+<br/>
+В браузере есть похожий встроенный инструмент — Lighthouse, на основе которого и сделан Page Speed Insights. Принцип работы прост: переходим на нужную страницу, нажимаем F12 и выбираем вкладку Lighthouse. Задаем нужные настройки, нажимаем <b>Analyze page load</b>, ждем и получаем результат анализа. В целом, все практически то же самое, что в Page Speed Insights, хотя по отдельным метрикам показатели могут незначительно различаться.<br/>
+<br/>
+<h3>Валидность HTML</h3><br/>
+Сайты с невалидным HTML-кодом гораздо хуже индексируются поисковиками, медленнее загружаются, а иногда и вовсе объявляются опасными. Проверить валидность можно с помощью классического <a href="https://validator.w3.org/">W3-валидатора</a>, в котором достаточно указать адрес нашей страницы.<br/>
+<br/>
+В нашем случае HTML-документ небольшой и проверять его даже не так интересно, как полноценный сайт. Валидатор выдает одно предупреждение на вьюпорт, и на этом все. В реальности, когда речь идет о настоящем большом сайте, ошибок может быть очень много и они часто бывают незаметны. Например, незакрытый div — очень популярная история, которая не влияет на пользовательский опыт, но негативно сказывается на индексации сайта поисковиками.<br/>
+<br/>
+Валидаторы хорошо справляются с поиском ошибок в верстке, поэтому пренебрегать ими не стоит. Чем больше ошибок останутся незамеченными, тем более подозрительной будут считать страницу поисковики, понижая ее приоритет в выдаче.<br/>
+<br/>
+<h3>Краулинговый бюджет</h3><br/>
+Количество страниц, которые может обойти поисковый робот, ограничено. При этом практически на любом сайте есть страницы, которые вообще не должны индексироваться: админские разделы, дубликаты и прочее. Их стоит исключить из индексации, чтобы повысить другие страницы сайта в ранжировании поисковой выдачи.<br/>
+<br/>
+Важно понимать, что заниматься этой работой стоит тогда, когда вы боретесь за десятые и сотые доли процента SEO. Это актуально, например, для маркетплейсов-гигантов. Если у вас небольшой сайт, лучше отложить оптимизацию краулингового бюджета и заняться более актуальными вопросами: улучшить качество контента, поработать с ключевыми словами, настроить Open Graph и так далее.<br/>
+<br/>
+<a name="8"></a><font color="#EB4247"><h2>Заключение</h2></font><br/>
+Ключевым фактором SEO остается контент. Тем не менее, технические детали также важны: семантика, валидный HTML, канонические ссылки, ключевые слова в линках, AMP и так далее — все это помогает поднять страницу в результатах поисковой выдачи.<br/>
+<br/>
+Если у вас остались вопросы, вы хотите поделиться собственными кейсами поисковой оптимизации или обсудить что-то, связанное с SEO, — добро пожаловать в комментарии.<br/>
+<br/>
+<blockquote><b>Возможно, эти тексты тоже вас заинтересуют:</b><br/>
+<br/>
+→ <a href="https://habr.com/ru/company/selectel/blog/791446">«Двигай телом»: обзор новой игровой консоли Nex Playground</a><br/>
+→ <a href="https://habr.com/ru/company/selectel/blog/793928">Эргономика рабочего места инди-разработчика, или как я избавился от боли в спине</a><br/>
+→ <a href="https://habr.com/ru/company/selectel/blog/792924">Февральские мини-ПК: 5 разных моделей для работы и развлечений</a></blockquote></div></div></div> <!-- --> <!-- --></div> <!-- --> <!-- --></div> <!-- --> <div class="tm-article-presenter__meta"><div class="tm-article-presenter__meta-list tm-separated-list"><span class="tm-separated-list__title">Теги:</span> <ul class="tm-separated-list__list"><li class="tm-separated-list__item"><a class="tm-tags-list__link" href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5Bselectel%5D">selectel</a></li><li class="tm-separated-list__item"><a class="tm-tags-list__link" href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5Bhtml%5D">html</a></li><li class="tm-separated-list__item"><a class="tm-tags-list__link" href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5Bseo%5D">seo</a></li><li class="tm-separated-list__item"><a class="tm-tags-list__link" href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5B%D0%B2%D0%B5%D0%B1-%D1%80%D0%B0%D0%B7%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%B0%5D">веб-разработка</a></li> <!-- --></ul></div> <div class="tm-article-presenter__meta-list tm-separated-list"><span class="tm-separated-list__title">Хабы:</span> <ul class="tm-separated-list__list"><li class="tm-separated-list__item"><a class="tm-hubs-list__link router-link-active" href="/ru/companies/selectel/articles/">Блог компании Selectel</a></li><li class="tm-separated-list__item"><a class="tm-hubs-list__link" href="/ru/hubs/webdev/">Веб-разработка</a></li><li class="tm-separated-list__item"><a class="tm-hubs-list__link" href="/ru/hubs/html5/">HTML</a></li><li class="tm-separated-list__item"><a class="tm-hubs-list__link" href="/ru/hubs/seo/">Поисковая оптимизация</a></li> <!-- --></ul></div></div> <!-- --></article></div> <!-- --></div> <div class="tm-article-sticky-panel"><div class="tm-data-icons tm-article-sticky-panel__icons"><div class="tm-article-rating tm-data-icons__item"><div class="tm-votes-lever tm-article-rating__votes-switcher tm-votes-lever tm-votes-lever_appearance-article" title="Всего голосов 22: ↑19 и ↓3"><button class="tm-votes-lever__button" title="Нравится" type="button"><svg class="tm-svg-img tm-votes-lever__icon" height="24" width="24"><title>Голосование</title> <use xlink:href="/img/megazord-v28.faec9762..svg#counter-vote"></use></svg></button> <div class="tm-votes-lever__score tm-votes-lever__score tm-votes-lever__score_appearance-article"><span><span class="tm-votes-lever__score-counter tm-votes-lever__score-counter tm-votes-lever__score-counter_positive">
+          +16
+        </span></span></div> <button class="tm-votes-lever__button" title="Не нравится" type="button"><svg class="tm-svg-img tm-votes-lever__icon tm-votes-lever__icon_arrow-down" height="24" width="24"><title>Голосование</title> <use xlink:href="/img/megazord-v28.faec9762..svg#counter-vote"></use></svg></button></div> <div class="v-portal" style="display:none;"></div> <!-- --></div> <!-- --> <!-- --> <button class="bookmarks-button tm-data-icons__item" title="Добавить в закладки" type="button"><span class="tm-svg-icon__wrapper bookmarks-button__icon"><svg class="tm-svg-img tm-svg-icon" height="24" width="24"><title>Добавить в закладки</title> <use xlink:href="/img/megazord-v28.faec9762..svg#counter-favorite"></use></svg></span> <span class="bookmarks-button__counter" title="Количество пользователей, добавивших публикацию в закладки">
+    44
+  </span></button> <div class="tm-sharing tm-data-icons__item" title="Поделиться"><button class="tm-sharing__button" type="button"><svg class="tm-sharing__icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13.8 13.8V18l7.2-6.6L13.8 5v3.9C5 8.9 3 18.6 3 18.6c2.5-4.4 6-4.8 10.8-4.8z" fill="currentColor"></path></svg></button> <div class="v-portal" style="display:none;"></div></div> <div class="tm-article-comments-counter-link tm-data-icons__item" title="Читать комментарии"><a class="tm-article-comments-counter-link__link" href="/ru/companies/selectel/articles/794146/comments/"><svg class="tm-svg-img tm-article-comments-counter-link__icon" height="24" width="24"><title>Комментарии</title> <use xlink:href="/img/megazord-v28.faec9762..svg#counter-comments"></use></svg> <span class="tm-article-comments-counter-link__value">
+      2
+    </span></a> <!-- --></div> <!-- --> <div class="v-portal" style="display:none;"></div></div></div></div> <div class="tm-article-presenter__footer"><div class="tm-article-blocks"><!-- --> <section class="tm-block tm-block tm-block_spacing-bottom"><!-- --> <div class="tm-block__body tm-block__body tm-block__body_variant-balanced"><div class="tm-article-author"><div class="tm-article-author__company"><div class="tm-article-author__company-card"><div class="tm-company-snippet"><a class="tm-company-snippet__logo-link" href="/ru/companies/selectel/profile/"><div class="tm-entity-image"><img alt="" class="tm-entity-image__pic" height="40" src="//habrastorage.org/getpro/habr/company/25d/e74/103/25de741038cc0c936b44280b7e740f27.png" width="40"/></div></a> <div class="tm-company-snippet__info"><a class="tm-company-snippet__title" href="/ru/companies/selectel/profile/">Selectel</a> <div class="tm-company-snippet__description">IT-инфраструктура для бизнеса</div></div></div> <div class="tm-article-author__buttons"><!-- --> <!-- --></div></div> <div class="tm-article-author__company-contacts"><a class="tm-article-author__contact" href="https://vk.com/selectel" rel="noopener" target="_blank">
+      ВКонтакте
+    </a><a class="tm-article-author__contact" href="https://telegram.me/selectel" rel="noopener" target="_blank">
+      Telegram
+    </a><a class="tm-article-author__contact" href="https://slc.tl/bgwqk" rel="noopener" target="_blank">
+      Сайт
+    </a></div> <div class="tm-article-author__separator"></div></div> <div class="tm-user-card tm-article-author__user-card tm-user-card tm-user-card_variant-article"><div class="tm-user-card__info-container"><div class="tm-user-card__header"><div class="tm-user-card__header-data"><a class="tm-user-card__userpic tm-user-card__userpic_size-40" href="/ru/users/El_Gato_Grande/"><div class="tm-entity-image"><img alt="" class="tm-entity-image__pic" src="//habrastorage.org/getpro/habr/avatars/c91/4e8/b9a/c914e8b9a51b9895cbd142eb7fc36aed.jpg"/></div></a> <div class="tm-user-card__meta"><div class="tm-counter-container tm-karma tm-karma" title=" 16 голосов "><div class="tm-counter-container__header"><div class="tm-karma__votes tm-karma__votes_positive">
+      14
+    </div></div> <div class="tm-counter-container__footer"><div class="tm-karma__text">
+      Карма
+    </div> <div class="v-portal" style="display:none;"></div></div></div> <div class="tm-counter-container" title="Рейтинг пользователя"><div class="tm-counter-container__header"> <div class="tm-votes-lever tm-votes-lever tm-votes-lever_appearance-rating"><!-- --> <div class="tm-votes-lever__score tm-votes-lever__score tm-votes-lever__score_appearance-rating"><span><span class="tm-votes-lever__score-counter tm-votes-lever__score-counter tm-votes-lever__score-counter_rating">
+          56.1
+        </span></span></div> <!-- --></div></div> <div class="tm-counter-container__footer"><span class="tm-rating__text tm-rating__text">
+      Рейтинг
+    </span></div></div></div></div></div> <div class="tm-user-card__info tm-user-card__info tm-user-card__info_variant-article"><div class="tm-user-card__title tm-user-card__title tm-user-card__title_variant-article"><span class="tm-user-card__name tm-user-card__name tm-user-card__name_variant-article">Александр Шилов</span> <a class="tm-user-card__nickname tm-user-card__nickname tm-user-card__nickname_variant-article" href="/ru/users/El_Gato_Grande/">
+          @El_Gato_Grande
+        </a> <!-- --></div> <p class="tm-user-card__short-info tm-user-card__short-info tm-user-card__short-info_variant-article">Технический автор</p></div></div> <div class="tm-user-card__buttons tm-user-card__buttons tm-user-card__buttons_variant-article"><!-- --> <!-- --> <!-- --> <!-- --></div></div> <!-- --></div></div> <!-- --></section> <!-- --> <!-- --> <div class="tm-article-blocks__comments"><div class="tm-article-page-comments" id="publication-comments"><div class="tm-article-comments-counter-link tm-article-comments-counter-button"><a class="tm-article-comments-counter-link__link tm-article-comments-counter-link__link_button-style" href="/ru/companies/selectel/articles/794146/comments/"><svg class="tm-svg-img tm-article-comments-counter-link__icon tm-article-comments-counter-link__icon_contrasted" height="24" width="24"><title>Комментарии</title> <use xlink:href="/img/megazord-v28.faec9762..svg#counter-comments"></use></svg> <span class="tm-article-comments-counter-link__value tm-article-comments-counter-link__value_contrasted">
+       Комментарии 2 
+    </span></a> <!-- --></div></div></div> <section class="tm-block tm-block tm-block_spacing-bottom"><header class="tm-block__header tm-block__header tm-block__header_variant-borderless"><div class="tm-block__header-container"><h2 class="tm-block__title tm-block__title tm-block__title_variant-large">Публикации</h2> </div> <!-- --></header> <div class="tm-block__body tm-block__body tm-block__body_variant-condensed-slim"><div class="tm-tabs tm-tabs"><div><span class="tm-tabs__tab-item"><button class="tm-tabs__tab-link tm-tabs__tab-link tm-tabs__tab-link_active tm-tabs__tab-link_slim">
+        Лучшие за сутки
+      </button></span><span class="tm-tabs__tab-item"><button class="tm-tabs__tab-link tm-tabs__tab-link tm-tabs__tab-link_slim">
+        Похожие
+      </button></span></div> <!-- --></div> <div class="similar-and-daily__tab-view"><div class="placeholder-wrapper"><!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <div class="tm-placeholder-article-cards"><div class="tm-placeholder-article-card"><div class="tm-placeholder__user"><div class="tm-placeholder__user-pic loads"></div> <div class="tm-placeholder__user-date loads"></div></div> <div class="tm-placeholder-article-card__title"><div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div></div> <div class="tm-placeholder-article-card__icons tm-placeholder__counters"><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div></div></div><div class="tm-placeholder-article-card"><div class="tm-placeholder__user"><div class="tm-placeholder__user-pic loads"></div> <div class="tm-placeholder__user-date loads"></div></div> <div class="tm-placeholder-article-card__title"><div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div></div> <div class="tm-placeholder-article-card__icons tm-placeholder__counters"><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div></div></div><div class="tm-placeholder-article-card"><div class="tm-placeholder__user"><div class="tm-placeholder__user-pic loads"></div> <div class="tm-placeholder__user-date loads"></div></div> <div class="tm-placeholder-article-card__title"><div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div></div> <div class="tm-placeholder-article-card__icons tm-placeholder__counters"><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div></div></div><div class="tm-placeholder-article-card"><div class="tm-placeholder__user"><div class="tm-placeholder__user-pic loads"></div> <div class="tm-placeholder__user-date loads"></div></div> <div class="tm-placeholder-article-card__title"><div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div></div> <div class="tm-placeholder-article-card__icons tm-placeholder__counters"><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div></div></div><div class="tm-placeholder-article-card"><div class="tm-placeholder__user"><div class="tm-placeholder__user-pic loads"></div> <div class="tm-placeholder__user-date loads"></div></div> <div class="tm-placeholder-article-card__title"><div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div></div> <div class="tm-placeholder-article-card__icons tm-placeholder__counters"><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div><div class="tm-placeholder-data-icon"><div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div></div></div></div></div> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --></div> <!-- --></div></div> <!-- --></section> <div class="placeholder-wrapper"><!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <div class="tm-placeholder-inset tm-placeholder-vacancies"><div class="tm-placeholder-inset__header"><div class="tm-placeholder__line tm-placeholder__line_inset-header loads"></div></div> <div class="tm-placeholder-inset__body"><ul class="tm-placeholder-list"><li class="tm-placeholder-list__item tm-placeholder-list__item_inset"><div class="tm-placeholder-list__title-container"><div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div></div> <div class="tm-project-block-items__properties"><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span></div></li><li class="tm-placeholder-list__item tm-placeholder-list__item_inset"><div class="tm-placeholder-list__title-container"><div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div></div> <div class="tm-project-block-items__properties"><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span></div></li><li class="tm-placeholder-list__item tm-placeholder-list__item_inset"><div class="tm-placeholder-list__title-container"><div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div></div> <div class="tm-project-block-items__properties"><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span></div></li><li class="tm-placeholder-list__item tm-placeholder-list__item_inset"><div class="tm-placeholder-list__title-container"><div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div></div> <div class="tm-project-block-items__properties"><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span></div></li><li class="tm-placeholder-list__item tm-placeholder-list__item_inset"><div class="tm-placeholder-list__title-container"><div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div></div> <div class="tm-project-block-items__properties"><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span></div></li></ul></div> <div class="tm-placeholder-inset__footer"><div class="tm-placeholder__line tm-placeholder__line_inset-footer loads"></div></div></div> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --> <!-- --></div> <!-- --> </div></div></div></div></div> <div class="tm-page__sidebar"><!-- --></div></div></div></div></main> <!-- --></div> <!-- --> <div class="tm-footer"><div class="tm-page-width"><div class="tm-footer__container"><div class="tm-footer__title"><a class="tm-svg-icon__wrapper tm-footer__title-link" href="/ru/"><svg class="tm-svg-img tm-svg-icon" height="16" width="16"><title>Хабр</title> <use xlink:href="/img/habr-logo-ru.svg#logo"></use></svg></a></div> <div class="tm-footer__social"><a class="tm-svg-icon__wrapper tm-social-icons__icon" href="https://www.facebook.com/habrahabr.ru" rel="nofollow noopener noreferrer" target="_blank"><svg class="tm-svg-img tm-svg-icon" height="36" width="36"><title>Facebook</title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-facebook"></use></svg></a><a class="tm-svg-icon__wrapper tm-social-icons__icon" href="https://twitter.com/habr_com" rel="nofollow noopener noreferrer" target="_blank"><svg class="tm-svg-img tm-svg-icon" height="36" width="36"><title>Twitter</title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-twitter"></use></svg></a><a class="tm-svg-icon__wrapper tm-social-icons__icon" href="https://vk.com/habr" rel="nofollow noopener noreferrer" target="_blank"><svg class="tm-svg-img tm-svg-icon" height="36" width="36"><title>VK</title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-vk"></use></svg></a><a class="tm-svg-icon__wrapper tm-social-icons__icon" href="https://telegram.me/habr_com" rel="nofollow noopener noreferrer" target="_blank"><svg class="tm-svg-img tm-svg-icon" height="36" width="36"><title>Telegram</title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-telegram"></use></svg></a><a class="tm-svg-icon__wrapper tm-social-icons__icon" href="https://www.youtube.com/channel/UCd_sTwKqVrweTt4oAKY5y4w" rel="nofollow noopener noreferrer" target="_blank"><svg class="tm-svg-img tm-svg-icon" height="36" width="36"><title>Youtube</title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-youtube"></use></svg></a><a class="tm-svg-icon__wrapper tm-social-icons__icon" href="https://dzen.ru/habr" rel="nofollow noopener noreferrer" target="_blank"><svg class="tm-svg-img tm-svg-icon" height="36" width="36"><title>Яндекс Дзен</title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-dzen"></use></svg></a></div> <div class="v-portal" style="display:none;"></div> <button class="tm-footer__link"><svg class="tm-svg-img tm-footer__icon" height="16" width="16"><title>Язык</title> <use xlink:href="/img/megazord-v28.faec9762..svg#lang"></use></svg>
+        Настройка языка
+      </button> <a class="tm-footer__link" href="/ru/feedback/">
+        Техническая поддержка
+      </a> <div class="tm-footer-copyright"><span class="tm-copyright"><span class="tm-copyright__years">© 2006–2024, </span> <span class="tm-copyright__name"><a class="tm-copyright__link" href="https://company.habr.com/" rel="noopener" target="_blank">Habr</a></span></span></div></div></div></div> <!-- --></div> <div class="vue-portal-target"></div></div>
+
+
+
+
+
+<noscript>
+<div>
+<img alt="" src="https://mc.yandex.ru/watch/24049213" style="position:absolute; left:-9999px;">
+</img></div>
+</noscript>
+
+
+</body>
+</html>
