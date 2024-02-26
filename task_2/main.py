@@ -46,13 +46,11 @@ class Tokenizer:
     def group_tokens_by_lemmas(self):
         for token in self.tokens:
             analysis = self.mystem.analyze(token)
-            print(analysis)
             if analysis and 'analysis' in analysis[0] and analysis[0]['analysis']:
                 lemma = analysis[0]['analysis'][0]['lex']
             else:
                 lemma = token.lower()
             self.lemmas.setdefault(lemma, []).append(token)
-            print(self.lemmas)
 
         self.write_list_of_lemmas()
 
@@ -65,8 +63,5 @@ class Tokenizer:
 
 if __name__ == '__main__':
     tokenizer = Tokenizer()
-    print('Getting list of tokens...')
     tokenizer.get_list_of_tokens()
-    print('Grouping tokens by lemmas...')
     tokenizer.group_tokens_by_lemmas()
-    print('Processing completed.')
