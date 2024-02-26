@@ -17,6 +17,7 @@ class Tokenizer:
         self.mystem = Mystem()
         self.tokens = set()
         self.lemmas = dict()
+        self.max_word_length = 20
 
     def is_correct_token(self, token):
         has_punctuation = any(x in string.punctuation for x in token)
@@ -27,8 +28,9 @@ class Tokenizer:
             sum(map(str.islower, token[1:])) > 0 or str.islower(token[0])
         )
         is_good_word = True
+        is_good_length = len(token) <= self.max_word_length
 
-        return not has_punctuation and not is_stop_word and not is_number and is_russian and not are_stuck_words and is_good_word
+        return not has_punctuation and not is_stop_word and not is_number and is_russian and not are_stuck_words and is_good_word and is_good_length
 
     def get_list_of_tokens(self):
         for page_name in listdir(self.pages_folder_name):
