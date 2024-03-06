@@ -20,7 +20,7 @@ class SearchQuery:
 
 class BooleanSearch:
     def __init__(self):
-        self.inverted_index_file_name = path.dirname(__file__) + '/inverted_index_temp21.txt'
+        self.inverted_index_file_name = path.dirname(__file__) + '/inverted_index_kchau.txt'
         self.mystem = Mystem()
         self.index = dict()
         self.read_inverted_index()
@@ -92,10 +92,10 @@ if __name__ == '__main__':
     boolean_search = BooleanSearch()
 
     # query = "(последнего & варианта) | (продукт & будет) | выше"
-    # query = "выше"
-    # query = "последнего & варианта"
-    # query = "(последнего & варианта) | выше"
-    query = "(последнего & варианта) | выше | работу"
+    # query = "валидация"
+    # query = "валидация & общий"
+    # query = "(валидация & общий) | представлять"
+    query = "(последнего & варианта) | представлять | первичный"
 
     result = boolean_search.search(query)
     print(f"Result of the boolean search '{query}': {result}")

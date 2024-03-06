@@ -3,7 +3,8 @@ from os import listdir, path
 from os.path import dirname, join
 from bs4 import BeautifulSoup
 from nltk.tokenize import wordpunct_tokenize
-from pymystem3 import Mystem
+from pip._internal import main as pipmain
+import spacy
 
 
 class IndexEntry:
@@ -20,8 +21,8 @@ class InvertedIndex:
     def __init__(self):
         self.pages_folder_name = join(dirname(__file__), '../task_1/pages')
         self.lemmas_file_name = join(dirname(__file__), '../task_2/lemmas.txt')
-        self.inverted_index_file_name = path.dirname(__file__) + '/inverted_index.txt'
-        self.mystem = Mystem()
+        self.inverted_index_file_name = path.join(dirname(__file__), 'inverted_index_kchau.txt')
+        self.spacy = spacy.load("ru_core_news_sm")
         self.lemmas = dict()
         self.index = dict()
 
@@ -34,15 +35,21 @@ class InvertedIndex:
                 self.lemmas[key] = set(words[1:-1])
 
     def get_index(self):
-        for file_name in listdir(self.pages_folder_name):
+        for i, file_name in enumerate(listdir(self.pages_folder_name)):
             with open(join(self.pages_folder_name, file_name), 'r', encoding='utf-8') as file:
                 text = BeautifulSoup(file, features='html.parser').get_text()
                 list_of_words = wordpunct_tokenize(text)
-                for word in set(self.mystem.lemmatize(w)[0].lower() for w in list_of_words):
-                    if word in self.lemmas and word not in self.index:
-                        count = sum(list_of_words.count(wf) for wf in self.lemmas[word])
-                        self.index[word] = IndexEntry()
-                        self.index[word].update(count, re.search('\\d+', file_name)[0])
+
+                for word in list_of_words:
+                    analysis = self.spacy(word)
+                    lemma = analysis[0].lemma_
+
+                    if lemma in self.lemmas and lemma not in self.index:
+                        count = sum(list_of_words.count(wf) for wf in self.lemmas[lemma])
+                        self.index[lemma] = IndexEntry()
+                        self.index[lemma].update(count, re.search('\\d+', file_name)[0])
+                    elif lemma in self.lemmas:
+                        self.index[lemma].update(1, re.search('\\d+', file_name)[0])
 
     def write_index(self):
         with open(self.inverted_index_file_name, 'w') as file:
@@ -56,6 +63,11 @@ class InvertedIndex:
         self.write_index()
 
 
-if __name__ == '__main__':
-    inverted_index = InvertedIndex()
-    inverted_index.create_index_file()
+def install_whl(path):
+    pipmain(['install', path])
+
+
+inverted_index = InvertedIndex()
+inverted_index.create_index_file()
+
+# install_whl('C:\\Users\\digital\\Downloads\\ru_core_news_sm-3.7.0-py3-none-any.whl')
