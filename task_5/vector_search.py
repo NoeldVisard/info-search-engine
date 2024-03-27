@@ -79,6 +79,6 @@ class VectorSearch:
 
 
 # Usage
-search_engine = VectorSearch()
-results = search_engine.search("головоломка")
-print(results)
+# search_engine = VectorSearch()
+# results = search_engine.search("головоломка")
+# print(results)
